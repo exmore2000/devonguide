@@ -6394,3 +6394,21 @@ chips.forEach(function(c){c.addEventListener('click',function(){apply(c.dataset.
 .kbk.n{background:linear-gradient(#7d8792,#565f69)!important;color:#fff!important}
 .wdc.g,.kbk.g{color:#fff!important}
 </style>
+
+<style id="tapfix">
+/* Daily Word: typed letters must be dark and clear before you submit */
+.wdc:not(.g):not(.y):not(.n){color:#1b2a3a!important;text-shadow:none!important;font-weight:900!important}
+/* Bigger, easier-to-tap game buttons on phones */
+@media(max-width:700px){
+.kb{width:100%;gap:8px!important}
+.kbr{width:100%;gap:5px!important;justify-content:center}
+.kbk{flex:1 1 0;min-width:0!important;height:54px!important;font-size:1.1rem!important;padding:0 2px!important}
+.kbk.wide{flex:1.6 1 0;font-size:.9rem!important}
+.wdc{height:56px!important;font-size:1.7rem!important}
+.fsplay .gbtn,.fsplay .btn,.fsplay button{min-height:48px}
+.fsplay .sdpad{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:8px!important}
+.fsplay .sdpad button,.fsplay .sdk{min-height:58px!important;font-size:1.4rem!important}
+.fsplay .xk{max-width:none!important;height:52px!important;font-size:1.15rem!important}
+.fsplay .xkb,.fsplay .xkeys{gap:6px!important}
+}
+</style>
