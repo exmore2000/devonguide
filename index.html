@@ -6473,6 +6473,8 @@ addEventListener('hashchange',function(){setTimeout(hit,50)});
 <script id="pasthidejs">(function(){
 function run(){
 ['events','whats-on'].forEach(function(id){var s=document.getElementById(id);if(!s||s.dataset.ph)return;
+ var _t=new Date();var _iso=_t.getFullYear()+'-'+('0'+(_t.getMonth()+1)).slice(-2)+'-'+('0'+_t.getDate()).slice(-2);
+ s.querySelectorAll('li[data-e]').forEach(function(li){if(li.dataset.e<_iso)li.classList.add('past');});
  var n=s.querySelectorAll('li.past').length;s.dataset.ph='1';if(!n)return;
  s.classList.add('hidepast');
  var b=document.createElement('button');b.type='button';b.className='showpastbtn';
