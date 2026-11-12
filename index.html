@@ -5365,7 +5365,7 @@ root.textContent='';
 var top=el('div','xtop'),tm=el('span','xtimer','0:00'),pr=el('span','xprog','');top.appendChild(el('span','xlab','Time'));top.appendChild(tm);top.appendChild(el('span','xsp'));top.appendChild(pr);root.appendChild(top);
 var ban=el('div','xban'),bn=el('span','xnum'),bp=el('span','xpic'),bc=el('span','xcl');var pv=el('button','xnav','‹'),nx=el('button','xnav','›');pv.type=nx.type='button';pv.setAttribute('aria-label','Previous clue');nx.setAttribute('aria-label','Next clue');
 var mid=el('div','xmid');mid.appendChild(bn);mid.appendChild(bc);ban.appendChild(pv);ban.appendChild(bp);ban.appendChild(mid);ban.appendChild(nx);ban.setAttribute('aria-live','polite');root.appendChild(ban);
-var grid=el('div','xw');grid.style.gridTemplateColumns='repeat('+W+',minmax(0,1fr))';var els={};
+var grid=el('div','xw');grid.style.gridTemplateColumns='repeat('+W+',minmax(0,1fr))';grid.style.setProperty('--xw',W);grid.style.setProperty('--xh',H);var els={};
 for(var r=0;r<H;r++)for(var c=0;c<W;c++){var k=r+','+c,d=el('div','xc'+(cells[k]?'':' b'));if(cells[k]){d.setAttribute('role','button');d.setAttribute('aria-label','Row '+(r+1)+' column '+(c+1));d.dataset.k=k;if(num[k])d.appendChild(el('i','',String(num[k])));d.appendChild(el('b'));els[k]=d;(function(kk){d.addEventListener('click',function(){pick(kk);});})(k);}grid.appendChild(d);}
 root.appendChild(grid);
 var kb=el('div','xkb');['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'].forEach(function(row,ri){var rw=el('div','xkr');row.split('').forEach(function(ch){var b=el('button','xk',ch);b.type='button';b.addEventListener('click',function(){typeCh(ch);});rw.appendChild(b);});if(ri===2){var bk=el('button','xk wide','⌫');bk.type='button';bk.setAttribute('aria-label','Delete');bk.addEventListener('click',back);rw.appendChild(bk);}kb.appendChild(rw);});root.appendChild(kb);
@@ -5390,9 +5390,9 @@ function back(){if(done||!sel)return;if(L[sel]){delete L[sel];}else{var w=cur();
 function go(d){var w=cur(),i=w?order.indexOf(w):-1;var n=order[(i+d+order.length)%order.length];dir=n.d;sel=n.r+','+n.c;for(var q=0,ks=wordCells(n);q<ks.length;q++){if(!L[ks[q]]){sel=ks[q];break;}}paint();}
 pv.addEventListener('click',function(){go(-1);});nx.addEventListener('click',function(){go(1);});
 function winCard(a){var o=el('div','xwin'),c=el('div','xwinc');c.appendChild(el('div','xwine','\ud83c\udf89'));c.appendChild(el('h3','','Solved!'));c.appendChild(el('p','xwt',(cfg.share||'Crossword')+' \u00b7 '+fmt(secs)+(hints?' \u00b7 '+hints+' hint'+(hints>1?'s':''):' \u00b7 no hints')));c.appendChild(el('p','xwpt',a.text));
-var sh=el('button','gnext','Share result');sh.type='button';sh.addEventListener('click',function(){var t=(cfg.share||'Crossword')+' \u2705 '+fmt(secs)+(hints?'':' (no hints)')+'\nPlay free: https://devonguide.co.uk';try{if(navigator.share){navigator.share({text:t});}else{navigator.clipboard.writeText(t);sh.textContent='Copied!';}}catch(e){sh.textContent='Copy not available';}});c.appendChild(sh);
+var sh=el('button','gnext','Share result');sh.type='button';sh.addEventListener('click',function(){var t=(cfg.share||'Crossword')+' \u2705 '+fmt(secs)+(hints?'':' (no hints)')+'\nPlay free: https://justdevon.co.uk';try{if(navigator.share){navigator.share({text:t});}else{navigator.clipboard.writeText(t);sh.textContent='Copied!';}}catch(e){sh.textContent='Copy not available';}});c.appendChild(sh);
 var bk=el('button','gnext gghost','Back to all games');bk.type='button';bk.addEventListener('click',function(){o.remove();var g=root.querySelector('.gback');if(g)g.click();});c.appendChild(bk);
-var cl=el('button','xwx','\u00d7');cl.type='button';cl.setAttribute('aria-label','Close');cl.addEventListener('click',function(){o.remove();});c.appendChild(cl);o.appendChild(c);root.appendChild(o);}
+var cl=el('button','xwx','\u00d7');cl.type='button';cl.setAttribute('aria-label','Close');cl.addEventListener('click',function(){o.remove();});c.appendChild(cl);o.appendChild(c);o.addEventListener('click',function(e){if(e.target===o)o.remove();});var esc=function(e){if(e.key==='Escape'){o.remove();document.removeEventListener('keydown',esc);}};document.addEventListener('keydown',esc);document.body.appendChild(o);}
 function check(){var wrong=0,empty=0;Object.keys(els).forEach(function(k){var e=els[k];e.classList.remove('ok','no');if(!L[k])empty++;else if(L[k]===cells[k]){e.classList.add('ok');}else{e.classList.add('no');wrong++;}});msg.textContent=wrong?wrong+' wrong letter'+(wrong>1?'s':'')+' shown in red.':empty?'No mistakes so far. '+empty+' squares to go.':'';}
 function hint(whole){if(done)return;var w=cur();if(!w){msg.textContent='Pick a square first.';return;}if(whole){wordCells(w).forEach(function(k){L[k]=cells[k];});hints+=3;}else{if(!sel)return;L[sel]=cells[sel];hints++;}msg.textContent='Hint used. Each hint costs a few points.';paint();save();checkWin();}
 function reveal(){Object.keys(cells).forEach(function(k){L[k]=cells[k];});all=true;msg.textContent='Answers revealed. No points for this one.';paint();save();finish();}
@@ -6438,4 +6438,22 @@ new Image().src='https://exmoregold2000.goatcounter.com/count?'+q;
 }catch(e){}}
 if(document.readyState==='complete')hit();else addEventListener('load',hit);
 addEventListener('hashchange',function(){setTimeout(hit,50)});
-}catch(e){}})();</script></body></html>
+}catch(e){}})();</script><style id="cwfix">
+.xwinc .gnext.gghost{color:#06223a!important;background:#fff!important;border:2px solid #06223a!important;box-shadow:none!important;text-shadow:none!important}
+.xwinc .gnext:not(.gghost){color:#06223a!important}
+.xwin{z-index:6000}
+@media (min-width:900px) and (min-height:480px){
+.fsplay:has(>.xw){display:grid!important;grid-template-columns:max-content minmax(300px,440px);grid-template-rows:auto repeat(6,min-content) 1fr auto;column-gap:32px;row-gap:10px;justify-content:center;align-content:start;padding-bottom:0!important}
+.fsplay:has(>.xw)>*{max-width:none}
+.fsplay:has(>.xw)>.ghead{grid-column:1/-1;grid-row:1;justify-self:center}
+.fsplay:has(>.xw)>.xw{grid-column:1;grid-row:2/9;align-self:start;width:calc((100dvh - 112px)*var(--xw)/var(--xh) + 16px)}
+.fsplay:has(>.xw)>.xtop{grid-column:2;grid-row:2}
+.fsplay:has(>.xw)>.xban{grid-column:2;grid-row:3}
+.fsplay:has(>.xw)>.xkb{grid-column:2;grid-row:4}
+.fsplay:has(>.xw)>.xbtns{grid-column:2;grid-row:5}
+.fsplay:has(>.xw)>.gsub{grid-column:2;grid-row:6}
+.fsplay:has(>.xw)>.xlists{grid-column:2;grid-row:7;max-height:calc(100dvh - 96px - 31px - 88px - 144px - 45px - 70px);min-height:120px;overflow:auto}
+.fsplay:has(>.xw)>.gfoot,.fsplay:has(>.xw)>.xfind{grid-column:1/-1}
+}
+</style>
+</body></html>
