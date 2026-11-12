@@ -6465,4 +6465,23 @@ addEventListener('hashchange',function(){setTimeout(hit,50)});
 .fsplay:has(>.xw)>.gfoot,.fsplay:has(>.xw)>.xfind{grid-column:1/-1}
 }
 </style>
+<style id="pasthide">
+.hidepast li.past{display:none!important}
+.hidepast .monthempty{display:none}
+.showpastbtn{display:inline-block;margin:6px 0 10px;padding:8px 14px;border-radius:999px;border:2px solid #1f3a5f;background:#fff;color:#1f3a5f;font:800 .85rem inherit;cursor:pointer}
+</style>
+<script id="pasthidejs">(function(){
+function run(){
+['events','whats-on'].forEach(function(id){var s=document.getElementById(id);if(!s||s.dataset.ph)return;
+ var n=s.querySelectorAll('li.past').length;s.dataset.ph='1';if(!n)return;
+ s.classList.add('hidepast');
+ var b=document.createElement('button');b.type='button';b.className='showpastbtn';
+ function lab(){return s.classList.contains('hidepast')?'Show '+n+' finished events':'Hide finished events';}
+ b.textContent=lab();
+ b.onclick=function(){s.classList.toggle('hidepast');b.textContent=lab();};
+ var w=s.querySelector('.wrap')||s;var ref=w.querySelector('.jump')||w.querySelector('.sub')||w.querySelector('p')||w.querySelector('h2');
+ if(ref&&ref.parentNode)ref.parentNode.insertBefore(b,ref.nextSibling);else w.insertBefore(b,w.firstChild);
+});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(run,50)});else setTimeout(run,50);
+})();</script>
 </body></html>
