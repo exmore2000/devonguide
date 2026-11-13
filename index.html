@@ -4603,7 +4603,7 @@ header.hero.v2 .btn-ghost{padding:14px 30px;font-size:1.02rem;background:rgba(25
 <section id="games"><div class="wrap"><span id="games-preview"></span>
 <h2>Games on the go</h2>
 <p class="gonote"><span aria-hidden="true">🚆</span><span><b>Something to play while you travel, or when you just want to switch off.</b> Every game is quick, works on your phone and saves your progress, so you can pick it up again on the bus, at the station, on the sand or on the sofa. Most take two to five minutes, and a new picture crossword arrives every day.</span></p>
-<p class="sub">Sudoku, picture and word crosswords, quizzes with a timer and lifelines, a daily word and more. Pick a game, earn points and climb the ranks. Scores stay on your own device.</p>
+<p class="sub">Sudoku, picture and word crosswords, Devon picross, quizzes with a timer and lifelines, a daily word and more. Pick a game, earn points and climb the ranks. Scores stay on your own device.</p>
 <div class="evt" id="evt"></div>
 <div class="dp" id="dp"></div>
 <div class="lb" id="lb"><h3>Leaderboard</h3><div id="lb-shared" hidden></div><div id="lb-local"></div></div>
@@ -4618,6 +4618,7 @@ header.hero.v2 .btn-ghost{padding:14px 30px;font-size:1.02rem;background:rgba(25
 <details class="gp"><summary><span class="gi" aria-hidden="true">⛰️</span><span class="gtx"><span class="gt">Higher or Lower: Peaks</span><span class="gd">Is it taller than the last one? From Dartmoor tors to Ben Nevis.</span></span></summary><div class="gb" id="g-hol"></div></details>
 <details class="gp"><summary><span class="gi" aria-hidden="true">🥾</span><span class="gtx"><span class="gt">Coast Path Challenge</span><span class="gd">A quiz for anyone who has walked the South West Coast Path.</span></span></summary><div class="gb"><p class="gsub">This game lives in the Coast Path section. <a href="#cpgame">Play it there</a>.</p></div></details>
 <details class="gp"><summary><span class="gi" aria-hidden="true">🏮</span><span class="gtx"><span class="gt">Devon Lighthouses</span><span class="gd">Place one lighthouse in every row, column and coloured Devon area. No two can touch.</span></span></summary><div class="gb" id="g-crn"></div></details>
+<details class="gp"><summary><span class="gi" aria-hidden="true">🖼️</span><span class="gtx"><span class="gt">Devon Picross</span><span class="gd">Solve the number clues to reveal a hidden Devon picture. Three levels, from 5×5 up.</span></span></summary><div class="gb" id="g-pic"></div></details>
 </div></section>
 
 <section id="photos"><div class="wrap">
@@ -4934,7 +4935,7 @@ var BAD={first:['First Steps','Earn your first points'],full:['Full House','Play
 var EVT={pub:['Pub Quiz Night','🍺','the Devon Pub Quiz'],word:['Wordsmith Week','🔤','the Devon Daily Word'],hist:['History Week','📜','the Devon History Challenge'],mem:['Harbour Regatta','⚓','Harbour Match'],cw:['Crossword Cup','✏️','the Devon Crossword'],hol:['Peak Challenge','⛰️','Higher or Lower: Peaks'],cp:['Walkers’ Week','🥾','the Coast Path Challenge'],sdk:['Sudoku Showdown','🔢','Sudoku'],pcw:['Picture Puzzle Week','🖼️','the Daily Picture Crossword']};
 var ORDER=['sdk','word','cw','pub'];
 
-var GN={sdk:'Sudoku',pcw:'Daily Picture Crossword',pub:'Pub Quiz',hist:'History Challenge',cw:'Crossword',word:'Daily Word',tea:'Cream Tea',mem:'Harbour Match',hol:'Peaks',cp:'Coast Path',crn:'Lighthouses',daily:'Daily set'};
+var GN={sdk:'Sudoku',pcw:'Daily Picture Crossword',pub:'Pub Quiz',hist:'History Challenge',cw:'Crossword',word:'Daily Word',tea:'Cream Tea',mem:'Harbour Match',hol:'Peaks',cp:'Coast Path',crn:'Lighthouses',pic:'Picross',daily:'Daily set'};
 var LBX={db:null,uid:null,user:null};
 function lbLocal(){var b=document.getElementById('lb-local');if(!b)return;b.textContent='';b.appendChild(el('h4','','Your best scores on this device'));var bp=js('devonBestPts',{}),ks=Object.keys(bp).sort(function(a,c){return bp[c]-bp[a];});
 if(!ks.length){b.appendChild(el('p','fine','Play a game to set your first score.'));return;}
@@ -4946,7 +4947,7 @@ function lbSync(){if(!LBX.db||!LBX.uid)return;var mine=n('devonPts');if(mine<=0)
 function lbInit(){lbLocal();var b=document.getElementById('lb');if(!b||!window.claude||!window.claude.use)return;
 Promise.all([window.claude.use('db'),window.claude.use('user')]).then(function(r){var db=r[0],user=r[1];if(!db||!user||!user.id)return;return user.id().then(function(id){LBX.db=db;LBX.uid=id;LBX.user=user;
 db.collection('scores').orderBy('pts','desc').limit(10).onSnapshot(function(snap){var rows=snap.docs.map(function(d){return {id:d.id,pts:((d.data()||{}).pts|0)};});user.profiles(rows.map(function(x){return x.id;})).then(function(ps){lbDraw(rows,ps);},function(){lbDraw(rows,{});});},function(){});lbSync();});}).catch(function(){});}
-var GAMES=['pub','hist','cw','pcw','sdk','word','tea','mem','hol','cp','crn'];
+var GAMES=['pub','hist','cw','pcw','sdk','word','tea','mem','hol','cp','crn','pic'];
 var day=Math.floor((new Date().getTime()-new Date().getTimezoneOffset()*60000)/864e5);
 var evG=ORDER[Math.floor((day+3)/7)%ORDER.length],left=6-((day+3)%7);
 function n(k){return parseInt(store(k)||'0',10)||0;}
@@ -5549,8 +5550,8 @@ var SPONSOR={name:'',url:''}; /* set name and url to show "Sponsored by ..." on 
 var sec=document.getElementById('games');
 if(sec){
 var panels=[].slice.call(sec.querySelectorAll('.gp'));
-var POP=['word','pcw','sdk','cw','crn','pub','hist','cp','mem','hol','tea'];
-var TYPE={word:'words',sdk:'puzzles',cw:'puzzles',pcw:'puzzles',pub:'quizzes',hist:'quizzes',cp:'quizzes',tea:'quick',mem:'quick',hol:'quick',crn:'puzzles'};
+var POP=['word','pcw','sdk','cw','crn','pub','hist','cp','mem','hol','tea','pic'];
+var TYPE={word:'words',sdk:'puzzles',cw:'puzzles',pcw:'puzzles',pub:'quizzes',hist:'quizzes',cp:'quizzes',tea:'quick',mem:'quick',hol:'quick',crn:'puzzles',pic:'puzzles'};
 var CHIPS=[['all','All'],['popular','Most popular'],['puzzles','Puzzles'],['words','Word'],['quizzes','Quizzes'],['quick','Quick fun']];
 panels.sort(function(a,b){return POP.indexOf(a.dataset.g)-POP.indexOf(b.dataset.g);});
 var wrap=el('div','ghubwrap');wrap.id='ghubwrap';
@@ -5558,7 +5559,7 @@ var daily=el('div','gdaily');wrap.appendChild(daily);
 var chips=el('div','gchips');chips.setAttribute('role','tablist');wrap.appendChild(chips);
 var hub=el('div','ghub');hub.id='ghub';wrap.appendChild(hub);
 var filter='all';
-var bestOf={pub:function(){var b=store('pubBest');return b?'Best '+b+'/10':'';},hist:function(){var b=store('histBest');return b?'Best '+b+'/10':'';},cp:function(){var b=store('cpgBest');return b?'Best '+b+'/10':'';},mem:function(){var b=store('memBest');return b?'Best '+b+' moves':'';},hol:function(){var b=store('holBest');return b?'Best streak '+b:'';},crn:function(){var x=[5,6,7,8].map(function(k){return store('crnBest-'+k);}).filter(Boolean).map(Number);return x.length?'Best '+fmt(Math.min.apply(null,x)):'';},sdk:function(){var x=['easy','medium','hard'].map(function(d){return store('sdkBest-'+d);}).filter(Boolean).map(Number);return x.length?'Best '+fmt(Math.min.apply(null,x)):'';}};
+var bestOf={pub:function(){var b=store('pubBest');return b?'Best '+b+'/10':'';},hist:function(){var b=store('histBest');return b?'Best '+b+'/10':'';},cp:function(){var b=store('cpgBest');return b?'Best '+b+'/10':'';},mem:function(){var b=store('memBest');return b?'Best '+b+' moves':'';},hol:function(){var b=store('holBest');return b?'Best streak '+b:'';},pic:function(){try{var a=JSON.parse(store('picSolved')||'[]');return a.length?'Solved '+a.length:'';}catch(e){return '';}},crn:function(){var x=[5,6,7,8].map(function(k){return store('crnBest-'+k);}).filter(Boolean).map(Number);return x.length?'Best '+fmt(Math.min.apply(null,x)):'';},sdk:function(){var x=['easy','medium','hard'].map(function(d){return store('sdkBest-'+d);}).filter(Boolean).map(Number);return x.length?'Best '+fmt(Math.min.apply(null,x)):'';}};
 /* game icons v4 */
 var GICON=(function(){
 function S(id,body,defs){return '<svg viewBox="0 0 64 64" width="100%" height="100%" aria-hidden="true" focusable="false"><defs>'+(defs||'')+'</defs>'+body+'</svg>';}
@@ -5598,6 +5599,7 @@ I.hol=S('l',
  '<g filter="url(#sl)"><path d="M3 54L22 18l11 18 8-11 21 29z" fill="url(#gl1)"/></g><path d="M22 18l-7 13 5-3 3 4 4-3 4 6-6-10z" fill="#fff"/><path d="M41 25l-5 8 3-1 3 3 3-3z" fill="#fff" opacity=".9"/><g><circle cx="50" cy="14" r="11" fill="#2f8f5b"/><path d="M50 8l6 7h-4v6h-4v-6h-4z" fill="#fff"/></g>',
  sh.replace('id="s"','id="sl"')+'<linearGradient id="gl1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8aa0b8"/><stop offset="1" stop-color="#4a5f78"/></linearGradient>');
 I.crn=S('q','<g filter="url(#sq)"><rect x="4" y="4" width="56" height="56" rx="9" fill="#fff"/></g><g><rect x="6" y="6" width="26" height="26" rx="4" fill="#c9a8ea"/><rect x="32" y="6" width="26" height="26" rx="4" fill="#8fcbe6"/><rect x="6" y="32" width="26" height="26" rx="4" fill="#f7d774"/><rect x="32" y="32" width="26" height="26" rx="4" fill="#9fd6a5"/></g><path d="M26 58l3-24h6l3 24z" fill="#fff" stroke="#1b3a63" stroke-width="2" stroke-linejoin="round"/><path d="M28 48l.8-6.5h6.4l.8 6.5z" fill="#b23a1f"/><rect x="28" y="26" width="8" height="7" rx="1.5" fill="#f0b429" stroke="#1b3a63" stroke-width="2"/><path d="M27 26l5-7 5 7z" fill="#b23a1f" stroke="#1b3a63" stroke-width="2" stroke-linejoin="round"/>',sh.replace('id="s"','id="sq"'));
+I.pic=S('p','<g filter="url(#sp)"><rect x="4" y="4" width="56" height="56" rx="9" fill="#fff"/></g><g stroke="#fff" stroke-width="1"><rect x="9.5" y="9.5" width="9" height="9" fill="#e9eef4"/><rect x="18.5" y="9.5" width="9" height="9" fill="#e9eef4"/><rect x="27.5" y="9.5" width="9" height="9" fill="#b23a1f"/><rect x="36.5" y="9.5" width="9" height="9" fill="#e9eef4"/><rect x="45.5" y="9.5" width="9" height="9" fill="#e9eef4"/><rect x="9.5" y="18.5" width="9" height="9" fill="#e9eef4"/><rect x="18.5" y="18.5" width="9" height="9" fill="#b23a1f"/><rect x="27.5" y="18.5" width="9" height="9" fill="#b23a1f"/><rect x="36.5" y="18.5" width="9" height="9" fill="#b23a1f"/><rect x="45.5" y="18.5" width="9" height="9" fill="#e9eef4"/><rect x="9.5" y="27.5" width="9" height="9" fill="#e9eef4"/><rect x="18.5" y="27.5" width="9" height="9" fill="#e9eef4"/><rect x="27.5" y="27.5" width="9" height="9" fill="#b23a1f"/><rect x="36.5" y="27.5" width="9" height="9" fill="#e9eef4"/><rect x="45.5" y="27.5" width="9" height="9" fill="#e9eef4"/><rect x="9.5" y="36.5" width="9" height="9" fill="#e9eef4"/><rect x="18.5" y="36.5" width="9" height="9" fill="#b23a1f"/><rect x="27.5" y="36.5" width="9" height="9" fill="#b23a1f"/><rect x="36.5" y="36.5" width="9" height="9" fill="#b23a1f"/><rect x="45.5" y="36.5" width="9" height="9" fill="#e9eef4"/><rect x="9.5" y="45.5" width="9" height="9" fill="#b23a1f"/><rect x="18.5" y="45.5" width="9" height="9" fill="#b23a1f"/><rect x="27.5" y="45.5" width="9" height="9" fill="#b23a1f"/><rect x="36.5" y="45.5" width="9" height="9" fill="#b23a1f"/><rect x="45.5" y="45.5" width="9" height="9" fill="#b23a1f"/></g>',sh.replace('id="s"','id="sp"'));
 return function(g){return I[g]||'';};
 })();
 
@@ -5618,7 +5620,7 @@ p.addEventListener('toggle',function(){if(p.open){panels.forEach(function(o){if(
 CHIPS.forEach(function(c){var b=el('button','gchip',c[1]);b.type='button';b.dataset.f=c[0];b.addEventListener('click',function(){filter=c[0];refresh();});chips.appendChild(b);});
 function fsOff(p){var sy=p._sy;p._sy=null;if(p._gb){p._ph.parentNode.insertBefore(p._gb,p._ph);p._ph.parentNode.removeChild(p._ph);p._gb.classList.remove('fsplay');p._gb=null;}document.documentElement.classList.remove('gplay');if(sy!=null)window.scrollTo({top:sy,behavior:'instant'});}
 function fsOn(p){var gb=p.querySelector('.gb');if(!gb)return;var cs=getComputedStyle(p);gb.style.setProperty('--tone',cs.getPropertyValue('--tone'));gb.style.setProperty('--tone-t',cs.getPropertyValue('--tone-t'));p._sy=window.scrollY;window.scrollTo({top:0,behavior:'instant'});p._gb=gb;p._ph=document.createComment('gb');gb.parentNode.insertBefore(p._ph,gb);document.body.appendChild(gb);gb.classList.add('fsplay');document.documentElement.classList.add('gplay');}
-function openGame(p){panels.forEach(function(o){o.open=(o===p);fsOff(o);});var fs=/^(pcw|cw|sdk|crn)$/.test(p.dataset.g);if(fs)fsOn(p);if(fs){var gbx=p.querySelector('.gb');if(gbx)gbx.scrollTop=0;}else p.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'});refresh();}
+function openGame(p){panels.forEach(function(o){o.open=(o===p);fsOff(o);});var fs=/^(pcw|cw|sdk|crn|pic)$/.test(p.dataset.g);if(fs)fsOn(p);if(fs){var gbx=p.querySelector('.gb');if(gbx)gbx.scrollTop=0;}else p.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'});refresh();}
 function dayNo(){return Math.floor((new Date().getTime()-new Date().getTimezoneOffset()*60000)/864e5);}
 function dvDK(){var d=new Date();return String(d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate());}
 function dvAllDone(all){var ok=all.every(function(x){return x[3];});if(!ok||store('dvAllDay')===dvDK()||!window.DP||!window.__dvPop)return;if(document.getElementById('crnwin')||document.getElementById('dvresult'))return;store('dvAllDay',dvDK());setTimeout(function(){var a=window.DP.award('daily',30);window.__dvPop('🏆','Daily set complete!','You finished all of today’s puzzles. '+a.text+' Come back tomorrow to keep your streak alive.');},700);}
@@ -5626,7 +5628,7 @@ function buildDaily(){daily.textContent='';var st=window.DP&&window.DP.streak?wi
 [['word','🔤','Daily Word',store('wdDay')===String(dayNo())],['sdk','🔢','Daily Sudoku',store('sdkDaily')===String(new Date().toDateString())],['crn','🏮','Daily Lighthouses',store('crnDaily-6')===dvDK()]].forEach(function(x,i,all){if(i===all.length-1)dvAllDone(all);var b=el('button','gdc'+(x[3]?' done':''));b.type='button';b.appendChild(el('b','',x[1]+' '+x[2]));b.appendChild(el('small','',x[3]?'Done today ✓':'Play today’s'));b.addEventListener('click',function(){var p=panels.filter(function(q){return q.dataset.g===x[0];})[0];if(p)openGame(p);if(x[0]==='crn'&&window.__crnDaily)setTimeout(window.__crnDaily,0);});daily.appendChild(b);});}
 function refresh(){[].forEach.call(chips.children,function(c){c.classList.toggle('on',c.dataset.f===filter);c.setAttribute('aria-pressed',c.dataset.f===filter?'true':'false');});
 tiles.forEach(function(x){var t=x[0],p=x[1],tg=x[2],g=x[3],idx=x[4];var show=filter==='all'||(filter==='popular'&&idx<3)||TYPE[g]===filter;t.hidden=!show;t.classList.toggle('active',p.open);t.classList.toggle('lockd',p.classList.contains('locked'));tg.textContent='';
-if(idx<3)tg.appendChild(el('span','tag pop','Popular'));if(p.classList.contains('event'))tg.appendChild(el('span','tag ev','2× points'));if(p.classList.contains('locked'))tg.appendChild(el('span','tag lk','🔒 Plus'));if(p.classList.contains('trial'))tg.appendChild(el('span','tag fr','Free first play'));if(g==='sdk'||g==='pcw'||g==='crn')tg.appendChild(el('span','tag nw','New'));var b=bestOf[g]&&bestOf[g]();if(b)tg.appendChild(el('span','tag bs',b));});buildDaily();}
+if(idx<3)tg.appendChild(el('span','tag pop','Popular'));if(p.classList.contains('event'))tg.appendChild(el('span','tag ev','2× points'));if(p.classList.contains('locked'))tg.appendChild(el('span','tag lk','🔒 Plus'));if(p.classList.contains('trial'))tg.appendChild(el('span','tag fr','Free first play'));if(g==='sdk'||g==='pcw'||g==='crn'||g==='pic')tg.appendChild(el('span','tag nw','New'));var b=bestOf[g]&&bestOf[g]();if(b)tg.appendChild(el('span','tag bs',b));});buildDaily();}
 var anchor=document.getElementById('dp');if(anchor&&anchor.parentNode){anchor.parentNode.insertBefore(wrap,anchor);}
 panels.forEach(function(p){p.open=false;});
 refresh();
@@ -5673,6 +5675,7 @@ cp:['Ten questions for Coast Path walkers.'],
 tea:['Swap two neighbouring items to line up 3 or more the same.','Collect the goals at the top before your moves run out. Match 4 for a golden bomb.'],
 mem:['Turn over two cards at a time and match all the pairs.'],
 hol:['Guess whether the next one is higher or lower.'],
+pic:['Numbers beside each row and column show runs of filled squares. “3 1” means three squares, a gap, then one.','Tap or drag to fill squares. Switch to ✕ to mark squares you know are empty.','Finish the picture to reveal what it is. Start with 5×5 and work up.'],
 crn:['Put one lighthouse in every row, column and coloured area.','No two lighthouses can touch, not even at the corners.','Tap once for a cross, twice for a lighthouse.']};
 [].forEach.call(sec.querySelectorAll('.gp'),function(p){p.addEventListener('toggle',function(){if(!p.open)return;var g=p.dataset.g;if(!g||!HOW[g]||S('devonHow-'+g))return;var gb=p.querySelector('.gb');if(!gb||gb.querySelector('.ghow'))return;var box=el('div','ghow');box.appendChild(el('b','','How to play'));var u=el('ul');HOW[g].forEach(function(t){u.appendChild(el('li','',t));});box.appendChild(u);var b=el('button','','Got it');b.type='button';b.addEventListener('click',function(){S('devonHow-'+g,'1');box.remove();});box.appendChild(b);gb.insertBefore(box,gb.firstChild);});});
 var wrap=document.getElementById('ghubwrap'),quest=null;
@@ -6736,6 +6739,7 @@ var sec=document.getElementById('games');if(!sec)return;
 function S(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){}return null;}
 function el(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!==undefined)n.textContent=x;return n;}
 var HOW={
+ pic:['Numbers beside each row and column show runs of filled squares. “3 1” means three squares, a gap, then one.','Tap or drag to fill squares. Switch to ✕ to mark squares you know are empty.','Finish the picture to reveal what it is. Start with 5×5 and work up.'],
 word:['Guess the five-letter word in six tries. Type with the keys, then press Enter.','Green: right letter, right place. Yellow: in the word, wrong place. Grey: not in the word.','A new word every day.'],
 sdk:['Fill every row, every column and every 3×3 box with the numbers 1 to 9, once each.','Tap a square, then tap a number underneath.','Switch on Notes to pencil in possible numbers. Undo and hints are there if you get stuck.'],
 cw:['Tap a square, then type the letter. Tap the same square again to switch between Across and Down.','The clue is shown at the top. Use the arrows beside it to move to the next clue.','Hints cost a few points.'],
@@ -6750,7 +6754,7 @@ function show(gb,g,force){if(!gb||!HOW[g])return;var old=gb.querySelector('.ghow
  var b=el('button','','Got it');b.type='button';b.addEventListener('click',function(){S('devonHow-'+g,'1');box.remove();});box.appendChild(b);
  var hd=gb.querySelector('.ghead');if(hd&&hd.nextSibling)gb.insertBefore(box,hd.nextSibling);else gb.insertBefore(box,gb.firstChild);}
 function gid(gb){return gb&&gb.id?gb.id.replace(/^g-/,''):'';}
-function opened(gb){var g=gid(gb);if(!g)return;if(g==='crn'){document.dispatchEvent(new Event('crn:open'));return;}if(/^(cw|pcw|sdk)$/.test(g)&&!S('devonHow-'+g)&&!gb.querySelector('.ghow'))show(gb,g,false);}
+function opened(gb){var g=gid(gb);if(!g)return;if(g==='crn'){document.dispatchEvent(new Event('crn:open'));return;}if(/^(cw|pcw|sdk|pic)$/.test(g)&&!S('devonHow-'+g)&&!gb.querySelector('.ghow'))show(gb,g,false);}
 if(window.MutationObserver)new MutationObserver(function(ms){ms.forEach(function(m){[].forEach.call(m.addedNodes,function(n){if(n.nodeType===1&&n.classList&&n.classList.contains('gb')&&n.classList.contains('fsplay'))setTimeout(function(){opened(n);},0);});});}).observe(document.body,{childList:true});
 [].forEach.call(sec.querySelectorAll('.gb'),function(gb){var hd=gb.querySelector('.ghead'),g=gid(gb);if(!hd||(!HOW[g]&&g!=='crn'))return;if(hd.querySelector('.ghq'))return;
  var q=el('button','ghq','?');q.type='button';q.setAttribute('aria-label','How to play');q.title='How to play';
@@ -6795,4 +6799,203 @@ watch('g-mem','p.gsub',function(s,root){if(!/^Done in/.test(s))return null;var n
 <style id="chipwrap">.gchips{flex-wrap:wrap!important;overflow-x:visible!important}.gchips .gchip{flex:0 0 auto}</style>
 <style id="navwrap">.navlinks{flex-wrap:wrap!important;overflow-x:visible!important}</style>
 <style id="drivecss">.warnbox{display:flex;flex-direction:column;gap:2px;background:var(--card);border:2px solid #e0a100;border-left-width:8px;border-radius:14px;padding:14px 16px;margin:0 0 6px}.warnbox b{font-family:var(--display);font-size:1.15rem;color:var(--ink)}.warnbox span{color:var(--ink)}a.warnlink{display:flex;flex-direction:column;gap:4px;text-decoration:none;background:var(--card);color:var(--ink)!important;border:2px solid #e0a100;border-left-width:8px;border-radius:14px;padding:14px 16px;margin:0 0 16px}a.warnlink b{font-family:var(--display);font-size:1.1rem;color:var(--ink)!important}a.warnlink span{color:var(--ink)!important;font-weight:400}a.warnlink em{font-style:normal;font-weight:800;color:var(--navy-t)}#drive-safe{--tone:var(--red);--tone-t:var(--red-t)}</style>
+<style id="piccss">
+html.gplay:active,html.gplay:active body{transform:none!important;box-shadow:none!important}
+.pxcard{background:var(--card);color:var(--ink);border:2px solid var(--tone);border-radius:18px;padding:10px 8px 14px;max-width:760px;margin:0 auto}
+.gp[data-g=pic]{--tone:#0e6477;--tone-t:var(--sea-t)} .gtile[data-g=pic]{--tone:#1d5c96}
+#g-pic{--tone:#0e6477;--tone-t:var(--sea-t)}
+.pxsm{background:var(--card)!important;color:var(--tone-t)!important;border:2px solid var(--tone)!important;border-radius:999px!important;font:800 .95rem var(--text)!important;height:44px;box-shadow:none!important;cursor:pointer}
+.pxtop{display:flex;flex-direction:column;align-items:center;gap:8px;margin:6px 0}
+.pxlv{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.pxl{display:flex;flex-direction:column;align-items:center;gap:0;min-width:84px;padding:6px 14px;border:2px solid var(--tone);border-radius:14px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer;line-height:1.15}
+.pxl b{font-family:var(--display);font-size:1.05rem}.pxl small{font-size:.74rem;color:var(--muted)}
+.pxl.on{background:var(--tone);color:#fff}.pxl.on small{color:#fff;opacity:.9}
+.pxchips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.pxn{min-width:44px;height:44px;border-radius:50%;border:2px solid var(--tone);background:var(--card);color:var(--ink);font:800 .95rem var(--text);cursor:pointer;padding:0}
+.pxn.on{background:var(--gorse);border-color:var(--gorse-ink);color:var(--gorse-ink)}
+.pxn.done{background:color-mix(in srgb,var(--moor) 30%,var(--card));border-color:var(--moor)}
+.pxn.done.on{background:var(--moor);color:#fff}
+.pxbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:6px 0}
+.pxtime{font-family:var(--display);font-weight:800;font-size:1.2rem;color:var(--tone-t);min-width:52px;text-align:center}
+.pxm{height:44px;padding:0 14px;border-radius:999px;border:2px solid var(--tone);background:var(--card);color:var(--ink);font:800 .95rem var(--text);cursor:pointer}
+.pxm.on{background:var(--tone);color:#fff}
+.pxsm{margin:0!important;padding:8px 14px!important;font-size:.9rem!important}
+.pxhelp{margin:4px auto 0;max-width:46ch;text-align:center;font-size:.85rem;color:var(--muted)}
+.pxwrap{display:flex;justify-content:center;width:100%;overflow:visible}
+.pxboard{display:grid;grid-template-columns:auto repeat(var(--n),var(--cs));grid-template-rows:auto repeat(var(--n),var(--cs));touch-action:none;user-select:none;-webkit-user-select:none;margin:10px auto;--cs:30px;--fs:13px}
+.pxcc{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font:800 var(--fs)/1.2 var(--text);color:var(--ink);padding-bottom:4px}
+.pxrc{display:flex;justify-content:flex-end;align-items:center;gap:calc(var(--cs)*.22);padding-right:7px;font:800 var(--fs) var(--text);color:var(--ink)}
+.pxcc.ok,.pxrc.ok{opacity:.35}
+.pxc{width:var(--cs);height:var(--cs);box-sizing:border-box;border:1px solid color-mix(in srgb,var(--ink) 32%,transparent);background:var(--card);position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pxc.c5{border-right:2px solid var(--ink)}.pxc.r5{border-bottom:2px solid var(--ink)}
+.pxc.f{background:var(--navy-t)}
+.pxc.x::after{content:"\2715";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 calc(var(--cs)*.55) var(--text);color:color-mix(in srgb,var(--ink) 55%,transparent)}
+.pxc:focus-visible{outline:3px solid var(--gorse);outline-offset:-2px;z-index:2}
+.pxc.hl{box-shadow:inset 0 0 0 3px var(--gorse)}
+.pxboard.won .pxc.f{background:var(--pc);border-color:var(--pc)}
+.pxboard.won .pxc{cursor:default}
+@media (prefers-reduced-motion:no-preference){.pxboard.won .pxc.f{transition:background .5s}}
+</style>
+<!--picjs-->
+<script id="picjs">
+(function(){
+var gb=document.getElementById('g-pic');if(!gb)return;
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){}return null;}
+function del(k){try{localStorage.removeItem(k);}catch(e){}}
+function el(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!==undefined)n.textContent=x;return n;}
+var SETS={"5":[{"n":"Lighthouse","a":["..#..",".###.","..#..",".###.","#####"],"c":"#b23a1f","f":"Berry Head at Brixham, Start Point and Hartland Point are among Devon's lighthouses."},{"n":"Sailing boat","a":["...#.","..##.",".###.","#####","#####"],"c":"#1d5c96","f":"Brixham is known for its harbour and its traditional sailing trawlers."},{"n":"Anchor","a":["..#..",".###.","..#..","#.#.#",".###."],"c":"#1b3a63","f":"Dartmouth and Plymouth both have long naval histories."},{"n":"Dartmoor tor","a":["..#..",".###.","#####","#####","#####"],"c":"#2f6a3a","f":"Dartmoor is dotted with granite tors, such as Haytor."},{"n":"Heart","a":[".#.#.","#####","#####",".###.","..#.."],"c":"#a82f67","f":"Devon has both a north coast and a south coast."},{"n":"Palm tree","a":[".###.","#.#.#","..#..","..#..",".###."],"c":"#2f8f5b","f":"Torquay is nicknamed the English Riviera, and its palm trees are part of the look."},{"n":"Sun","a":["#.#.#",".###.","#####",".###.","#.#.#"],"c":"#e0a100","f":"A Devon beach day: check the tide times before you go."}],"7":[{"n":"Lighthouse","a":["...#...","..###..","...#...","..###..","..###..",".#####.",".#####."],"c":"#b23a1f","f":"Hartland Point lighthouse stands on a dramatic North Devon headland."},{"n":"Sailing boat","a":["...#...","..###..",".#####.","...#...","#######",".#####.","..###.."],"c":"#1d5c96","f":"Dartmouth hosts a famous annual Royal Regatta."},{"n":"Crab","a":["#.....#","#.#.#.#","#######",".#####.","#######",".#.#.#.","#.....#"],"c":"#d8382b","f":"Fresh crab is a Devon seafood favourite."},{"n":"Cuppa","a":[".......","#######","#######","#####.#","#####.#",".###.#.","..###.."],"c":"#a82f67","f":"A Devon cream tea: a split scone with clotted cream and jam. The Devon way is cream first, then jam."},{"n":"Fish","a":[".......",".###...","#####.#","#######","#####.#",".###...","......."],"c":"#0e6477","f":"Brixham is one of England's most important fishing ports."},{"n":"Dartmoor tor","a":["...#...","..###..",".#####.","#######","#######","#######","#######"],"c":"#2f6a3a","f":"Haytor, near Ilsington, is one of Dartmoor's best-known tors."}],"10":[{"n":"Lighthouse","a":["....##....","...####...","..######..","....##....","...#..#...","...####...","...#..#...","..######..","..######..",".########."],"c":"#b23a1f","f":"Start Point lighthouse sits on a rocky headland in the South Hams."},{"n":"Sailing boat","a":["....#.....","...##.....","...###....","..####....","..#####...",".######...","....#.....","##########",".########.","..######.."],"c":"#1d5c96","f":"Traditional Brixham trawlers are still sailed today."},{"n":"Dartmoor tor","a":["..........","......##..",".....####.","...######.","..########",".#########","##########","##########","##########","##########"],"c":"#2f6a3a","f":"Dartmoor is a National Park, famous for its granite tors and free-roaming ponies."},{"n":"Crab","a":["#........#","##......##","#.#.##.#.#","#.######.#",".########.","##########",".########.","..##.##...","..#....#..","..#....#.."],"c":"#d8382b","f":"Look out for crab pots stacked on the quays at Devon harbours."},{"n":"Anchor","a":["....##....","...#..#...","....##....",".########.","....##....","....##....","#...##...#","##..##..##",".###..###.","..######.."],"c":"#1b3a63","f":"Plymouth's Mayflower Steps mark where the Pilgrims set sail in 1620."},{"n":"Cottage","a":["...##.....","...##..##.","..####.##.",".#########","##########",".#.####.#.",".#.#..#.#.",".#.#..#.#.",".#.####.#.",".########."],"c":"#b5482d","f":"Thatched cottages are a classic sight in Devon villages."},{"n":"Fish","a":["..........","....###...","..#######.","##########","#.########","##########","..#######.","....###...","..........",".........."],"c":"#0e6477","f":"Fish and chips by the harbour is a Devon holiday tradition."}]};
+var LV=[[5,'Easy','5×5'],[7,'Medium','7×7'],[10,'Hard','10×10']];
+var PTS={5:15,7:25,10:40};
+var size=5,idx=0,n=5,grid=[],sol=[],rc=[],cc=[],hints=0,secs=0,won=false,mode=1,drag=null,tm=null;
+var top,lvRow,chipRow,bar,timerEl,help,wrap,board,fillB,crossB;
+function solvedList(){try{return JSON.parse(store('picSolved')||'[]')||[];}catch(e){return [];}}
+function pid(s,i){return s+'-'+i;}
+function isSolved(s,i){return solvedList().indexOf(pid(s,i))>-1;}
+function runs(line){var r=[],c=0;for(var i=0;i<line.length;i++){if(line[i]){c++;}else if(c){r.push(c);c=0;}}if(c)r.push(c);return r.length?r:[0];}
+function same(a,b){if(a.length!==b.length)return false;for(var i=0;i<a.length;i++)if(a[i]!==b[i])return false;return true;}
+function fmt(s){var m=Math.floor(s/60),x=s%60;return m+':'+(x<10?'0':'')+x;}
+function build(){
+ var oc=gb.querySelector('.pxcard');if(oc)oc.remove();var card=el('div','pxcard');gb.appendChild(card);
+ top=el('div','pxtop');lvRow=el('div','pxlv');lvRow.setAttribute('role','group');lvRow.setAttribute('aria-label','Difficulty');
+ LV.forEach(function(l){var b=el('button','pxl');b.type='button';b.dataset.s=l[0];b.appendChild(el('b','',l[2]));b.appendChild(el('small','',l[1]));b.addEventListener('click',function(){pick(l[0],firstOpen(l[0]));});lvRow.appendChild(b);});
+ top.appendChild(lvRow);
+ chipRow=el('div','pxchips');chipRow.setAttribute('role','group');chipRow.setAttribute('aria-label','Pick a puzzle');top.appendChild(chipRow);
+ card.appendChild(top);
+ bar=el('div','pxbar');
+ timerEl=el('span','pxtime','0:00');bar.appendChild(timerEl);
+ fillB=el('button','pxm on','■ Fill');fillB.type='button';fillB.setAttribute('aria-pressed','true');
+ crossB=el('button','pxm','✕ Cross');crossB.type='button';crossB.setAttribute('aria-pressed','false');
+ fillB.addEventListener('click',function(){setMode(1);});crossB.addEventListener('click',function(){setMode(2);});
+ var hb=el('button','gnext gghost pxsm','Hint');hb.type='button';hb.addEventListener('click',hint);
+ var rb=el('button','gnext gghost pxsm','Reset');rb.type='button';rb.addEventListener('click',reset);
+ bar.appendChild(fillB);bar.appendChild(crossB);bar.appendChild(hb);bar.appendChild(rb);card.appendChild(bar);
+ help=el('p','pxhelp','Numbers show runs of filled squares in that row or column. “3 1” means three squares, a gap, then one. Tap or drag to fill.');card.appendChild(help);
+ wrap=el('div','pxwrap');card.appendChild(wrap);
+}
+function setMode(m){mode=m;fillB.classList.toggle('on',m===1);crossB.classList.toggle('on',m===2);fillB.setAttribute('aria-pressed',m===1);crossB.setAttribute('aria-pressed',m===2);}
+function firstOpen(s){var l=SETS[s];for(var i=0;i<l.length;i++)if(!isSolved(s,i))return i;return 0;}
+function pick(s,i){
+ size=s;idx=i;n=s;var P=SETS[s][i];sol=[];P.a.forEach(function(r){for(var k=0;k<r.length;k++)sol.push(r.charAt(k)==='#'?1:0);});
+ rc=[];cc=[];for(var r=0;r<n;r++)rc.push(runs(sol.slice(r*n,r*n+n)));
+ for(var c=0;c<n;c++){var col=[];for(var r2=0;r2<n;r2++)col.push(sol[r2*n+c]);cc.push(runs(col));}
+ grid=[];for(var k=0;k<n*n;k++)grid.push(0);
+ var sv=store('picS-'+pid(s,i));if(sv&&sv.length===n*n){for(var q=0;q<n*n;q++)grid[q]=+sv.charAt(q)||0;}
+ hints=+(store('picH-'+pid(s,i))||0);secs=+(store('picT-'+pid(s,i))||0);won=false;
+ store('picLast',pid(s,i));
+ [].forEach.call(lvRow.children,function(b){b.classList.toggle('on',+b.dataset.s===s);});
+ chipRow.textContent='';
+ SETS[s].forEach(function(p,j){var b=el('button','pxn'+(j===i?' on':'')+(isSolved(s,j)?' done':''),isSolved(s,j)?'✓':String(j+1));b.type='button';b.setAttribute('aria-label','Puzzle '+(j+1)+(isSolved(s,j)?', solved':''));b.addEventListener('click',function(){pick(s,j);});chipRow.appendChild(b);});
+ draw();
+}
+function draw(){
+ wrap.textContent='';
+ board=el('div','pxboard');board.style.setProperty('--n',n);board.setAttribute('role','grid');board.setAttribute('aria-label','Picross grid '+n+' by '+n);
+ board.appendChild(el('div','pxcorner'));
+ for(var c=0;c<n;c++){var cl=el('div','pxcc');cl.dataset.c=c;cc[c].forEach(function(v){cl.appendChild(el('span','',String(v)));});board.appendChild(cl);}
+ for(var r=0;r<n;r++){
+  var rl=el('div','pxrc');rl.dataset.r=r;rc[r].forEach(function(v){rl.appendChild(el('span','',String(v)));});board.appendChild(rl);
+  for(var c2=0;c2<n;c2++){var i=r*n+c2;var cell=el('div','pxc'+((c2%5===4&&c2<n-1&&n>5)?' c5':'')+((r%5===4&&r<n-1&&n>5)?' r5':''));cell.dataset.i=i;cell.setAttribute('role','gridcell');cell.setAttribute('tabindex',i===0?'0':'-1');cell.setAttribute('aria-label','Row '+(r+1)+', column '+(c2+1));board.appendChild(cell);}
+ }
+ wrap.appendChild(board);
+ for(var k=0;k<n*n;k++)paint(k);
+ clueState();size_();
+ board.addEventListener('pointerdown',down);board.addEventListener('pointermove',move);board.addEventListener('pointerup',up);board.addEventListener('pointercancel',up);
+ board.addEventListener('keydown',key);
+ start();
+ if(check(true))finish(true);
+}
+function cellEl(i){return board.querySelector('.pxc[data-i="'+i+'"]');}
+function paint(i){var c=cellEl(i);if(!c)return;c.classList.toggle('f',grid[i]===1);c.classList.toggle('x',grid[i]===2);c.setAttribute('aria-label','Row '+(Math.floor(i/n)+1)+', column '+(i%n+1)+(grid[i]===1?', filled':grid[i]===2?', crossed':', empty'));}
+function size_(){
+ var rcMax=1,ccMax=1;rc.forEach(function(a){if(a.length>rcMax)rcMax=a.length;});cc.forEach(function(a){if(a.length>ccMax)ccMax=a.length;});
+ var host=gb.classList.contains('fsplay')?gb:gb;
+ var W=Math.min(host.clientWidth||wrap.clientWidth||window.innerWidth||320,720)-8;
+ var H=(window.innerHeight||700)-(gb.classList.contains('fsplay')?300:260);
+ var cw=W/(n+0.62*rcMax+0.4),ch=H/(n+0.95*ccMax);
+ var cs=Math.floor(Math.max(18,Math.min(cw,ch,52)));
+ board.style.setProperty('--cs',cs+'px');board.style.setProperty('--fs',Math.max(11,Math.round(cs*0.46))+'px');
+}
+function clueState(){
+ for(var r=0;r<n;r++){var line=[];for(var c=0;c<n;c++)line.push(grid[r*n+c]===1?1:0);var e=board.querySelector('.pxrc[data-r="'+r+'"]');if(e)e.classList.toggle('ok',same(runs(line),rc[r]));}
+ for(var c2=0;c2<n;c2++){var l2=[];for(var r2=0;r2<n;r2++)l2.push(grid[r2*n+c2]===1?1:0);var e2=board.querySelector('.pxcc[data-c="'+c2+'"]');if(e2)e2.classList.toggle('ok',same(runs(l2),cc[c2]));}
+}
+function save(){var s='';for(var i=0;i<grid.length;i++)s+=grid[i];store('picS-'+pid(size,idx),s);store('picT-'+pid(size,idx),String(secs));store('picH-'+pid(size,idx),String(hints));}
+function check(quiet){
+ for(var r=0;r<n;r++){var line=[];for(var c=0;c<n;c++)line.push(grid[r*n+c]===1?1:0);if(!same(runs(line),rc[r]))return false;}
+ for(var c2=0;c2<n;c2++){var l2=[];for(var r2=0;r2<n;r2++)l2.push(grid[r2*n+c2]===1?1:0);if(!same(runs(l2),cc[c2]))return false;}
+ return true;
+}
+function set(i,v){if(grid[i]===v)return;grid[i]=v;paint(i);}
+function cellAt(x,y){var e=document.elementFromPoint(x,y);return e&&e.closest?e.closest('.pxc'):null;}
+function down(e){
+ if(won)return;var c=e.target.closest?e.target.closest('.pxc'):null;if(!c)return;e.preventDefault();
+ var i=+c.dataset.i,cur=grid[i];var paintV=(cur===mode)?0:mode;var rr=c.getBoundingClientRect();
+ drag={v:paintV,id:e.pointerId,r0:Math.floor(i/n),c0:i%n,x0:e.clientX,y0:e.clientY,ox:e.clientX-rr.left,oy:e.clientY-rr.top,cs:rr.width||30,last:i};
+ try{board.setPointerCapture(e.pointerId);}catch(x){}
+ set(i,paintV);
+}
+function move(e){
+ if(!drag||won)return;
+ var col=drag.c0+Math.floor((drag.ox+(e.clientX-drag.x0))/drag.cs),row=drag.r0+Math.floor((drag.oy+(e.clientY-drag.y0))/drag.cs);
+ col=Math.max(0,Math.min(n-1,col));row=Math.max(0,Math.min(n-1,row));
+ var i=row*n+col;if(i===drag.last)return;
+ // fill every cell along the straight path so fast drags do not skip squares
+ var r1=Math.floor(drag.last/n),c1=drag.last%n,steps=Math.max(Math.abs(row-r1),Math.abs(col-c1));
+ for(var k=1;k<=steps;k++){var rr2=Math.round(r1+(row-r1)*k/steps),cc2=Math.round(c1+(col-c1)*k/steps),j=rr2*n+cc2,cur=grid[j];
+  if(drag.v===0){if(cur===mode)set(j,0);}else{if(cur===0)set(j,drag.v);}}
+ drag.last=i;
+}
+function up(e){if(!drag)return;drag=null;try{board.releasePointerCapture(e.pointerId);}catch(x){}after();}
+function after(){clueState();save();if(check())finish(false);}
+function key(e){
+ var c=e.target.closest?e.target.closest('.pxc'):null;if(!c)return;var i=+c.dataset.i;
+ if(e.key==='Enter'||e.key===' '){e.preventDefault();if(won)return;set(i,grid[i]===mode?0:mode);after();return;}
+ var d={ArrowLeft:-1,ArrowRight:1,ArrowUp:-n,ArrowDown:n}[e.key];if(d===undefined)return;e.preventDefault();
+ var j=i+d;if((e.key==='ArrowLeft'&&i%n===0)||(e.key==='ArrowRight'&&i%n===n-1)||j<0||j>=n*n)return;
+ var t=cellEl(j);if(t){c.setAttribute('tabindex','-1');t.setAttribute('tabindex','0');t.focus();}
+}
+function start(){if(tm)clearInterval(tm);timerEl.textContent=fmt(secs);tm=setInterval(function(){if(won||!gb.offsetParent)return;secs++;timerEl.textContent=fmt(secs);if(secs%5===0)save();},1000);}
+function hint(){
+ if(won)return;var bad=[];for(var i=0;i<n*n;i++){var want=sol[i]?1:2;if(grid[i]!==want&&!(want===2&&grid[i]===0&&false))bad.push(i);}
+ // prefer fixing wrong marks, then reveal a filled square
+ var wrong=bad.filter(function(i){return grid[i]!==0&&((grid[i]===1)!==(sol[i]===1));});
+ var pool=wrong.length?wrong:bad.filter(function(i){return sol[i]===1&&grid[i]===0;});
+ if(!pool.length)pool=bad;if(!pool.length)return;
+ var i2=pool[Math.floor(Math.random()*pool.length)];set(i2,sol[i2]?1:2);hints++;
+ var c=cellEl(i2);if(c){c.classList.add('hl');setTimeout(function(){c.classList.remove('hl');},900);}
+ after();
+}
+function reset(){if(won)return;grid=grid.map(function(){return 0;});for(var i=0;i<n*n;i++)paint(i);clueState();save();}
+function finish(restored){
+ won=true;board.classList.add('won');var P=SETS[size][idx];board.style.setProperty('--pc',P.c);
+ clearInterval(tm);tm=null;
+ for(var i=0;i<n*n;i++)if(grid[i]===2){grid[i]=0;paint(i);}
+ del('picS-'+pid(size,idx));
+ if(restored)return;
+ var list=solvedList(),id=pid(size,idx),first=list.indexOf(id)<0,txt='';
+ var bk='picBest-'+id,bs=+(store(bk)||0);
+ if(!hints&&(!bs||secs<bs)){store(bk,String(secs));txt+='New best time: '+fmt(secs)+'. ';}else if(!hints)txt+='Time: '+fmt(secs)+'. ';
+ if(first){list.push(id);store('picSolved',JSON.stringify(list));
+  var pts=Math.max(5,PTS[size]-hints*3);
+  if(window.DP&&window.DP.award)txt+=window.DP.award('pic',pts).text+'.';
+ }else txt+='You have already earned points for this one.';
+ [].forEach.call(chipRow.children,function(b,j){if(isSolved(size,j)){b.classList.add('done');b.textContent='✓';}});
+ var next=-1,l=SETS[size];for(var j=1;j<=l.length;j++){var k=(idx+j)%l.length;if(!isSolved(size,k)){next=k;break;}}
+ var lbl,fn;
+ if(next>-1){lbl='Next puzzle';fn=function(){pick(size,next);};}
+ else if(size<10){var ns=size===5?7:10;lbl='Try '+ns+'×'+ns;fn=function(){pick(ns,firstOpen(ns));};}
+ else{lbl='';fn=null;}
+ var extra=next<0?(size<10?' Level complete! Ready for a bigger grid?':' You have solved every puzzle. New ones coming soon!'):'';
+ setTimeout(function(){if(window.__dvPop)window.__dvPop('🖼️','It’s a '+P.n.toLowerCase()+'!',P.f+' '+txt+extra,lbl,fn);},900);
+}
+function layout(){if(board&&gb.offsetParent!==null)size_();}
+window.addEventListener('resize',layout);window.addEventListener('orientationchange',function(){setTimeout(layout,250);});
+if(window.ResizeObserver)new ResizeObserver(layout).observe(gb);
+document.addEventListener('visibilitychange',function(){if(document.hidden)save();});
+build();
+var last=(store('picLast')||'').split('-'),s0=+last[0],i0=+last[1];
+if(SETS[s0]&&SETS[s0][i0])pick(s0,i0);else pick(5,firstOpen(5));
+})();
+</script>
+
 </body></html>
