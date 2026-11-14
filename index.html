@@ -6854,6 +6854,7 @@ html.gplay:active,html.gplay:active body{transform:none!important;box-shadow:non
 .pxcc{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font:800 var(--fs)/1.2 var(--text);color:var(--ink);padding-bottom:4px}
 .pxrc{display:flex;justify-content:flex-end;align-items:center;gap:calc(var(--cs)*.22);padding-right:7px;font:800 var(--fs) var(--text);color:var(--ink)}
 .pxcc.ok,.pxrc.ok{opacity:.35}
+.pxboard *{touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .pxc{width:var(--cs);height:var(--cs);box-sizing:border-box;border:1px solid color-mix(in srgb,var(--ink) 32%,transparent);background:var(--card);position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .pxc.c5{border-right:2px solid var(--ink)}.pxc.r5{border-bottom:2px solid var(--ink)}
 .pxc.f{background:var(--navy-t)}
@@ -6929,6 +6930,8 @@ function draw(){
  for(var k=0;k<n*n;k++)paint(k);
  clueState();size_();
  board.addEventListener('pointerdown',down);board.addEventListener('pointermove',move);board.addEventListener('pointerup',up);board.addEventListener('pointercancel',up);
+ board.addEventListener('click',function(e){if(won||Date.now()-lastBegin<800)return;var c=e.target.closest?e.target.closest('.pxc'):null;if(!c)return;begin(c,e.clientX,e.clientY,'c');endDrag();});
+ board.addEventListener('touchstart',tstart,{passive:false});board.addEventListener('touchmove',tmove,{passive:false});board.addEventListener('touchend',tend,{passive:false});board.addEventListener('touchcancel',tend,{passive:false});
  board.addEventListener('keydown',key);
  start();
  if(check(true))finish(true);
@@ -6957,25 +6960,31 @@ function check(quiet){
 }
 function set(i,v){if(grid[i]===v)return;grid[i]=v;paint(i);}
 function cellAt(x,y){var e=document.elementFromPoint(x,y);return e&&e.closest?e.closest('.pxc'):null;}
-function down(e){
- if(won)return;var c=e.target.closest?e.target.closest('.pxc'):null;if(!c)return;e.preventDefault();
- var i=+c.dataset.i,cur=grid[i];var paintV=(cur===mode)?0:mode;var rr=c.getBoundingClientRect();
- drag={v:paintV,id:e.pointerId,r0:Math.floor(i/n),c0:i%n,x0:e.clientX,y0:e.clientY,ox:e.clientX-rr.left,oy:e.clientY-rr.top,cs:rr.width||30,last:i};
- try{board.setPointerCapture(e.pointerId);}catch(x){}
+var lastBegin=0;
+function begin(c,x,y,pid){
+ if(won||!c)return;lastBegin=Date.now();var i=+c.dataset.i,cur=grid[i];var paintV=(cur===mode)?0:mode;var rr=c.getBoundingClientRect();
+ drag={v:paintV,id:pid,r0:Math.floor(i/n),c0:i%n,x0:x,y0:y,ox:x-rr.left,oy:y-rr.top,cs:rr.width||30,last:i};
  set(i,paintV);
 }
-function move(e){
+function dragTo(x,y){
  if(!drag||won)return;
- var col=drag.c0+Math.floor((drag.ox+(e.clientX-drag.x0))/drag.cs),row=drag.r0+Math.floor((drag.oy+(e.clientY-drag.y0))/drag.cs);
+ var col=drag.c0+Math.floor((drag.ox+(x-drag.x0))/drag.cs),row=drag.r0+Math.floor((drag.oy+(y-drag.y0))/drag.cs);
  col=Math.max(0,Math.min(n-1,col));row=Math.max(0,Math.min(n-1,row));
  var i=row*n+col;if(i===drag.last)return;
- // fill every cell along the straight path so fast drags do not skip squares
  var r1=Math.floor(drag.last/n),c1=drag.last%n,steps=Math.max(Math.abs(row-r1),Math.abs(col-c1));
  for(var k=1;k<=steps;k++){var rr2=Math.round(r1+(row-r1)*k/steps),cc2=Math.round(c1+(col-c1)*k/steps),j=rr2*n+cc2,cur=grid[j];
   if(drag.v===0){if(cur===mode)set(j,0);}else{if(cur===0)set(j,drag.v);}}
  drag.last=i;
 }
-function up(e){if(!drag)return;drag=null;try{board.releasePointerCapture(e.pointerId);}catch(x){}after();}
+function endDrag(){if(!drag)return;drag=null;after();}
+/* mouse and pen */
+function down(e){if(e.pointerType==='touch'||won)return;var c=e.target.closest?e.target.closest('.pxc'):null;if(!c)return;e.preventDefault();try{board.setPointerCapture(e.pointerId);}catch(x){}begin(c,e.clientX,e.clientY,e.pointerId);}
+function move(e){if(e.pointerType==='touch')return;dragTo(e.clientX,e.clientY);}
+function up(e){if(e.pointerType==='touch')return;try{board.releasePointerCapture(e.pointerId);}catch(x){}endDrag();}
+/* fingers: touch events work the same on every phone and tablet */
+function tstart(e){if(won||!e.touches||!e.touches.length)return;var t=e.touches[0];var c=document.elementFromPoint(t.clientX,t.clientY);c=c&&c.closest?c.closest('.pxc'):null;if(!c)return;e.preventDefault();begin(c,t.clientX,t.clientY,'t');}
+function tmove(e){if(!drag||!e.touches||!e.touches.length)return;e.preventDefault();dragTo(e.touches[0].clientX,e.touches[0].clientY);}
+function tend(e){if(!drag)return;if(e.cancelable)e.preventDefault();endDrag();}
 function after(){clueState();save();if(check())finish(false);else if(tut)tutUpdate();}
 function key(e){
  var c=e.target.closest?e.target.closest('.pxc'):null;if(!c)return;var i=+c.dataset.i;
