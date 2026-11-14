@@ -6940,7 +6940,7 @@ function size_(){
  var host=gb.classList.contains('fsplay')?gb:gb;
  var W=Math.min(host.clientWidth||wrap.clientWidth||window.innerWidth||320,720)-8;
  var H=(window.innerHeight||700)-(gb.classList.contains('fsplay')?300:260);
- if(tut&&tbox&&tbox.offsetHeight)H=(window.innerHeight||700)-84-tbox.offsetHeight-48;
+ if(tut)H=1e5;
  var cw=W/(n+0.62*rcMax+0.4),ch=H/(n+0.95*ccMax);
  var cs=Math.floor(Math.max(18,Math.min(cw,ch,52)));
  board.style.setProperty('--cs',cs+'px');board.style.setProperty('--fs',Math.max(11,Math.round(cs*0.46))+'px');
@@ -7034,7 +7034,7 @@ var TS=[
  {t:'You solved it: a lighthouse! 🎉',m:'You are a natural! Real puzzles grow up to 10×10, and every picture you uncover earns points and keeps your daily streak going. A few tips:'}
 ];
 function stepDone(k){var S=TS[k];var a=(S.cells||[]).every(function(i){return grid[i]===1;});var b=(S.xcells||[]).every(function(i){return grid[i]===2;});return a&&b;}
-function tutEnd(){tut=false;demoBusy=false;if(tbox){tbox.remove();tbox=null;}if(card)card.classList.remove('tutmode');setMode(1);store('picTutDone','1');}
+function tutEnd(){tut=false;demoBusy=false;if(tbox){tbox.remove();tbox=null;}if(wrap)wrap.style.display='';if(card)card.classList.remove('tutmode');setMode(1);store('picTutDone','1');}
 function tutorial(){
  if(!card||!lvRow)return;
  tut=true;tstep=0;size=5;idx=-1;n=5;sol=[];TUT.a.forEach(function(r){for(var k=0;k<r.length;k++)sol.push(r.charAt(k)==='#'?1:0);});
@@ -7054,7 +7054,7 @@ function exRow(clue,pat,cap){
  var r=el('div','er');var ecs=el('span','ec');clue.split(' ').forEach(function(t){ecs.appendChild(el('span','',t));});r.appendChild(ecs);var sq=el('span','es');for(var k=0;k<pat.length;k++)sq.appendChild(el('i',pat.charAt(k)==='1'?'on':''));r.appendChild(sq);r.appendChild(el('span','ecap',cap));return r;
 }
 function tutShow(){
- var S=TS[tstep];if(!tbox){tbox=el('div','pxtut');card.insertBefore(tbox,wrap);}tbox.textContent='';
+ var S=TS[tstep];if(!tbox){tbox=el('div','pxtut');}if(tbox.parentNode)tbox.parentNode.removeChild(tbox);if(tstep===0){wrap.style.display='none';card.insertBefore(tbox,wrap);}else{wrap.style.display='';card.appendChild(tbox);}tbox.textContent='';
  setMode(S.xcells?2:1);
  tbox.appendChild(el('small','',tstep===0?'Tutorial':tstep<TEND?'Tutorial: step '+tstep+' of 4':'Tutorial complete'));
  tbox.appendChild(el('b','',S.t));
@@ -7077,7 +7077,7 @@ function tutShow(){
   tbox.appendChild(rw2);
  }
  tutUpdate();size_();
- setTimeout(function(){if(tbox&&tbox.scrollIntoView){try{tbox.scrollIntoView({block:'start',behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)?'auto':'smooth'});}catch(e){tbox.scrollIntoView(true);}}},80);
+ setTimeout(function(){if(tbox&&tbox.scrollIntoView){try{var tg=(tstep>0&&wrap)?wrap:tbox;tg.style.scrollMarginTop='84px';tg.scrollIntoView({block:'start',behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)?'auto':'smooth'});}catch(e){tbox.scrollIntoView(true);}}},80);
 }
 function tutUpdate(){
  if(!tut||!board)return;var S=TS[tstep];
