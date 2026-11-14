@@ -6772,7 +6772,7 @@ function dvStreak(){var s=window.DP&&window.DP.streak?window.DP.streak():0;retur
 window.__dvConf=dvConf;window.__dvStreak=dvStreak;
 function pop(icon,title,text,btnLabel,btnFn){var old=document.getElementById('dvresult');if(old)old.remove();
  var o=el('div','crwinov');o.id='dvresult';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');o.setAttribute('aria-label',title);
- var c=el('div','crwinc');var ic=el('div','crwini');ic.style.fontSize='2.4rem';ic.style.display='flex';ic.style.alignItems='center';ic.style.justifyContent='center';ic.textContent=icon;c.appendChild(ic);c.appendChild(el('h3','crwint',title));c.appendChild(el('p','crwinp',text));var sk=dvStreak();if(sk)c.appendChild(el('p','crwstk',sk));
+ var c=el('div','crwinc');var ic=el('div','crwini');ic.style.fontSize='2.4rem';ic.style.display='flex';ic.style.alignItems='center';ic.style.justifyContent='center';if(icon&&icon.nodeType){ic.style.width='auto';ic.style.height='auto';ic.style.background='none';ic.style.boxShadow='none';ic.style.borderRadius='0';ic.style.border='0';ic.style.outline='0';ic.style.margin='0 auto 10px';ic.style.padding='6px';ic.appendChild(icon);}else ic.textContent=icon;c.appendChild(ic);c.appendChild(el('h3','crwint',title));c.appendChild(el('p','crwinp',text));var sk=dvStreak();if(sk)c.appendChild(el('p','crwstk',sk));
  var row=el('div','crbtns');function close(){o.remove();document.removeEventListener('keydown',esc);}function esc(e){if(e.key==='Escape')close();}
  if(btnLabel){var b=el('button','gnext',btnLabel);b.type='button';b.addEventListener('click',function(){close();if(btnFn)btnFn();});row.appendChild(b);}
  var x=el('button','gnext gghost','Close');x.type='button';x.addEventListener('click',close);row.appendChild(x);c.appendChild(row);o.appendChild(c);dvConf(o);
@@ -6906,6 +6906,14 @@ html.gplay:active,html.gplay:active body{transform:none!important;box-shadow:non
 .pxcard.seen .pxhelp{display:none!important}
 .pxpv{padding:4px 10px!important;margin:2px auto!important}.pxpvg{width:44px!important;height:44px!important}
 .pxlearn{margin:2px auto 4px!important;padding:8px 18px!important}
+
+.pxpost{background:#fff8e6;border:3px solid #2a2017;border-radius:12px;padding:12px 12px 8px;box-shadow:0 6px 0 rgba(0,0,0,.25);transform:rotate(-2deg);text-align:center}
+.pxpostg{display:grid;width:min(44vw,170px);height:min(44vw,170px);gap:1px;background:#e5d9b8;border:2px solid #2a2017;border-radius:6px;overflow:hidden;margin:0 auto 6px}
+.pxpostg i{display:block;background:#fffdf5}
+.pxpostg i.on{animation:pxpop .5s both}
+@keyframes pxpop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.pxpost span{font:800 1.05rem var(--display);color:#2a2017;letter-spacing:.04em}
+@media (prefers-reduced-motion:reduce){.pxpostg i.on{animation:none}}
 </style>
 <!--picjs-->
 <script id="picjs">
@@ -7090,7 +7098,12 @@ function finish(restored){
  else if(size<10){var ns=size===5?7:10;lbl='Try '+ns+'×'+ns;fn=function(){pick(ns,firstOpen(ns));};}
  else{lbl='';fn=null;}
  var extra=next<0?(size<10?' Level complete! Ready for a bigger grid?':' You have solved every puzzle. New ones coming soon!'):'';
- setTimeout(function(){if(window.__dvPop)window.__dvPop('🖼️','It’s a '+P.n.toLowerCase()+'!',P.f+' '+txt+extra,lbl,fn);},900);
+ setTimeout(function(){if(window.__dvPop)window.__dvPop(postcard(P),'It’s a '+P.n.toLowerCase()+'!',P.f+' '+txt+extra,lbl,fn);},900);
+}
+function postcard(P){
+ var d=el('div','pxpost');var g=el('div','pxpostg');g.style.gridTemplateColumns='repeat('+P.a.length+',1fr)';
+ P.a.forEach(function(r,y){for(var k=0;k<r.length;k++){var c=el('i');if(r.charAt(k)==='#'){c.style.background=P.c;c.style.animationDelay=((y+k)*45)+'ms';c.className='on';}g.appendChild(c);}});
+ d.appendChild(g);d.appendChild(el('span','',P.n));return d;
 }
 function layout(){if(board&&gb.offsetParent!==null)size_();}
 window.addEventListener('resize',layout);window.addEventListener('orientationchange',function(){setTimeout(layout,250);});
