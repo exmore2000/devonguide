@@ -6914,6 +6914,10 @@ html.gplay:active,html.gplay:active body{transform:none!important;box-shadow:non
 @keyframes pxpop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
 .pxpost span{font:800 1.05rem var(--display);color:#2a2017;letter-spacing:.04em}
 @media (prefers-reduced-motion:reduce){.pxpostg i.on{animation:none}}
+.pxwin{margin:10px auto;max-width:520px;padding:12px;border:3px solid var(--moor);border-radius:16px;background:color-mix(in srgb,var(--moor) 14%,var(--card));text-align:center}
+.pxwin b{display:block;font:800 1.2rem var(--display);color:var(--moor-t);margin-bottom:8px}
+.pxwin .pxrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pxwin .gnext{margin:0}
 </style>
 <!--picjs-->
 <script id="picjs">
@@ -6958,6 +6962,7 @@ function setMode(m){mode=m;fillB.classList.toggle('on',m===1);crossB.classList.t
 function firstOpen(s){var l=SETS[s];for(var i=0;i<l.length;i++)if(!isSolved(s,i))return i;return 0;}
 function pick(s,i){
  if(tut)tutEnd();
+ var ow=card&&card.querySelector('.pxwin');if(ow)ow.remove();
  size=s;idx=i;n=s;var P=SETS[s][i];sol=[];P.a.forEach(function(r){for(var k=0;k<r.length;k++)sol.push(r.charAt(k)==='#'?1:0);});
  rc=[];cc=[];for(var r=0;r<n;r++)rc.push(runs(sol.slice(r*n,r*n+n)));
  for(var c=0;c<n;c++){var col=[];for(var r2=0;r2<n;r2++)col.push(sol[r2*n+c]);cc.push(runs(col));}
@@ -6987,7 +6992,7 @@ function draw(){
  board.addEventListener('touchstart',tstart,{passive:false});board.addEventListener('touchmove',tmove,{passive:false});board.addEventListener('touchend',tend,{passive:false});board.addEventListener('touchcancel',tend,{passive:false});
  board.addEventListener('keydown',key);
  start();
- if(check(true))finish(true);
+ if(check(true))finish(isSolved(size,idx));
 }
 function cellEl(i){return board.querySelector('.pxc[data-i="'+i+'"]');}
 function paint(i){var c=cellEl(i);if(!c)return;c.classList.toggle('f',grid[i]===1);c.classList.toggle('x',grid[i]===2);c.setAttribute('aria-label','Row '+(Math.floor(i/n)+1)+', column '+(i%n+1)+(grid[i]===1?', filled':grid[i]===2?', crossed':', empty'));}
@@ -7023,7 +7028,7 @@ function gallery(){
    t.appendChild(mg);t.appendChild(el('em','',done?p.n:'? '+(j+1)));t.addEventListener('click',function(){pick(sz,j);var cd=card;if(cd&&cd.scrollIntoView)cd.scrollIntoView({block:'start'});});g.appendChild(t);});
   row.appendChild(g);gal.appendChild(row);});
 }
-function save(){if(tut)return;var s='';for(var i=0;i<grid.length;i++)s+=grid[i];store('picS-'+pid(size,idx),s);store('picT-'+pid(size,idx),String(secs));store('picH-'+pid(size,idx),String(hints));}
+function save(){if(tut||won)return;var s='';for(var i=0;i<grid.length;i++)s+=grid[i];store('picS-'+pid(size,idx),s);store('picT-'+pid(size,idx),String(secs));store('picH-'+pid(size,idx),String(hints));}
 function check(quiet){
  for(var r=0;r<n;r++){var line=[];for(var c=0;c<n;c++)line.push(grid[r*n+c]===1?1:0);if(!same(runs(line),rc[r]))return false;}
  for(var c2=0;c2<n;c2++){var l2=[];for(var r2=0;r2<n;r2++)l2.push(grid[r2*n+c2]===1?1:0);if(!same(runs(l2),cc[c2]))return false;}
@@ -7082,7 +7087,7 @@ function finish(restored){
  clearInterval(tm);tm=null;
  for(var i=0;i<n*n;i++)if(grid[i]===2){grid[i]=0;paint(i);}
  del('picS-'+pid(size,idx));
- if(restored)return;
+ if(restored){preview();gallery();winBar();return;}
  var list=solvedList(),id=pid(size,idx),first=list.indexOf(id)<0,txt='';
  var bk='picBest-'+id,bs=+(store(bk)||0);
  if(!hints&&(!bs||secs<bs)){store(bk,String(secs));txt+='New best time: '+fmt(secs)+'. ';}else if(!hints)txt+='Time: '+fmt(secs)+'. ';
@@ -7098,7 +7103,22 @@ function finish(restored){
  else if(size<10){var ns=size===5?7:10;lbl='Try '+ns+'×'+ns;fn=function(){pick(ns,firstOpen(ns));};}
  else{lbl='';fn=null;}
  var extra=next<0?(size<10?' Level complete! Ready for a bigger grid?':' You have solved every puzzle. New ones coming soon!'):'';
+ winBar();
  setTimeout(function(){if(window.__dvPop)window.__dvPop(postcard(P),'It’s a '+P.n.toLowerCase()+'!',P.f+' '+txt+extra,lbl,fn);},900);
+}
+function winBar(){
+ var old=card.querySelector('.pxwin');if(old)old.remove();var P=SETS[size][idx];if(!P)return;
+ var b=el('div','pxwin');b.appendChild(el('b','','🎉 Solved: '+P.n+'!'));
+ var next=-1,l=SETS[size];for(var j=1;j<=l.length;j++){var k=(idx+j)%l.length;if(!isSolved(size,k)){next=k;break;}}
+ var rw=el('div','pxrow');
+ function add(t,f,ghost){var x=el('button','gnext'+(ghost?' gghost pxsm':''),t);x.type='button';x.addEventListener('click',f);rw.appendChild(x);}
+ if(next>-1)add('Next puzzle →',function(){pick(size,next);window.scrollTo(0,0);});
+ else if(size<10){var ns=size===5?7:10;add('Try '+ns+'×'+ns+' →',function(){pick(ns,firstOpen(ns));});}
+ add('Play again',function(){del('picS-'+pid(size,idx));pick(size,idx);},true);
+ add('See my gallery',function(){gal.scrollIntoView({block:'start',behavior:'smooth'});},true);
+ add('All games',function(){var bk=gb.querySelector('.gback')||document.querySelector('.gback');if(bk)bk.click();},true);
+ b.appendChild(rw);card.insertBefore(b,gal);
+ setTimeout(function(){try{b.scrollIntoView({block:'center',behavior:'smooth'});}catch(e){}},400);
 }
 function postcard(P){
  var d=el('div','pxpost');var g=el('div','pxpostg');g.style.gridTemplateColumns='repeat('+P.a.length+',1fr)';
