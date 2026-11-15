@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://justdevon.co.uk/sitemap.xml
