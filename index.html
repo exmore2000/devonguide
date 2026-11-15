@@ -4289,6 +4289,8 @@ header.hero.v2 .btn-ghost{padding:14px 30px;font-size:1.02rem;background:rgba(25
 </ul>
 <p class="seeall"><a href="#concerts-theatre">Concerts &amp; theatre venues →</a><a href="#events">All events and festivals →</a></p>
 </div></section>
+<script>window.__dvApply&&window.__dvApply("WHATSON");</script>
+
 
 <section id="events"><div class="wrap">
 <h2>Events &amp; festivals</h2>
@@ -4556,7 +4558,11 @@ header.hero.v2 .btn-ghost{padding:14px 30px;font-size:1.02rem;background:rgba(25
 <p class="note">Dates marked as 2026 are last year's timings, so expect something similar but check each event before you plan. Dates came from the English Riviera tourist board, CAMRA branch calendars, Visit South Devon, Visit Devon and Christmas market guides. Events change, sell out and get cancelled.</p>
 <div class="slot"><strong>Add your own events</strong> – a date, a place and a link for every brewery open day, farm shop event and food fair you know about.</div>
 </div></section>
+<script>window.__dvApply&&window.__dvApply("EVENTS");</script>
 
+
+<script id="newsload">(function(){var d={};try{var x=new XMLHttpRequest();x.open('GET','news.html?v='+Math.floor(Date.now()/300000),false);x.send();var t=x.responseText||'';if(x.status===200){['LOCAL','EVENTS','WHATSON'].forEach(function(k){var a=t.indexOf('<!--'+k+'-->'),b=t.indexOf('<!--/'+k+'-->');if(a>-1&&b>a)d[k]=t.slice(a+k.length+7,b);});}}catch(e){}
+window.__dvNews=d;window.__dvApply=function(k){var d=window.__dvNews||{};if(!d[k])return;try{if(k==='LOCAL'){var w=document.querySelector('#local-news .wrap');if(w)w.innerHTML=d.LOCAL;}else if(k==='WHATSON'){var w2=document.querySelector('#whats-on .wrap');if(w2)w2.innerHTML=d.WHATSON;}else if(k==='EVENTS'){var a=document.querySelector('#events .areaph');if(a){while(a.nextSibling)a.parentNode.removeChild(a.nextSibling);a.insertAdjacentHTML('afterend',d.EVENTS);}}}catch(e){}};})();</script>
 <section id="local-news"><div class="wrap">
 <h2>Local news</h2>
 <p class="sub">A short, hand-picked round-up of what is happening around Devon. Each item is a one-line summary in our own words with a link to the paper that reported it, so you can read the full story there. Every listing is free.</p>
@@ -4614,6 +4620,8 @@ header.hero.v2 .btn-ghost{padding:14px 30px;font-size:1.02rem;background:rgba(25
 </ul>
 <p class="note">This is curated by hand, not a live feed, so it can lag behind the day's news. Links go to each paper's front page, where the story will be near the top or in its news section. Outlets are listed A–Z within each area, in no ranking, and none pays to be here. </p>
 </div></section>
+<script>window.__dvApply&&window.__dvApply("LOCAL");</script>
+
 
 <section id="play-promo"><div class="wrap"><a class="promo" href="#games"><span class="pi" aria-hidden="true">🎮</span><span class="pt"><b>Games on the go</b><span>On a train, waiting for a ferry or just relaxing? Quick Devon puzzles and quizzes. Earn points and rank up. <em id="promo-ev"></em></span></span><span class="pgo">Play now &rarr;</span></a></div></section>
 
