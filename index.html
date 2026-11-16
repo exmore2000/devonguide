@@ -2834,7 +2834,7 @@ header.hero.v2 .btn-ghost{padding:14px 30px;font-size:1.02rem;background:rgba(25
 <li><b>Crab Shack, Teignmouth</b><span>Fish and seafood.</span></li>
 <li><b>Emilia, Ashburton</b><span>Italian osteria with homemade pasta; Michelin Bib Gourmand.</span></li>
 </ul>
-<div class="cat">Newton Abbot</div>
+<div class="cat">Newton Abbot: pubs and attractions</div>
 <ul class="list">
 <li><b>Highweek Village Inn</b><span>Pub listed in CAMRA guides.</span></li>
 <li><b>Maltings Taphouse &amp; Bottle Shop</b><span>Beer shop and taproom, beside Teignworthy Brewery at Tuckers Maltings.</span></li>
@@ -2847,7 +2847,7 @@ header.hero.v2 .btn-ghost{padding:14px 30px;font-size:1.02rem;background:rgba(25
 <li><b>Union Inn</b><span>Pub listed in CAMRA guides.</span></li>
 <li><b>Upside Bar Co</b><span>Bar listed by South Devon CAMRA.</span></li>
 </ul>
-<p class="note" style="margin-top:0">This group lists pubs and attractions, with The Old Rydon Inn for a meal. For restaurants, takeaways and cafes see Newton Abbot: more places to eat below. If you run or love a Newton Abbot restaurant, email us and we will add it, free.</p>
+<p class="note" style="margin-top:0">Pubs and things to see. For restaurants, takeaways and cafes, open Newton Abbot: restaurants, takeaways and cafes below. If you run or love a Newton Abbot restaurant, email us and we will add it, free.</p>
 <div class="cat">Dawlish and Cockwood</div>
 <ul class="list">
 <li><b>Anchor, Cockwood Harbour</b><span>Harbourside pub known for seafood and real ale.</span></li>
@@ -2911,7 +2911,7 @@ header.hero.v2 .btn-ghost{padding:14px 30px;font-size:1.02rem;background:rgba(25
 <p class="seeall"><b>Getting to Newton Abbot:</b> by train, it is on the main London to Penzance line, with connections to Torquay and Paignton. By bus, local services run to Exeter and Torquay. By car, take the A380 from the M5. On foot or by bike, the Templer Way runs from Haytor to Teignmouth and a cycle route passes the Town Quay.</p>
 <p class="note">Coverage is thinnest for Teignmouth, Ivybridge, Honiton and Axminster, where the sources I could reach listed few venues.</p>
 
-<div class="cat">Newton Abbot: more places to eat</div>
+<div class="cat">Newton Abbot: restaurants, takeaways and cafes</div>
 <ul class="list">
 <li><b><a href="https://www.google.com/maps/search/?api=1&amp;query=Bollywood+Spice%2C+Newton+Abbot%2C+Devon" target="_blank" rel="noopener">Bollywood Spice</a>, Newton Abbot</b><span>Indian.</span></li>
 <li><b><a href="https://www.google.com/maps/search/?api=1&amp;query=Chippies+Plaice%2C+Newton+Abbot%2C+Devon" target="_blank" rel="noopener">Chippies Plaice</a>, Newton Abbot</b><span>Fish and chips.</span></li>
@@ -6255,6 +6255,7 @@ document.querySelectorAll('section[id]').forEach(function(sec){
  if(cats.length<3&&!OPEN1[sec.id])return;
  var made=[];
  cats.forEach(function(c,i){var items=[],n=c.nextElementSibling;while(n&&!stopAt(n)){items.push(n);n=n.nextElementSibling}
+  if(n&&n.tagName==='P'&&n.classList.contains('note')&&n.getAttribute('style')&&/margin-top:\s*0/.test(n.getAttribute('style'))){items.push(n)}
   var cnt=0;items.forEach(function(x){cnt+=x.tagName==='UL'?x.querySelectorAll(':scope>li').length:0});
   var d=document.createElement('details');d.className='acc';if(OPEN1[sec.id]&&i===0)d.open=true;
   var sm=document.createElement('summary'),b=document.createElement('div');b.className='accb';
