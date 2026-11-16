@@ -796,6 +796,11 @@ html.gplay #g-tea .ctwrap{max-width:min(440px,max(230px,calc((100dvh - 190px)*.6
 .famban{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:18px 0;padding:16px 18px;border-radius:16px;border:2px solid rgba(232,85,154,.5);background:rgba(232,85,154,.1)}
 .famban b{display:block;font-size:1.1rem}.famban span{display:block;margin-top:4px;opacity:.85}
 .famact{display:flex;flex-wrap:wrap;gap:8px}.famact button{font:inherit;font-weight:700;color:inherit;padding:9px 14px;border-radius:999px;border:2px solid currentColor;background:transparent;cursor:pointer;min-height:44px}
+.regions .card{position:relative;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.regions .card .more{position:static!important}
+.regions .card .more::after{content:"";position:absolute;inset:0;border-radius:inherit;z-index:5}
+.regions .card:hover{transform:translateY(-2px)}.regions .card:active{transform:scale(.985)}
+.regions .card:focus-within{outline:3px solid var(--gorse,#3ab0e0);outline-offset:2px}
 .dvnx{margin:16px 0 6px;padding-top:12px;border-top:2px dashed rgba(120,100,60,.35);text-align:center;clear:both}
 .dvnxt{display:block;font-weight:900;margin-bottom:10px;font-size:1.05rem}
 .dvnxr{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
@@ -1590,7 +1595,6 @@ html.gplay:active,html.gplay:active body{transform:none!important;box-shadow:non
 
 
 <div class="cat">Where to stay</div>
-<p class="note">A few places to start. Hotels, B&amp;Bs, campsites and holiday parks across Plymouth and the west are in <a href="/where-to-stay/">Where to stay</a> (21 listed) and <a href="/holiday-parks/">Holiday parks</a>. Check availability and prices with each place.</p>
 <ul class="list">
 <li><b>Black River Inn, Beaworthy</b><span>Gold Pub of the Year at the 2025 Devon Tourism Awards.</span></li>
 <li><b>Libbear Barton, Shebbear</b><span>Gold for self-catering at the 2025 Devon Tourism Awards.</span></li>
@@ -1601,6 +1605,7 @@ html.gplay:active,html.gplay:active body{transform:none!important;box-shadow:non
 <li><b><a href="https://www.google.com/maps/search/?api=1&amp;query=Invicta+Hotel%2C+Plymouth%2C+Devon" rel="noopener" target="_blank">Invicta Hotel</a>, Plymouth</b><span>Hotel, listed by Visit Plymouth.</span></li>
 <li><b><a href="https://www.google.com/maps/search/?api=1&amp;query=Leonardo+Hotel+Plymouth%2C+Plymouth%2C+Devon" rel="noopener" target="_blank">Leonardo Hotel Plymouth</a>, Plymouth</b><span>City-centre hotel on Exeter Street.</span></li>
 </ul>
+<p class="note">These are a few places to start. Hotels, B&amp;Bs, campsites and holiday parks across Plymouth and the west are in <a href="/where-to-stay/">Where to stay</a> (21 listed) and <a href="/holiday-parks/">Holiday parks</a>. Check availability and prices with each place.</p>
 <div class="cat">Getting there &amp; around</div>
 <ul class="list">
 <li><b>By car</b><span>Three park and ride sites serve the city, with buses leaving from stop A14 on Royal Parade, which avoids all-day parking charges in the centre.</span></li>

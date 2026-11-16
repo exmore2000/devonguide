@@ -796,6 +796,11 @@ html.gplay #g-tea .ctwrap{max-width:min(440px,max(230px,calc((100dvh - 190px)*.6
 .famban{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:18px 0;padding:16px 18px;border-radius:16px;border:2px solid rgba(232,85,154,.5);background:rgba(232,85,154,.1)}
 .famban b{display:block;font-size:1.1rem}.famban span{display:block;margin-top:4px;opacity:.85}
 .famact{display:flex;flex-wrap:wrap;gap:8px}.famact button{font:inherit;font-weight:700;color:inherit;padding:9px 14px;border-radius:999px;border:2px solid currentColor;background:transparent;cursor:pointer;min-height:44px}
+.regions .card{position:relative;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.regions .card .more{position:static!important}
+.regions .card .more::after{content:"";position:absolute;inset:0;border-radius:inherit;z-index:5}
+.regions .card:hover{transform:translateY(-2px)}.regions .card:active{transform:scale(.985)}
+.regions .card:focus-within{outline:3px solid var(--gorse,#3ab0e0);outline-offset:2px}
 .dvnx{margin:16px 0 6px;padding-top:12px;border-top:2px dashed rgba(120,100,60,.35);text-align:center;clear:both}
 .dvnxt{display:block;font-weight:900;margin-bottom:10px;font-size:1.05rem}
 .dvnxr{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
@@ -1591,7 +1596,6 @@ html.gplay:active,html.gplay:active body{transform:none!important;box-shadow:non
 
 <p class="note">Breweries and producers are listed A–Z, not ranked. Many breweries here are confirmed only through the North Devon CAMRA list, so check that each is still brewing and open to visitors before you travel.</p>
 <div class="cat">Where to stay</div>
-<p class="note">A few places to start. Hotels, B&amp;Bs, campsites and holiday parks across North Devon are in <a href="/where-to-stay/">Where to stay</a> (51 listed) and <a href="/holiday-parks/">Holiday parks</a>. Check availability and prices with each place.</p>
 <ul class="list">
 <li><b>Croyde Bay House, Croyde</b><span>Beachfront stay right on Croyde Bay.</span></li>
 <li><b>Highbullen Hotel, Chittlehamholt</b><span>Country hotel with a golf course, near South Molton.</span></li>
@@ -1602,6 +1606,7 @@ html.gplay:active,html.gplay:active body{transform:none!important;box-shadow:non
 <li><b>The Tors Hotel, Lynmouth</b><span>Hotel above the harbour with views over the bay.</span></li>
 <li><b>Valley of Rocks Hotel, Lynton</b><span>Hotel near the Valley of the Rocks.</span></li>
 </ul>
+<p class="note">These are a few places to start. Hotels, B&amp;Bs, campsites and holiday parks across North Devon are in <a href="/where-to-stay/">Where to stay</a> (51 listed) and <a href="/holiday-parks/">Holiday parks</a>. Check availability and prices with each place.</p>
 <div class="cat">Getting there &amp; around</div>
 <ul class="list">
 <li><b>By car</b><span>Draft route idea: A361 from Barnstaple to Braunton and Ilfracombe, then the A39 towards Bideford. Exmoor and the north coast have steep, narrow lanes, and summer parking at Croyde and Woolacombe fills early.</span></li>
