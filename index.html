@@ -6970,6 +6970,7 @@ document.querySelectorAll('section[id]').forEach(function(sec){if(NOJ[sec.id]||s
  else{var jc=document.createElement('div');jc.className='jc';ds.forEach(function(d){var a=document.createElement('a');a.href='#';a.textContent=plain(d.querySelector('summary .cat').textContent);a.addEventListener('click',function(e){e.preventDefault();go(d);});jc.appendChild(a);});box.appendChild(jc);}
  var first=ds[0];var anchor=first;while(anchor.parentNode&&anchor.parentNode!==sec&&anchor.parentNode.querySelectorAll('details').length===ds.length&&anchor.parentNode.className.indexOf('wrap')<0)anchor=anchor.parentNode;
  var prev=anchor.previousElementSibling;if(prev&&/open|close/i.test(prev.textContent)&&prev.querySelectorAll('button').length)anchor=prev;
+ var hp=anchor.previousElementSibling;if(hp&&/^H[2-4]$/.test(hp.tagName))anchor=hp;
  anchor.parentNode.insertBefore(box,anchor);});
 /* 4. Near me on home */
 var st=document.getElementById('start');
