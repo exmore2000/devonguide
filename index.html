@@ -6206,7 +6206,7 @@ function save(){store(key,JSON.stringify({v:1,L:L,s:secs,h:hints}));}
 function pick(k){if(sel===k){var b=byCell[k];if(b.A&&b.D)dir=dir==='A'?'D':'A';}else{sel=k;var b2=byCell[k];if(!b2[dir])dir=dir==='A'?'D':'A';}paint();}
 function step(dr,dc){if(!sel)return;var p=sel.split(',').map(Number),r=p[0]+dr,c=p[1]+dc;while(r>=0&&c>=0&&r<H&&c<W){if(cells[r+','+c]){sel=r+','+c;if(!byCell[sel][dir])dir=dir==='A'?'D':'A';paint();return;}r+=dr;c+=dc;}}
 function inWordNext(){var w=cur();if(!w)return;var ks=wordCells(w),i=ks.indexOf(sel);for(var j=i+1;j<ks.length;j++){if(!L[ks[j]]){sel=ks[j];return;}}if(i<ks.length-1)sel=ks[i+1];}
-function typeCh(ch){if(done||!sel)return;chk=false;L[sel]=ch;els[sel].classList.remove('ok','no');inWordNext();paint();save();checkWin();}
+function typeCh(ch){if(done||!sel)return;chk=false;L[sel]=ch;els[sel].classList.remove('ok','no');inWordNext();paint();save();checkWin();if(!done)fullCheck();}
 function back(){if(done||!sel)return;chk=false;if(L[sel]){delete L[sel];}else{var w=cur();if(w){var ks=wordCells(w),i=ks.indexOf(sel);if(i>0){sel=ks[i-1];delete L[sel];}}}paint();save();}
 function go(d){var w=cur(),i=w?order.indexOf(w):-1;var n=order[(i+d+order.length)%order.length];dir=n.d;sel=n.r+','+n.c;for(var q=0,ks=wordCells(n);q<ks.length;q++){if(!L[ks[q]]){sel=ks[q];break;}}paint();}
 pv.addEventListener('click',function(){go(-1);});nx.addEventListener('click',function(){go(1);});
@@ -6214,10 +6214,12 @@ function winCard(a){var o=el('div','xwin'),c=el('div','xwinc');c.appendChild(el(
 var sh=el('button','gnext','Share result');sh.type='button';sh.addEventListener('click',function(){var t=(cfg.share||'Crossword')+' \u2705 '+fmt(secs)+(hints?'':' (no hints)')+'\nPlay free: https://justdevon.co.uk';try{if(navigator.share){navigator.share({text:t});}else{navigator.clipboard.writeText(t);sh.textContent='Copied!';}}catch(e){sh.textContent='Copy not available';}});c.appendChild(sh);
 if(window.__dvNext)window.__dvNext(c,{});else{var bk=el('button','gnext gghost','Back to all games');bk.type='button';bk.addEventListener('click',function(){o.remove();var g=root.querySelector('.gback');if(g)g.click();});c.appendChild(bk);}
 var cl=el('button','xwx','\u00d7');cl.type='button';cl.setAttribute('aria-label','Close');cl.addEventListener('click',function(){o.remove();});c.appendChild(cl);o.appendChild(c);o.addEventListener('click',function(e){if(e.target===o)o.remove();});var esc=function(e){if(e.key==='Escape'){o.remove();document.removeEventListener('keydown',esc);}};document.addEventListener('keydown',esc);document.body.appendChild(o);}
-function check(){chk=true;chkBtn.classList.remove('ready');var wrong=0,empty=0;Object.keys(els).forEach(function(k){var e=els[k];e.classList.remove('ok','no');if(!L[k])empty++;else if(L[k]===cells[k]){e.classList.add('ok');}else{e.classList.add('no');wrong++;}});msg.dataset.m='';msg.textContent=wrong?wrong+' wrong letter'+(wrong>1?'s':'')+' shown in red.':empty?'No mistakes so far. '+empty+' squares to go.':'';}
+function check(){chk=true;chkBtn.classList.remove('ready');var wrong=0,empty=0;Object.keys(els).forEach(function(k){var e=els[k];e.classList.remove('ok','no');if(!L[k])empty++;else if(L[k]===cells[k]){e.classList.add('ok');}else{e.classList.add('no');wrong++;}});msg.dataset.m='';msg.textContent=wrong?wrong+' wrong letter'+(wrong>1?'s':'')+' shown in red.':empty?'No mistakes so far. '+empty+' squares to go.':'';if(msg.textContent)pill(msg.textContent,wrong?'bad':'good');}
 function hint(whole){if(done)return;var w=cur();if(!w){msg.textContent='Pick a square first.';return;}var left=wordCells(w).filter(function(k){return L[k]!==cells[k];});if(!left.length){msg.textContent='This word is already complete. Pick another word for a hint.';return;}if(whole){left.forEach(function(k){L[k]=cells[k];});hints+=3;}else{if(!sel||L[sel]===cells[sel])sel=left[0];L[sel]=cells[sel];hints++;var nx=left.filter(function(k){return k!==sel;})[0];if(nx)sel=nx;}msg.textContent='Hint used. Each hint costs a few points.';paint();save();checkWin();}
 function reveal(){Object.keys(cells).forEach(function(k){L[k]=cells[k];});all=true;msg.textContent='Answers revealed. No points for this one.';paint();save();finish();}
 function clear(){L={};hints=0;all=false;paid=false;done=false;msg.textContent='';Object.keys(els).forEach(function(k){els[k].classList.remove('ok','no','win');});paint();save();}
+function pill(t,k){var o=document.querySelector('.xpill');if(o)o.remove();var p=el('div','xpill'+(k?' '+k:''),t);p.setAttribute('role','status');document.body.appendChild(p);setTimeout(function(){if(p.parentNode)p.parentNode.removeChild(p);},3200);}
+function fullCheck(){var tot=0,fil=0;for(var k in cells){tot++;if(L[k])fil++;}if(fil<tot)return;check();var wr=0;for(var k2 in cells){if(L[k2]&&L[k2]!==cells[k2])wr++;}var pl=document.querySelector('.xpill');if(pl)pl.remove();if(!wr)return;var old=document.querySelector('.xwin.xno');if(old)old.remove();var o=el('div','xwin xno'),c=el('div','xwinc');c.appendChild(el('div','xwine','\ud83e\udd14'));c.appendChild(el('h3','','Not quite right yet'));c.appendChild(el('p','xwt','Every square is filled, but '+wr+' letter'+(wr>1?'s are':' is')+' wrong.'));c.appendChild(el('p','xwpt','The wrong ones are marked in red. Tap a red square to change it, or use a hint.'));var kb=el('button','gnext','Keep trying');kb.type='button';kb.addEventListener('click',function(){o.remove();});c.appendChild(kb);o.appendChild(c);o.addEventListener('click',function(e){if(e.target===o)o.remove();});document.body.appendChild(o);}
 function checkWin(){for(var k in cells){if(L[k]!==cells[k])return;}finish();}
 function finish(){if(done)return;done=true;store(key,null);if(all){msg.textContent='All answers revealed.';return;}
 var base=cfg.base-hints*8-Math.floor(secs/60)*2;base=Math.max(20,base);var a=award(cfg.gid,base);if(cfg.badge)badge(cfg.badge);msg.textContent='Solved in '+fmt(secs)+'! '+a.text;if(cfg.hint){var ln=el('div','xfind');ln.appendChild(el('b','','Explore more in the guide: '));order.forEach(function(w){if(!w.href)return;var x=el('a','',w.a.charAt(0)+w.a.slice(1).toLowerCase());x.href=w.href;ln.appendChild(x);});root.appendChild(ln);}Object.keys(els).forEach(function(k){els[k].classList.add('win');});confetti(root);winCard(a);}
@@ -7293,11 +7295,15 @@ addEventListener('hashchange',function(){setTimeout(hit,50)});
 .xwinc .gnext.gghost{color:#06223a!important;background:#fff!important;border:2px solid #06223a!important;box-shadow:none!important;text-shadow:none!important}
 .xwinc .gnext:not(.gghost){color:#06223a!important}
 .xwin{z-index:6000}
+.xpill{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:6100;background:#06223a;color:#fff;font-weight:800;padding:12px 20px;border-radius:999px;box-shadow:0 10px 28px rgba(0,0,0,.4);max-width:90vw;text-align:center;animation:fadein .25s ease}.xpill.bad{background:#a82f67}.xpill.good{background:#1f6b3a}
+.xno .xwinc h3{color:#a82f67}
+@media (min-width:900px) and (max-height:800px){.fsplay:has(>.xw) .xk{height:44px!important}}
+
 @media (min-width:900px) and (min-height:480px){
-.fsplay:has(>.xw){display:grid!important;grid-template-columns:max-content minmax(300px,440px);grid-template-rows:auto repeat(6,min-content) 1fr auto;column-gap:32px;row-gap:10px;justify-content:center;align-content:start;padding-bottom:0!important}
+.fsplay:has(>.xw){display:grid!important;grid-template-columns:minmax(0,1fr) minmax(300px,400px);grid-template-rows:auto repeat(6,min-content) auto auto;column-gap:32px;row-gap:10px;justify-content:center;align-content:start;padding-bottom:0!important}
 .fsplay:has(>.xw)>*{max-width:none}
 .fsplay:has(>.xw)>.ghead{grid-column:1/-1;grid-row:1;justify-self:center}
-.fsplay:has(>.xw)>.xw{grid-column:1;grid-row:2/9;align-self:start;width:calc((100dvh - 112px)*var(--xw)/var(--xh) + 16px)}
+.fsplay:has(>.xw)>.xw{grid-column:1;grid-row:2/8;align-self:start;justify-self:end;width:min(calc((100dvh - 112px)*var(--xw)/var(--xh) + 16px),100%)}
 .fsplay:has(>.xw)>.xtop{grid-column:2;grid-row:2}
 .fsplay:has(>.xw)>.xban{grid-column:2;grid-row:3}
 .fsplay:has(>.xw)>.xkb{grid-column:2;grid-row:4}
@@ -7305,6 +7311,8 @@ addEventListener('hashchange',function(){setTimeout(hit,50)});
 .fsplay:has(>.xw)>.gsub{grid-column:2;grid-row:6}
 .fsplay:has(>.xw)>.xlists{grid-column:2;grid-row:7;max-height:calc(100dvh - 96px - 31px - 88px - 144px - 45px - 70px);min-height:120px;overflow:auto}
 .fsplay:has(>.xw)>.gfoot,.fsplay:has(>.xw)>.xfind{grid-column:1/-1}
+.fsplay:has(>.xw)>.pcwhead{grid-column:1;grid-row:8;justify-self:center;margin:0}
+.fsplay:has(>.xw)>.xlists{align-self:start;min-height:0}.fsplay:has(>.xw)>.gsub{min-height:0;margin:0}
 }
 </style>
 <style id="pasthide">

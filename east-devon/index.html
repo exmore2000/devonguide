@@ -1385,11 +1385,15 @@ details.acc summary:hover{background:rgba(27,58,99,.035)}
 .xwinc .gnext.gghost{color:#06223a!important;background:#fff!important;border:2px solid #06223a!important;box-shadow:none!important;text-shadow:none!important}
 .xwinc .gnext:not(.gghost){color:#06223a!important}
 .xwin{z-index:6000}
+.xpill{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:6100;background:#06223a;color:#fff;font-weight:800;padding:12px 20px;border-radius:999px;box-shadow:0 10px 28px rgba(0,0,0,.4);max-width:90vw;text-align:center;animation:fadein .25s ease}.xpill.bad{background:#a82f67}.xpill.good{background:#1f6b3a}
+.xno .xwinc h3{color:#a82f67}
+@media (min-width:900px) and (max-height:800px){.fsplay:has(>.xw) .xk{height:44px!important}}
+
 @media (min-width:900px) and (min-height:480px){
-.fsplay:has(>.xw){display:grid!important;grid-template-columns:max-content minmax(300px,440px);grid-template-rows:auto repeat(6,min-content) 1fr auto;column-gap:32px;row-gap:10px;justify-content:center;align-content:start;padding-bottom:0!important}
+.fsplay:has(>.xw){display:grid!important;grid-template-columns:minmax(0,1fr) minmax(300px,400px);grid-template-rows:auto repeat(6,min-content) auto auto;column-gap:32px;row-gap:10px;justify-content:center;align-content:start;padding-bottom:0!important}
 .fsplay:has(>.xw)>*{max-width:none}
 .fsplay:has(>.xw)>.ghead{grid-column:1/-1;grid-row:1;justify-self:center}
-.fsplay:has(>.xw)>.xw{grid-column:1;grid-row:2/9;align-self:start;width:calc((100dvh - 112px)*var(--xw)/var(--xh) + 16px)}
+.fsplay:has(>.xw)>.xw{grid-column:1;grid-row:2/8;align-self:start;justify-self:end;width:min(calc((100dvh - 112px)*var(--xw)/var(--xh) + 16px),100%)}
 .fsplay:has(>.xw)>.xtop{grid-column:2;grid-row:2}
 .fsplay:has(>.xw)>.xban{grid-column:2;grid-row:3}
 .fsplay:has(>.xw)>.xkb{grid-column:2;grid-row:4}
@@ -1397,6 +1401,8 @@ details.acc summary:hover{background:rgba(27,58,99,.035)}
 .fsplay:has(>.xw)>.gsub{grid-column:2;grid-row:6}
 .fsplay:has(>.xw)>.xlists{grid-column:2;grid-row:7;max-height:calc(100dvh - 96px - 31px - 88px - 144px - 45px - 70px);min-height:120px;overflow:auto}
 .fsplay:has(>.xw)>.gfoot,.fsplay:has(>.xw)>.xfind{grid-column:1/-1}
+.fsplay:has(>.xw)>.pcwhead{grid-column:1;grid-row:8;justify-self:center;margin:0}
+.fsplay:has(>.xw)>.xlists{align-self:start;min-height:0}.fsplay:has(>.xw)>.gsub{min-height:0;margin:0}
 }
 </style><style id="pasthide">
 .hidepast li.past{display:none!important}
