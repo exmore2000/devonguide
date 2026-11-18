@@ -386,6 +386,7 @@ footer .wrap::before{content:"";display:block;width:34px;height:34px;margin:0 au
 .pgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));margin:8px 0}
 .pcard{margin:0;background:var(--card);border:2px solid var(--tone);border-radius:14px;overflow:hidden;box-shadow:0 8px 20px -10px rgba(15,35,60,.38)}
 .pcard button.pimg{display:block;width:100%;padding:0;border:0;background:var(--line);cursor:zoom-in}
+.pcard img,#pview img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .pcard img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
 .pcard figcaption{padding:10px 12px;font-size:.9rem}
 .pcard figcaption b{display:block;font-family:var(--display);font-size:1rem}
@@ -5383,14 +5384,15 @@ window.__dvNews=d;window.__dvApply=function(k){var d=window.__dvNews||{};if(!d[k
 
 <section id="photos"><div class="wrap">
 <h2>Photos</h2>
-<p class="sub">Devon through the lens: our own pictures, where to find more on the web, and a monthly photo competition for you.</p>
+<p class="sub">Devon through the lens: our own pictures, and where to find more on the web.</p>
 <div class="cat">Our photos</div>
+<p class="note">All photos in our gallery belong to Just Devon. &copy; Just Devon, all rights reserved. They may not be copied, downloaded, shared or reused without our written permission.</p>
 <div class="pgrid" id="gal"></div>
 <p class="note" id="gal-note">Photos are on their way. Check back soon.</p>
 <form class="pform" id="gal-form" hidden><h4>Add a photo to the gallery</h4><input type="file" id="gal-file" accept="image/*" aria-label="Photo file"><input type="text" id="gal-cap" maxlength="120" placeholder="Caption" aria-label="Caption"><input type="text" id="gal-place" maxlength="60" placeholder="Place, attraction or band name" aria-label="Place, attraction or band name"><input type="text" id="gal-by" maxlength="60" placeholder="Photo by (credit shown under the photo)" aria-label="Photographer credit"><select id="gal-tag" aria-label="Which section is it for"><option value="">General gallery only</option><option value="south-devon">South Devon</option><option value="torbay">Torbay</option><option value="dartmoor">Dartmoor</option><option value="north-devon">North Devon</option><option value="plymouth">Plymouth</option><option value="east-devon">East Devon</option><option value="concerts-theatre">Bands &amp; gigs</option><option value="museums">Museums &amp; heritage</option><option value="attractions">Attractions &amp; days out</option><option value="things-to-do">Things to do</option><option value="coast-path">Coast Path</option></select><button class="gplay" type="submit">Add photo</button><p class="fine" id="gal-msg" aria-live="polite"></p></form>
 <div class="cat">Photos around the web</div>
 <ul class="list">
-<li><b><a href="https://commons.wikimedia.org/wiki/Category:Devon" target="_blank" rel="noopener">Wikimedia Commons: Devon</a></b><span>Free-licence photos of Devon places. Check each file's licence and credit the photographer.</span></li>
+<li><b><a href="https://commons.wikimedia.org/w/index.php?search=Devon&amp;ns6=1&amp;ns14=1" target="_blank" rel="noopener">Wikimedia Commons: Devon</a></b><span>Free-licence photos of Devon places. Check each file's licence and credit the photographer.</span></li>
 <li><b><a href="https://www.geograph.org.uk/" target="_blank" rel="noopener">Geograph Britain and Ireland</a></b><span>Community photos of every grid square, many under Creative Commons licences. Search by Devon place name.</span></li>
 <li><b><a href="https://unsplash.com/s/photos/devon" target="_blank" rel="noopener">Unsplash: Devon</a></b><span>Free-to-use photos. Crediting the photographer is kind and appreciated.</span></li>
 <li><b><a href="https://www.pexels.com/search/devon/" target="_blank" rel="noopener">Pexels: Devon</a></b><span>Free-to-use photos and video clips.</span></li>
@@ -7289,7 +7291,22 @@ new Image().src='https://exmoregold2000.goatcounter.com/count?'+q;
 }catch(e){}}
 if(document.readyState==='complete')hit();else addEventListener('load',hit);
 addEventListener('hashchange',function(){setTimeout(hit,50)});
-}catch(e){}})();</script><style id="gamefit">
+}catch(e){}})();</script><script id="staticgallery">(function(){
+var dlg=document.getElementById('pview');
+function el(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!==undefined)n.textContent=x;return n}
+function view(u,c){if(!dlg||!dlg.showModal)return;document.getElementById('pview-img').src=u;document.getElementById('pview-cap').textContent=c||'';dlg.showModal()}
+function card(p){var f=el('figure','pcard'),b=el('button','pimg');b.type='button';b.setAttribute('aria-label','View photo: '+(p.cap||p.place||'Devon'));
+var im=el('img');im.loading='lazy';im.alt=p.cap||p.place||'Photo of Devon';im.src='/photos/'+p.t;im.draggable=false;b.appendChild(im);
+b.addEventListener('click',function(){view('/photos/'+p.f,(p.cap||'')+(p.place?(p.cap?' \u00b7 ':'')+p.place:'')+' \u00a9 Just Devon')});f.appendChild(b);
+var c=el('figcaption');if(p.cap)c.appendChild(el('b','',p.cap));if(p.place&&p.place!==p.cap)c.appendChild(el('span','by',p.place));c.appendChild(el('div','by','\u00a9 Just Devon'));f.appendChild(c);return f}
+document.addEventListener('contextmenu',function(e){if(e.target.closest&&e.target.closest('.pcard,#pview'))e.preventDefault()});
+document.addEventListener('dragstart',function(e){if(e.target.closest&&e.target.closest('.pcard,#pview'))e.preventDefault()});
+fetch('/photos/photos.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[]}).then(function(rows){
+if(!rows||!rows.length)return;var g=document.getElementById('gal'),n=document.getElementById('gal-note');
+if(g){g.textContent='';rows.forEach(function(p){g.appendChild(card(p))})}if(n)n.hidden=true;
+[].forEach.call(document.querySelectorAll('.pstrip'),function(st){var mine=rows.filter(function(p){return p.tag===st.dataset.tag}).slice(0,8);if(!mine.length)return;var g2=st.querySelector('.pgrid');g2.textContent='';mine.forEach(function(p){g2.appendChild(card(p))});st.hidden=false})
+}).catch(function(){})})();</script>
+<style id="gamefit">
 .fsplay>.xkb{align-self:stretch;width:100%;max-width:none}
 .fsplay .xkr{width:100%}
 .fsplay .xk{flex:1 1 0;min-width:0}
