@@ -407,7 +407,7 @@ footer .wrap::before{content:"";display:block;width:34px;height:34px;margin:0 au
 #pview{border:0;border-radius:16px;padding:12px;max-width:min(96vw,1000px);background:var(--card);color:var(--ink)}
 #pview::backdrop{background:rgba(0,0,0,.7)}
 #pview img{display:block;max-width:100%;max-height:78vh;margin:0 auto;border-radius:8px}
-#pview p{margin:8px 4px 0}
+#pview p{margin:8px 4px 0}#pview-n{display:block;margin:2px 4px 0;font-size:.85rem;opacity:.75}.pnav{position:absolute;top:calc(50% - 40px);z-index:2;width:46px;height:46px;border:0;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:2rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 0 4px}.pnav[hidden]{display:none}.pnav:hover,.pnav:focus-visible{background:rgba(0,0,0,.8)}#pview-prev{left:18px}#pview-next{right:18px}
 #pview-x{position:absolute;right:8px;top:4px;border:0;background:var(--gorse);color:var(--gorse-ink);font-size:1.4rem;line-height:1;width:34px;height:34px;border-radius:50%;cursor:pointer;z-index:2}
 .pform{box-sizing:border-box;width:100%;grid-template-columns:minmax(0,1fr)}.pform>*{min-width:0;max-width:100%;box-sizing:border-box}
 .pstrip{margin:14px 0 4px}.pstrip .pgrid{grid-template-columns:repeat(auto-fill,minmax(min(100%,180px),1fr))}.photolink{margin-top:10px}
@@ -5465,7 +5465,7 @@ window.__dvNews=d;window.__dvApply=function(k){var d=window.__dvNews||{};if(!d[k
 
 
 
-<dialog id="pview" aria-label="Photo"><button type="button" id="pview-x" aria-label="Close">&times;</button><img alt="" id="pview-img"><p id="pview-cap"></p></dialog>
+<dialog id="pview" aria-label="Photo"><button type="button" id="pview-x" aria-label="Close">&times;</button><button type="button" class="pnav" id="pview-prev" aria-label="Previous photo">&#8249;</button><button type="button" class="pnav" id="pview-next" aria-label="Next photo">&#8250;</button><img alt="" id="pview-img"><p id="pview-cap"></p><span id="pview-n" aria-live="polite"></span></dialog>
 
 <section id="weather"><div class="wrap">
 <h2>Devon weather, 7 days</h2>
@@ -6818,7 +6818,7 @@ var PG={home:['season-slot','start','sponsor-slot','this-week','local-news'],pla
 var ALL=['join'];var OF={};Object.keys(PG).forEach(function(k){PG[k].forEach(function(id){OF[id]=k})});
 var SAVE={};document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a&&cur)SAVE[cur]=window.scrollY},true);var mb0=document.getElementById('pgmenu');if(mb0)mb0.addEventListener('click',function(){var o=document.documentElement.classList.toggle('navopen');mb0.setAttribute('aria-expanded',o?'true':'false')});var root=document.documentElement,secs=[].slice.call(document.querySelectorAll('section[id]')),links=[].slice.call(document.querySelectorAll('.navlinks a')),cur=null;
 function pageOfId(id){if(!id||id==='home')return'home';if(OF[id])return OF[id];var e=document.getElementById(id);if(e){var s=e.closest('section[id]');if(s){return s.id==='join'?cur||'home':(OF[s.id]||'home')}}return null}
-function show(pg){if(pg===cur)return;if(cur!==null){var sq=document.getElementById('q');if(sq&&sq.value){sq.value='';sq.dispatchEvent(new Event('input',{bubbles:true}))}}cur=pg;secs.forEach(function(s){var on=ALL.indexOf(s.id)>-1||OF[s.id]===pg;s.classList.toggle('pg-off',!on)});root.classList.toggle('pg-home',pg==='home');var TT={places:'Places',things:'Things to do',eat:'Eat & drink',stay:'Where to stay',plan:'Plan your trip',whatson:"What's on",play:'Games on the go',about:'About & legal'},pt=document.getElementById('pgttl');if(pt)pt.textContent=TT[pg]||'';
+function show(pg){if(pg===cur)return;if(cur!==null){var sq=document.getElementById('q');if(sq&&sq.value){sq.value='';sq.dispatchEvent(new Event('input',{bubbles:true}))}}cur=pg;secs.forEach(function(s){var on=ALL.indexOf(s.id)>-1||OF[s.id]===pg;s.classList.toggle('pg-off',!on)});root.classList.toggle('pg-home',pg==='home');var TT={places:'Places',things:'Things to do',eat:'Eat & drink',stay:'Where to stay',plan:'Plan your trip',whatson:"What's on",play:'Games on the go',about:'About & legal'},pt=document.getElementById('pgttl');if(pt){pt.dataset.t=TT[pg]||'';pt.textContent=TT[pg]||''}
  links.forEach(function(a){var h=(a.getAttribute('href')||'').slice(1),p=h==='home'?'home':OF[h];if(p===pg)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
  var cn=document.querySelector('.navlinks a[aria-current]');if(cn&&cn.scrollIntoViewIfNeeded)try{cn.parentNode.scrollLeft=Math.max(0,cn.offsetLeft-20)}catch(e){}}
 try{history.scrollRestoration='manual'}catch(e){}
@@ -7353,20 +7353,28 @@ new Image().src='https://exmoregold2000.goatcounter.com/count?'+q;
 }catch(e){}}
 if(document.readyState==='complete')hit();else addEventListener('load',hit);
 addEventListener('hashchange',function(){setTimeout(hit,50)});
-}catch(e){}})();</script><script id="staticgallery">(function(){
+}catch(e){}})();</script><script id="photottl">(function(){function f(){var p=document.getElementById('pgttl');if(!p)return;p.textContent=location.hash==='#photos'?'Photos':(p.dataset.t||p.textContent)}addEventListener('hashchange',function(){setTimeout(f,0)});addEventListener('load',function(){setTimeout(f,100)});setTimeout(f,400)})();</script>
+<script id="staticgallery">(function(){
 var dlg=document.getElementById('pview');
 function el(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!==undefined)n.textContent=x;return n}
-function view(u,c){if(!dlg||!dlg.showModal)return;document.getElementById('pview-img').src=u;document.getElementById('pview-cap').textContent=c||'';dlg.showModal()}
-function card(p){var f=el('figure','pcard'),b=el('button','pimg');b.type='button';b.setAttribute('aria-label','View photo: '+(p.cap||p.place||'Devon'));
+var cur={l:[],i:0},CAP='\u00a9 Just Devon. All rights reserved.';
+function show(){var p=cur.l[cur.i];if(!p)return;document.getElementById('pview-img').src='/photos/'+p.f;document.getElementById('pview-cap').textContent=CAP;document.getElementById('pview-n').textContent=(cur.i+1)+' of '+cur.l.length;var multi=cur.l.length>1;document.getElementById('pview-prev').hidden=!multi;document.getElementById('pview-next').hidden=!multi}
+function step(d){var n=cur.l.length;if(n<2)return;cur.i=(cur.i+d+n)%n;show();var nx=cur.l[(cur.i+1)%n];if(nx){var pr=new Image();pr.src='/photos/'+nx.f}}
+function view(l,i){if(!dlg||!dlg.showModal)return;cur={l:l,i:i};show();if(!dlg.open)dlg.showModal()}
+(function(){if(!dlg)return;var pv=document.getElementById('pview-prev'),nx=document.getElementById('pview-next');if(pv)pv.addEventListener('click',function(){step(-1)});if(nx)nx.addEventListener('click',function(){step(1)});
+dlg.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();step(1)}else if(e.key==='ArrowLeft'){e.preventDefault();step(-1)}});
+var x0=null,y0=0;dlg.addEventListener('touchstart',function(e){var t=e.touches[0];x0=t.clientX;y0=t.clientY},{passive:true});
+dlg.addEventListener('touchend',function(e){if(x0===null)return;var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.4)step(dx<0?1:-1)},{passive:true})})();
+function card(p,l,i){var f=el('figure','pcard'),b=el('button','pimg');b.type='button';b.setAttribute('aria-label','View photo: '+(p.cap||p.place||'Devon'));
 var im=el('img');im.loading='lazy';im.alt=p.cap||p.place||'Photo of Devon';im.src='/photos/'+p.t;im.draggable=false;b.appendChild(im);
-b.addEventListener('click',function(){view('/photos/'+p.f,'\u00a9 Just Devon. All rights reserved.')});f.appendChild(b);
+b.addEventListener('click',function(){view(l,i)});f.appendChild(b);
 return f}
 document.addEventListener('contextmenu',function(e){if(e.target.closest&&e.target.closest('.pcard,#pview'))e.preventDefault()});
 document.addEventListener('dragstart',function(e){if(e.target.closest&&e.target.closest('.pcard,#pview'))e.preventDefault()});
 fetch('/photos/photos.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[]}).then(function(rows){
 if(!rows||!rows.length)return;var g=document.getElementById('gal'),n=document.getElementById('gal-note');
-if(g){g.textContent='';rows.forEach(function(p){g.appendChild(card(p))})}if(n)n.hidden=true;
-[].forEach.call(document.querySelectorAll('.pstrip'),function(st){var mine=rows.filter(function(p){return p.tag===st.dataset.tag}).slice(0,8);if(!mine.length)return;var g2=st.querySelector('.pgrid');g2.textContent='';mine.forEach(function(p){g2.appendChild(card(p))});st.hidden=false})
+if(g){g.textContent='';rows.forEach(function(p,i){g.appendChild(card(p,rows,i))})}if(n)n.hidden=true;
+[].forEach.call(document.querySelectorAll('.pstrip'),function(st){var mine=rows.filter(function(p){return p.tag===st.dataset.tag}).slice(0,8);if(!mine.length)return;var g2=st.querySelector('.pgrid');g2.textContent='';mine.forEach(function(p,i){g2.appendChild(card(p,mine,i))});st.hidden=false})
 }).catch(function(){})})();</script>
 <style id="gamefit">
 .fsplay>.xkb{align-self:stretch;width:100%;max-width:none}
