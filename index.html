@@ -990,9 +990,9 @@ header.hero.v2 .btn-ghost{padding:14px 30px;font-size:1.02rem;background:rgba(25
 <div class="wrap">
 <div class="kicker"><span>Eat, drink, stay &amp; explore</span></div>
 <h1><span class="h1a">Devon<span class="h1c">:</span></span> <em class="h1b">Where to Go for Everything</em></h1>
-<p class="lead">Pubs, food, places to stay, things to do and events across Devon, listed A to Z.</p>
+<p class="lead">Pubs, food, places to stay, things to do and events across Devon.</p>
 <div class="hero-cta"><a class="btn" href="#regions">Start exploring</a><a class="btn-ghost" href="#this-week">This week in Devon</a></div>
-<p class="hero-fair">Listed A to Z. Every listing is free and A to Z. Sponsored spots are always labelled.</p>
+<p class="hero-fair">Every listing is free and in A to Z order. Sponsored spots are always labelled.</p>
 <nav class="hero-tiles" aria-label="Jump to"><a href="#eat-drink"><b>Eat &amp; drink</b><span>Pubs, restaurants, cafes</span></a><a href="#stay"><b>Where to stay</b><span>Hotels, B&amp;Bs, holiday parks</span></a><a href="#things-to-do"><b>Things to do</b><span>Attractions, walks, markets</span></a><a href="#whats-on"><b>What's on</b><span>Events and live music</span></a></nav>
 </div>
 <p class="hero-credit">Red sandstone cliffs on the Devon coast. &copy; Just Devon.</p>
@@ -7299,8 +7299,8 @@ function el(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!==und
 function view(u,c){if(!dlg||!dlg.showModal)return;document.getElementById('pview-img').src=u;document.getElementById('pview-cap').textContent=c||'';dlg.showModal()}
 function card(p){var f=el('figure','pcard'),b=el('button','pimg');b.type='button';b.setAttribute('aria-label','View photo: '+(p.cap||p.place||'Devon'));
 var im=el('img');im.loading='lazy';im.alt=p.cap||p.place||'Photo of Devon';im.src='/photos/'+p.t;im.draggable=false;b.appendChild(im);
-b.addEventListener('click',function(){view('/photos/'+p.f,(p.cap||'')+(p.place?(p.cap?' \u00b7 ':'')+p.place:'')+' \u00a9 Just Devon')});f.appendChild(b);
-var c=el('figcaption');if(p.cap)c.appendChild(el('b','',p.cap));if(p.place&&p.place!==p.cap)c.appendChild(el('span','by',p.place));c.appendChild(el('div','by','\u00a9 Just Devon'));f.appendChild(c);return f}
+b.addEventListener('click',function(){view('/photos/'+p.f,'\u00a9 Just Devon. All rights reserved.')});f.appendChild(b);
+return f}
 document.addEventListener('contextmenu',function(e){if(e.target.closest&&e.target.closest('.pcard,#pview'))e.preventDefault()});
 document.addEventListener('dragstart',function(e){if(e.target.closest&&e.target.closest('.pcard,#pview'))e.preventDefault()});
 fetch('/photos/photos.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[]}).then(function(rows){
