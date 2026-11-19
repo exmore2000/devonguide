@@ -372,6 +372,7 @@ footer .wrap::before{content:"";display:block;width:34px;height:34px;margin:0 au
 .pgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));margin:8px 0}
 .pcard{margin:0;background:var(--card);border:2px solid var(--tone);border-radius:14px;overflow:hidden;box-shadow:0 8px 20px -10px rgba(15,35,60,.38)}
 .pcard button.pimg{display:block;width:100%;padding:0;border:0;background:var(--line);cursor:zoom-in}
+.pcard img,#pview img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .pcard img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
 .pcard figcaption{padding:10px 12px;font-size:.9rem}
 .pcard figcaption b{display:block;font-family:var(--display);font-size:1rem}
@@ -1285,6 +1286,8 @@ header.hero.v2 .btn-ghost{border:1px solid rgba(255,255,255,.65)!important}
 #start .steps li em{display:flex;flex-wrap:wrap;gap:8px;font-style:normal}
 #start .steps li em a{display:inline-block;padding:6px 12px;border-radius:8px;background:#eef3f8;border:1px solid #d4e0ea;color:#1b3a63;font-weight:600;font-size:.86rem;text-decoration:none}
 #start .steps li em a:hover{background:#dfeaf4}
+#start .steps li em a{flex:1 1 auto;display:flex;align-items:center;justify-content:center;text-align:center;min-height:46px;padding:10px 14px}
+#start .steps li:first-child{cursor:pointer}#start .steps li:first-child em a::after{content:"";position:absolute;inset:0;border-radius:12px}
 #start .qt i{position:static!important;top:auto!important;right:auto!important;transform:none!important}
 #start .steps li::before{position:static!important;display:grid;margin:0 0 12px!important;width:34px!important;height:34px!important;border-radius:50%;font-size:.95rem}
 #start .steps li{padding:18px!important}
