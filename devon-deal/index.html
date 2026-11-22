@@ -1,0 +1,665 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Devon Deal: free Devon board game | Just Devon</title>
+<meta name="description" content="Play Devon Deal, a free Devon property trading board game. Buy Devon landmarks, build cottages and beat the computer. No sign-up.">
+<link rel="canonical" href="https://justdevon.co.uk/devon-deal/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Just Devon"><meta property="og:title" content="Devon Deal: free Devon board game"><meta property="og:description" content="Buy Devon landmarks, build cottages and beat the computer. Free, no sign-up."><meta property="og:url" content="https://justdevon.co.uk/devon-deal/"><meta property="og:image" content="https://justdevon.co.uk/og/games.jpg"><meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#071823"><link rel="icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Devon Deal", "description": "A free Devon property trading board game for phones and computers.", "url": "https://justdevon.co.uk/devon-deal/", "genre": "Board game", "gamePlatform": "Web browser", "applicationCategory": "Game", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Just Devon", "url": "https://justdevon.co.uk/"}}</script>
+<style>:root{--navy:#0f2a3a;--gold:#e8c26a;--paper:#f4f7f5;--granite:#5d6e68;--red:#b4472b}
+*{box-sizing:border-box;margin:0}
+html,body{background:#071823}
+#dd{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;min-height:100vh;padding:8px;background:radial-gradient(120% 90% at 50% 0%,#1d4b63 0%,#0e2f42 45%,#071823 100%);-webkit-tap-highlight-color:transparent;user-select:none}
+#dd button{font:inherit;cursor:pointer}
+#dd .app{max-width:1060px;margin:0 auto;display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:900px){#dd .app{grid-template-columns:minmax(0,min(78vh,720px)) minmax(0,1fr);align-items:start}}
+.topbar{display:flex;align-items:center;gap:8px;grid-column:1/-1;font-weight:800}
+.topbar .brand{font-size:18px;letter-spacing:-.02em;margin-right:auto;white-space:nowrap}
+.ib{white-space:nowrap}
+.topbar .rnd{white-space:nowrap;font-size:12px;font-weight:700;color:#f3dc9a}
+.ib{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:10px;padding:7px 11px;font-weight:700;font-size:13px}
+.ib:focus-visible,.btn:focus-visible{outline:3px solid #f3dc9a;outline-offset:2px}
+#board{position:relative;width:100%;aspect-ratio:1;border-radius:20px;padding:9px;background:linear-gradient(145deg,#f3dc9a,#c99a3c 38%,#8a6320 62%,#e8c26a);box-shadow:0 30px 60px rgba(0,0,0,.55)}
+#board:before{content:"";position:absolute;inset:6px;border-radius:15px;background:#0c2433;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
+#grid{position:relative;width:100%;height:100%;border-radius:11px;overflow:hidden;container-type:size;background:radial-gradient(90% 90% at 50% 40%,#17425a,#0b2231)}
+.tile{position:absolute;padding:.28cqw;cursor:pointer}
+.tile .card{position:absolute;inset:.28cqw;border-radius:.9cqw;overflow:hidden;background:linear-gradient(180deg,#fff,#e8eeec);box-shadow:0 .25cqw .5cqw rgba(0,0,0,.45),inset 0 0 0 .12cqw rgba(255,255,255,.9),inset 0 -.4cqw .6cqw rgba(15,42,58,.08);color:var(--navy);transition:filter .2s}
+.tile.mort .card{filter:grayscale(.9) brightness(.85)}
+.tile.hl .card{animation:hl .9s ease 2}
+@keyframes hl{50%{box-shadow:0 0 0 .6cqw #ffe08a,0 0 2.4cqw #ffe08a}}
+.tile .in{position:absolute;inset:0;display:flex}
+.in.b{flex-direction:column}.in.t{flex-direction:column-reverse}.in.l{flex-direction:row-reverse}.in.r{flex-direction:row}
+.band{flex:none;position:relative;box-shadow:inset 0 -.3cqw .4cqw rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;gap:.3cqw;flex-wrap:wrap}
+.band:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0) 55%);pointer-events:none}
+.in.b .band,.in.t .band{height:23%}.in.l .band,.in.r .band{width:23%;flex-direction:column}
+.cot{width:1.1cqw;height:1.1cqw;background:#fff;clip-path:polygon(50% 0,100% 45%,100% 100%,0 100%,0 45%);position:relative;z-index:1}
+.cot.inn{width:2.2cqw;height:1.5cqw;background:#ffd35e}
+.body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2%;padding:3% 4% 4%;min-height:0}
+.body svg{width:62%;height:auto;max-height:48%;flex:none;filter:drop-shadow(0 .25cqw .25cqw rgba(15,42,58,.35))}
+.nm{font-weight:800;font-size:1.22cqw;line-height:1.05;text-align:center;letter-spacing:-.01em}
+.pr{font-weight:800;font-size:1.1cqw;color:#a07a2a}
+.corner .body{padding:6%}.corner .nm{font-size:1.75cqw;color:#fff;text-shadow:0 .2cqw .3cqw rgba(0,0,0,.4)}
+.corner svg{width:50%;max-height:50%}
+.tile .ownbar{position:absolute;left:0;right:0;bottom:0;height:.9cqw;z-index:2}
+.in.l~.ownbar{}
+@container (max-width:560px){.nm,.pr{display:none}.body svg{width:72%;max-height:76%}.cot{width:1.6cqw;height:1.6cqw}}
+.tok{position:absolute;width:4.4%;aspect-ratio:1;border-radius:50%;border:.3cqw solid #fff;box-shadow:0 .5cqw .8cqw rgba(0,0,0,.55),inset 0 -.5cqw .6cqw rgba(0,0,0,.25),inset 0 .4cqw .5cqw rgba(255,255,255,.4);transform:translate(-50%,-50%);transition:left .15s ease-out,top .15s ease-out,opacity .4s,transform .15s;z-index:6;display:flex;align-items:center;justify-content:center}
+.tok svg{width:72%;height:72%}
+.tok.act{animation:bob 1.1s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,-62%)}}
+.tok.hop{transform:translate(-50%,-72%) scale(1.12)}
+#centre{position:absolute;overflow:hidden;border-radius:1.6cqw;box-shadow:0 0 0 .35cqw #e8c26a,0 0 0 .6cqw #0c2433,0 1.2cqw 2.4cqw rgba(0,0,0,.5)}
+#centre>svg{position:absolute;inset:0;width:100%;height:100%}
+#title{position:absolute;left:0;right:0;top:8%;text-align:center;font-family:"Inter Display",Inter,sans-serif;font-weight:900;letter-spacing:-.045em;line-height:.84;font-size:10.5cqw;color:#fff}
+#title span{background:linear-gradient(180deg,#fff 30%,#ffe3a1);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;filter:drop-shadow(0 .5cqw 0 #8f3a22) drop-shadow(0 1cqw 1.2cqw rgba(0,0,0,.4))}
+#tag{position:absolute;left:50%;transform:translateX(-50%);top:39%;white-space:nowrap;background:#0f2a3a;color:#f3dc9a;font-weight:800;font-size:1.6cqw;padding:.7cqw 2.2cqw;border-radius:2cqw;box-shadow:0 .4cqw .8cqw rgba(0,0,0,.4),inset 0 0 0 .15cqw #e8c26a}
+#dice{position:absolute;left:0;right:0;top:55%;display:flex;gap:3cqw;justify-content:center}
+.die{width:8.5cqw;height:8.5cqw;border-radius:1.6cqw;background:linear-gradient(160deg,#fff,#dfe6e4);box-shadow:0 .6cqw 1cqw rgba(0,0,0,.45),inset 0 -.4cqw .6cqw rgba(0,0,0,.12);position:relative;display:none}
+.die.show{display:block}.die.roll{animation:tumble .5s linear infinite}
+@keyframes tumble{0%{transform:rotate(0) translateY(0)}25%{transform:rotate(110deg) translateY(-1.5cqw)}50%{transform:rotate(220deg) translateY(0)}75%{transform:rotate(330deg) translateY(-1cqw)}100%{transform:rotate(360deg)}}
+.pip{position:absolute;width:1.5cqw;height:1.5cqw;border-radius:50%;background:#0f2a3a;transform:translate(-50%,-50%)}
+#bannerc{position:absolute;left:0;right:0;bottom:7%;text-align:center;font-weight:800;font-size:1.9cqw;color:#fff;text-shadow:0 .2cqw .5cqw rgba(0,0,0,.6);padding:0 4cqw}
+.dock{display:flex;flex-direction:column;gap:10px;min-width:0}
+.panel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:12px}
+.turn{display:flex;align-items:center;gap:10px}
+.turn .tk{width:38px;height:38px;border-radius:50%;border:2px solid #fff;flex:none;display:flex;align-items:center;justify-content:center}
+.turn .tk svg{width:70%;height:70%}
+.turn b{font-size:16px;display:block}.turn span{font-size:13px;color:#b9cbd3}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn{flex:1;min-width:120px;border:0;border-radius:14px;padding:14px 12px;font-weight:800;font-size:16px;color:#0f2a3a;background:linear-gradient(180deg,#ffe08a,#e8b23a);box-shadow:0 3px 0 #9a6f1a,0 6px 12px rgba(0,0,0,.3)}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #9a6f1a}
+.btn.alt{background:linear-gradient(180deg,#ffffff,#d5dedb);box-shadow:0 3px 0 #7f918b,0 6px 12px rgba(0,0,0,.3)}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.players{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.pl{display:flex;align-items:center;gap:8px;padding:8px;border-radius:12px;background:rgba(255,255,255,.06);border:2px solid transparent;min-width:0}
+.pl.cur{border-color:#f3dc9a;background:rgba(243,220,154,.12)}
+.pl.out{opacity:.4}
+.pl .tk{width:30px;height:30px;border-radius:50%;border:2px solid #fff;flex:none;display:flex;align-items:center;justify-content:center}
+.pl .tk svg{width:70%;height:70%}
+.pl b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl span{font-size:15px;font-weight:800;color:#ffe08a;font-variant-numeric:tabular-nums}
+.pl small{display:block;font-size:11px;color:#9fb6c0}
+#log{font-size:13px;line-height:1.45;color:#cfe0e6;max-height:132px;overflow:auto}
+#log div{padding:3px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+#log div:first-child{color:#fff;font-weight:700}
+.ov{position:fixed;inset:0;background:rgba(3,12,18,.72);display:none;align-items:center;justify-content:center;padding:14px;z-index:50;backdrop-filter:blur(3px)}
+.ov.on{display:flex}
+.sheet{background:linear-gradient(180deg,#14394f,#0d2a3b);border:1px solid rgba(255,255,255,.2);border-radius:20px;width:min(460px,100%);max-height:92vh;overflow:auto;padding:18px;box-shadow:0 30px 60px rgba(0,0,0,.6);animation:pop .22s ease-out}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+.sheet h2{font-size:22px;letter-spacing:-.02em;margin-bottom:4px}
+.sheet p{color:#cfe0e6;font-size:14px;line-height:1.5}
+.pcard{background:#f4f7f5;color:#0f2a3a;border-radius:14px;overflow:hidden;margin:10px 0}
+.pcard .hd{padding:12px 14px;color:#fff;font-weight:900;font-size:19px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+.pcard .hd svg{width:44px;height:44px;background:#fff;border-radius:10px;padding:4px;flex:none}
+.pcard table{width:100%;border-collapse:collapse;font-size:14px}
+.pcard td{padding:6px 14px;border-top:1px solid #dbe4e1}.pcard td:last-child{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
+.pcard .own{padding:8px 14px;font-weight:700;font-size:13px;background:#e7eeec}
+.lcard{background:linear-gradient(160deg,#ffe9a8,#f2b632);color:#0f2a3a;border-radius:16px;padding:22px 18px;margin:12px 0;font-weight:800;font-size:19px;line-height:1.3;text-align:center;animation:flip .5s ease-out;box-shadow:inset 0 0 0 3px #fff6d6}
+@keyframes flip{from{transform:rotateY(90deg)}}
+.row{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid rgba(255,255,255,.1);font-size:14px}
+.row .dot{width:12px;height:12px;border-radius:3px;flex:none}
+.row .nm2{flex:1;min-width:0}
+.mini{border:0;border-radius:9px;padding:7px 10px;font-weight:800;font-size:12px;background:#ffe08a;color:#0f2a3a}
+.mini[disabled]{opacity:.35}
+.mini.alt{background:#dbe4e1}
+.choice{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.choice button{background:rgba(255,255,255,.08);border:2px solid transparent;color:#fff;border-radius:12px;padding:10px 4px;font-weight:700;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.choice button.sel{border-color:#f3dc9a;background:rgba(243,220,154,.14)}
+.choice .tk{width:36px;height:36px;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center}
+.choice .tk svg{width:70%;height:70%}
+.seg{display:flex;gap:8px;margin:8px 0}
+.seg button{flex:1;background:rgba(255,255,255,.08);border:2px solid transparent;color:#fff;border-radius:12px;padding:10px;font-weight:700;font-size:13px}
+.seg button.sel{border-color:#f3dc9a;background:rgba(243,220,154,.14)}
+.lbl{font-size:12px;font-weight:700;color:#9fb6c0;margin-top:10px}
+.float{position:fixed;font-weight:900;font-size:22px;pointer-events:none;z-index:70;text-shadow:0 2px 4px rgba(0,0,0,.6);animation:fl 1.2s ease-out forwards}
+@keyframes fl{to{transform:translateY(-46px);opacity:0}}
+.conf{position:fixed;top:-10px;width:9px;height:14px;z-index:80;pointer-events:none;animation:cf 2.6s ease-in forwards}
+@keyframes cf{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
+@media(prefers-reduced-motion:reduce){.tok.act,.die.roll,.tile.hl .card,.sheet,.lcard{animation:none}.tok{transition:none}}
+.topbar{flex-wrap:nowrap;min-width:0}
+.topbar .brand{font-size:17px}
+.ib{padding:7px 9px;font-size:12px}
+@media(max-width:420px){.topbar .rnd{font-size:11px}.topbar{gap:6px}}
+
+.choice button small{font-size:10px;font-weight:700}
+.seg button small{font-size:11px}
+#board.th-winter #centre>svg{filter:hue-rotate(165deg) saturate(.55) brightness(1.12)}
+#board.th-night #centre>svg{filter:brightness(.5) saturate(1.3) hue-rotate(-12deg)}
+#board.th-night #title span{filter:drop-shadow(0 .5cqw 0 #1a2c4a) drop-shadow(0 1cqw 1.2cqw rgba(0,0,0,.5))}
+#board.th-winter{background:linear-gradient(145deg,#eef4f8,#9db4c4 40%,#5f7d92 62%,#dfe9ef)}
+#board.th-night{background:linear-gradient(145deg,#8fa2c8,#3d4d78 40%,#232f52 62%,#7c8fbd)}
+body{margin:0}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
+<nav id="ddnav"><a href="/">Just Devon</a><a href="/games/">All games</a></nav>
+<div id="dd"><div class="app">
+ <div class="topbar"><span class="brand">Devon Deal</span><span class="rnd" id="rnd"></span><button class="ib" id="mute">Sound on</button><button class="ib" id="newg">New game</button></div>
+ <div id="board"><div id="grid"></div></div>
+ <div class="dock">
+  <div class="panel"><div class="turn"><span id="turntk"></span><div><b id="turnname"></b><span id="turnsub"></span></div></div><div class="actions" id="actions"></div></div>
+  <div class="panel"><div class="players" id="players"></div></div>
+  <div class="panel"><div id="log"></div></div>
+ </div>
+</div>
+<div class="ov" id="ov" role="dialog" aria-modal="true"></div></div>
+<section id="dd-about"><h1>Devon Deal: a free Devon board game</h1>
+<p>Devon Deal is a free property trading board game for your phone, tablet or computer. Roll the dice, buy Devon landmarks from Widecombe to Burgh Island, collect rent, build cottages and beat up to three computer players. No sign-up and nothing to download.</p>
+<h2>How to play</h2>
+<ul><li>Roll the dice and move round the board. Buy the place you land on, or pass.</li>
+<li>When someone lands on a place you own, they pay you rent. Own a whole colour group and the rent doubles.</li>
+<li>Build cottages, then an inn, to charge far higher rent.</li>
+<li>Own railway stations like Exeter St Davids and the Dartmouth ferry for steady income.</li>
+<li>Land in the fog and you wait, roll doubles, pay £50 or use a fog card to leave.</li>
+<li>Quick games last 25 rounds and the richest player wins. Classic games run until one player is left.</li></ul>
+<h2>Earn points and unlock more</h2>
+<p>Every game you finish earns Devon points, the same points you collect in all our <a href="/games/">free Devon games</a>. Spend them on new pieces such as a crab, a Dartmoor pony, a trawler, a surfer and a puffin, and on new board looks like Winter on the moor and Night harbour.</p>
+<p><a href="/games/">More free Devon games</a> &middot; <a href="/coast-path/">Devon coast path guide</a> &middot; <a href="/">Just Devon home</a></p></section><script>// Devon Deal board data
+var GROUPS={
+ moor:{c:'#7a5c3e',n:'Moor villages'},
+ falls:{c:'#6fb3c8',n:'Wild Devon'},
+ market:{c:'#c0558d',n:'Market towns'},
+ castle:{c:'#e07a2f',n:'Castles & caves'},
+ harbour:{c:'#c8372d',n:'Harbours'},
+ cliff:{c:'#f2b632',n:'Cliffs & clifftops'},
+ sands:{c:'#2f8a5b',n:'North coast sands'},
+ crown:{c:'#17324d',n:'Crown jewels'}
+};
+var SQ=[
+ {t:'go',n:'Start in Exeter',ic:'flag'},
+ {t:'p',g:'moor',n:'Widecombe',ic:'tor',p:60},
+ {t:'luck',n:'Devon Luck',ic:'luck'},
+ {t:'p',g:'moor',n:'Postbridge',ic:'bridge',p:60},
+ {t:'tax',n:'Tamar Bridge toll',ic:'bridge',amt:200},
+ {t:'st',n:'Exeter St Davids',ic:'train',p:200},
+ {t:'p',g:'falls',n:'Lydford Gorge',ic:'fall',p:100},
+ {t:'luck',n:'Devon Luck',ic:'luck'},
+ {t:'p',g:'falls',n:'Becky Falls',ic:'fall',p:100},
+ {t:'p',g:'falls',n:'Haytor Rocks',ic:'tor',p:120},
+ {t:'fog',n:'Lost in the fog',ic:'fog'},
+ {t:'p',g:'market',n:'Tavistock',ic:'market',p:140},
+ {t:'ut',n:'Dartmouth Ferry',ic:'ferry',p:150},
+ {t:'p',g:'market',n:'Totnes',ic:'market',p:140},
+ {t:'p',g:'market',n:'Bovey Tracey',ic:'market',p:160},
+ {t:'st',n:'Newton Abbot',ic:'train',p:200},
+ {t:'p',g:'castle',n:'Dartmouth Castle',ic:'castle',p:180},
+ {t:'luck',n:'Devon Luck',ic:'luck'},
+ {t:'p',g:'castle',n:'Kents Cavern',ic:'cave',p:180},
+ {t:'p',g:'castle',n:'Berry Pomeroy',ic:'castle',p:200},
+ {t:'tea',n:'Cream tea break',ic:'tea'},
+ {t:'p',g:'harbour',n:'Salcombe',ic:'boat',p:220},
+ {t:'luck',n:'Devon Luck',ic:'luck'},
+ {t:'p',g:'harbour',n:'Brixham Harbour',ic:'boat',p:220},
+ {t:'p',g:'harbour',n:'Paignton Pier',ic:'pier',p:240},
+ {t:'st',n:'Plymouth',ic:'train',p:200},
+ {t:'p',g:'cliff',n:'Lynton Cliff Railway',ic:'cliffrail',p:260},
+ {t:'p',g:'cliff',n:'Clovelly',ic:'boat',p:260},
+ {t:'ut',n:'Steam Railway',ic:'steam',p:150},
+ {t:'p',g:'cliff',n:'Hartland Quay',ic:'cliff',p:280},
+ {t:'togo',n:'Into the fog',ic:'fog'},
+ {t:'p',g:'sands',n:'Woolacombe',ic:'surf',p:300},
+ {t:'p',g:'sands',n:'Croyde',ic:'surf',p:300},
+ {t:'luck',n:'Devon Luck',ic:'luck'},
+ {t:'p',g:'sands',n:'Saunton Sands',ic:'surf',p:320},
+ {t:'st',n:'Barnstaple',ic:'train',p:200},
+ {t:'luck',n:'Devon Luck',ic:'luck'},
+ {t:'p',g:'crown',n:'Burgh Island',ic:'island',p:350},
+ {t:'tax',n:'A38 roadworks',ic:'cone',amt:100},
+ {t:'p',g:'crown',n:'Plymouth Hoe',ic:'light',p:400}
+];
+</script><script>var IC={
+flag:'<path d="M12 6v30" stroke="#17324d" stroke-width="3" stroke-linecap="round"/><path d="M13 7h20l-5 7 5 7H13z" fill="#c8372d"/>',
+tor:'<path d="M2 34 14 16l6 8 6-12 12 22z" fill="#6b7a73"/><path d="M12 18l4 3-2 4zM26 14l4 5-3 3z" fill="#8c9a93"/><rect x="2" y="32" width="36" height="4" fill="#2f5d50"/>',
+bridge:'<rect x="2" y="24" width="36" height="4" fill="#6b7a73"/><path d="M6 28v-8h6v8M16 28v-8h6v8M26 28v-8h6v8" fill="#8c9a93"/><path d="M2 32q9-5 18 0t18 0v4H2z" fill="#4a90a8"/>',
+luck:'<rect x="9" y="6" width="22" height="28" rx="3" fill="#f2b632"/><text x="20" y="28" text-anchor="middle" font-size="22" font-weight="900" fill="#17324d" font-family="Inter,sans-serif">?</text>',
+train:'<rect x="7" y="9" width="26" height="18" rx="4" fill="#17324d"/><rect x="10" y="12" width="9" height="7" fill="#9fd0e0"/><rect x="21" y="12" width="9" height="7" fill="#9fd0e0"/><circle cx="14" cy="31" r="3" fill="#17324d"/><circle cx="26" cy="31" r="3" fill="#17324d"/><rect x="5" y="34" width="30" height="2" fill="#6b7a73"/>',
+fall:'<path d="M2 12h12l-3 24H2z" fill="#6b7a73"/><path d="M14 12h6v24h-6z" fill="#9fd0e0"/><path d="M20 12h18v24H20z" fill="#2f5d50"/><path d="M16 14v20" stroke="#fff" stroke-width="2" stroke-dasharray="4 3"/>',
+fog:'<path d="M6 16h24M2 24h28M10 32h26" stroke="#8c9a93" stroke-width="4" stroke-linecap="round"/>',
+market:'<path d="M4 16 8 7h24l4 9z" fill="#c8372d"/><path d="M4 16q4 5 8 0 4 5 8 0 4 5 8 0 4 5 8 0" fill="#fff"/><rect x="6" y="20" width="28" height="14" fill="#8c6b4a"/><rect x="16" y="24" width="8" height="10" fill="#17324d"/>',
+ferry:'<path d="M5 24h30l-5 9H10z" fill="#17324d"/><rect x="12" y="15" width="14" height="9" fill="#fff"/><rect x="16" y="9" width="6" height="6" fill="#c8372d"/><path d="M2 36q4-3 9 0t9 0 9 0 9 0" stroke="#4a90a8" stroke-width="3" fill="none"/>',
+castle:'<path d="M5 34V14h5v-4h4v4h4v-4h4v4h4v-4h4v4h5v20z" fill="#8c9a93"/><path d="M16 34v-9a4 4 0 0 1 8 0v9z" fill="#17324d"/>',
+cave:'<path d="M2 36V24Q8 6 20 6t18 18v12z" fill="#6b7a73"/><path d="M11 36V25q9-12 18 0v11z" fill="#17324d"/><path d="M20 14v6M15 16v4M25 16v4" stroke="#8c9a93" stroke-width="2"/>',
+tea:'<path d="M8 17h20v10a8 8 0 0 1-8 8h-4a8 8 0 0 1-8-8z" fill="#fff" stroke="#17324d" stroke-width="2.5"/><path d="M28 20h4a4 4 0 0 1 0 8h-4" fill="none" stroke="#17324d" stroke-width="2.5"/><path d="M13 5q3 4 0 8M20 5q3 4 0 8" stroke="#8c9a93" stroke-width="2.5" fill="none"/>',
+boat:'<path d="M20 4v22" stroke="#17324d" stroke-width="2.5"/><path d="M22 6q10 8 11 18H22z" fill="#c8372d"/><path d="M18 8Q10 16 9 24h9z" fill="#fff" stroke="#17324d" stroke-width="1.5"/><path d="M5 27h30l-5 8H10z" fill="#17324d"/>',
+pier:'<rect x="3" y="18" width="34" height="4" fill="#8c6b4a"/><path d="M8 22v12M16 22v12M24 22v12M32 22v12" stroke="#8c6b4a" stroke-width="3"/><path d="M26 18v-8l5-4 5 4v8z" fill="#c8372d"/><path d="M2 36q4-3 9 0t9 0 9 0 9 0" stroke="#4a90a8" stroke-width="3" fill="none"/>',
+cliffrail:'<path d="M3 36 3 8l10 6 10 10 14 12z" fill="#6b7a73"/><path d="M10 30 30 10" stroke="#17324d" stroke-width="2.5"/><rect x="16" y="16" width="10" height="7" rx="2" fill="#c8372d" transform="rotate(-38 21 20)"/>',
+steam:'<rect x="6" y="16" width="20" height="12" rx="2" fill="#17324d"/><rect x="26" y="10" width="8" height="18" fill="#c8372d"/><rect x="9" y="8" width="5" height="8" fill="#17324d"/><circle cx="12" cy="32" r="4" fill="#17324d" stroke="#fff" stroke-width="1.5"/><circle cx="26" cy="32" r="4" fill="#17324d" stroke="#fff" stroke-width="1.5"/><circle cx="14" cy="5" r="3" fill="#cfd8d6"/>',
+cliff:'<path d="M2 6h22l6 14-6 16H2z" fill="#b4472b"/><path d="M24 6l6 14-6 16" fill="#8a3420"/><path d="M28 36q4-3 9 0v-4H28z" fill="#4a90a8"/>',
+surf:'<path d="M2 28q6-12 14-12 8 0 8 12" fill="#4a90a8"/><path d="M14 28q6-10 12-10 8 0 12 10z" fill="#9fd0e0"/><rect x="24" y="6" width="5" height="24" rx="2.5" fill="#f2b632" transform="rotate(25 26 18)"/><rect x="2" y="30" width="36" height="6" fill="#e9d9ae"/>',
+island:'<path d="M4 34q6-18 16-20t16 20z" fill="#2f5d50"/><rect x="17" y="9" width="12" height="9" fill="#fff"/><rect x="19" y="5" width="8" height="4" fill="#c8372d"/><path d="M2 36q4-3 9 0t9 0 9 0 9 0" stroke="#4a90a8" stroke-width="3" fill="none"/>',
+cone:'<path d="M20 5 30 32H10z" fill="#e07a2f"/><path d="M15 21h10M13 27h14" stroke="#fff" stroke-width="3"/><rect x="6" y="32" width="28" height="4" fill="#17324d"/>',
+light:'<path d="M15 34 17 12h6l2 22z" fill="#fff" stroke="#17324d" stroke-width="2"/><path d="M16 22h8" stroke="#c8372d" stroke-width="4"/><rect x="14" y="8" width="12" height="4" fill="#17324d"/><path d="M20 3v5M10 6l4 3M30 6l-4 3" stroke="#f2b632" stroke-width="2.5"/>'
+};
+function icon(k,s){return '<svg viewBox="0 0 40 40" width="'+(s||40)+'" height="'+(s||40)+'">'+(IC[k]||'')+'</svg>'}
+</script><script>var SCENE='<svg viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%">'+
+'<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a5d8f"/><stop offset=".38" stop-color="#e98d5a"/><stop offset=".62" stop-color="#ffd37a"/></linearGradient>'+
+'<radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff6d6"/><stop offset=".35" stop-color="#ffe08a" stop-opacity=".9"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient>'+
+'<linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2d89a6"/><stop offset="1" stop-color="#0b3550"/></linearGradient>'+
+'<linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4623f"/><stop offset="1" stop-color="#8f3a22"/></linearGradient>'+
+'<linearGradient id="grn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4f8f6a"/><stop offset="1" stop-color="#1f4c3d"/></linearGradient>'+
+'<linearGradient id="hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffcf8a" stop-opacity=".0"/><stop offset="1" stop-color="#ffd9a0" stop-opacity=".55"/></linearGradient></defs>'+
+'<rect width="600" height="600" fill="url(#sky)"/>'+
+'<circle cx="400" cy="330" r="190" fill="url(#sun)"/><circle cx="400" cy="335" r="52" fill="#fff3c8"/>'+
+'<g fill="#fff" opacity=".55"><ellipse cx="120" cy="170" rx="70" ry="13"/><ellipse cx="170" cy="158" rx="46" ry="11"/><ellipse cx="470" cy="130" rx="80" ry="12"/><ellipse cx="520" cy="146" rx="50" ry="9"/></g>'+
+'<path d="M0 360Q90 330 170 350T330 342 470 356 600 338V420H0z" fill="#7b6f8f" opacity=".55"/>'+
+'<rect y="372" width="600" height="228" fill="url(#sea)"/>'+
+'<g stroke="#fff6d6" stroke-linecap="round" opacity=".7"><path d="M360 380h80M372 392h56M352 406h96M380 420h40" stroke-width="5"/></g>'+
+'<g stroke="#ffffff" stroke-linecap="round" opacity=".22"><path d="M40 450h90M180 480h110M330 470h90M470 500h100M60 540h120M260 548h100" stroke-width="4"/></g>'+
+'<path d="M0 600V300Q60 270 120 296T215 330 250 372 200 420 140 470 0 560z" fill="url(#red)"/>'+
+'<path d="M0 300Q60 270 120 296T215 330 250 372 220 365 150 344 90 340 0 350z" fill="url(#grn)"/>'+
+'<path d="M120 296Q165 300 215 330 250 372 250 372 220 342 160 322z" fill="#fff" opacity=".12"/>'+
+'<path d="M620 600V430Q540 410 500 440T430 520 380 600z" fill="url(#red)" opacity=".9"/>'+
+'<g transform="translate(150 218)"><path d="M-12 78 -8 22h16l4 56z" fill="#fff"/><path d="M-9 44h18v10h-18z" fill="#b4472b"/><rect x="-11" y="12" width="22" height="10" fill="#0f2a3a"/><path d="M-13 12 0 0 13 12z" fill="#b4472b"/><path d="M0-4 0-22M-8-8-20-16M8-8 20-16" stroke="#ffe08a" stroke-width="3" stroke-linecap="round"/></g>'+
+'<g transform="translate(430 430)"><path d="M0-62Q42-34 48 16H0z" fill="#fff"/><path d="M-6-52Q-40-24-46 16H-6z" fill="#c8372d"/><path d="M0-66V22" stroke="#0f2a3a" stroke-width="4"/><path d="M-58 22H62L44 50H-40z" fill="#0f2a3a"/><path d="M-50 56Q-20 66 0 56T50 56" stroke="#fff" stroke-width="4" fill="none" opacity=".6"/></g>'+
+'<g fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" opacity=".9"><path d="M300 90q10-12 20 0q10-12 20 0M230 130q8-9 16 0q8-9 16 0M480 220q8-9 16 0q8-9 16 0"/></g>'+
+'<rect y="330" width="600" height="60" fill="url(#hz)"/>'+
+'</svg>';
+</script><script>// Devon Deal rules engine (no DOM)
+(function(root){
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+var GROUPSIZE={},GCOST={moor:50,falls:50,market:100,castle:100,harbour:150,cliff:150,sands:200,crown:200};
+var SQ=root.SQ;
+SQ.forEach(function(s,i){s.i=i;if(s.t==='p'){GROUPSIZE[s.g]=(GROUPSIZE[s.g]||[]).concat(i);s.base=Math.round(s.p*0.08/2)*2}});
+var MULT=[1,4,10,25,40,60];
+var CARDS=[
+ {tx:'Surprise cream tea on the house. Collect £50.',cash:50},
+ {tx:'Your Devon guide book sells well. Collect £100.',cash:100},
+ {tx:'Pasty dropped by a seagull. Pay £30.',cash:-30},
+ {tx:'Speeding on the A38. Pay £60.',cash:-60},
+ {tx:'Rail replacement bus again. Pay £40.',cash:-40},
+ {tx:'Win the village raffle. Collect £80.',cash:80},
+ {tx:'Sunny day, beach car park packed. Collect £60.',cash:60},
+ {tx:'Advance to Start in Exeter. Collect £200.',goto:0},
+ {tx:'Take the scenic route to Burgh Island.',goto:37},
+ {tx:'Hop on the steam railway.',goto:28},
+ {tx:'Fog rolls in from the moor. Go to the fog.',fog:1},
+ {tx:'Go back three spaces. Wrong turn at the roundabout.',back:3},
+ {tx:'Get out of the fog free. Keep this card until you need it.',keep:1},
+ {tx:'Pay £25 for each cottage you own.',rep:25},
+ {tx:'Everyone chips in for your birthday. Collect £20 from each player.',each:20},
+ {tx:'Your round of drinks. Pay £20 to each player.',eachpay:20}
+];
+function Game(o){
+ var G=this;G.seed=o.seed||((Math.random()*1e9)|0);G.rs=G.seed;G.rng=function(){var a=(G.rs=(G.rs+0x6D2B79F5)|0);var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};G.mode=o.mode||'classic';G.maxRound=o.maxRound||25;G.cash0=o.cash||1500;
+ G.ps=o.players.map(function(p,i){return{id:i,name:p.name,ai:p.ai||null,tok:p.tok||i,cash:G.cash0,pos:0,fog:0,out:false,card:0,doubles:0}});
+ G.own=SQ.map(function(){return -1});G.lvl=SQ.map(function(){return 0});G.mort=SQ.map(function(){return false});
+ G.deck=shuffle(G,CARDS.map(function(c,i){return i}));G.cur=0;G.round=1;G.phase='roll';G.dice=[0,0];G.ev=[];G.over=false;G.winner=-1;G.pendingOffer=-1;
+}
+function shuffle(G,a){for(var i=a.length-1;i>0;i--){var j=Math.floor(G.rng()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+var P=Game.prototype;
+P.P=function(){return this.ps[this.cur]};
+P.hasSet=function(pid,g){return GROUPSIZE[g].every(function(i){return this.own[i]===pid},this)};
+P.cottages=function(pid){var n=0;for(var i=0;i<SQ.length;i++)if(this.own[i]===pid)n+=this.lvl[i];return n};
+P.season=function(){return 1+Math.floor((this.round-1)/10)};
+P.rent=function(i,dt){return this.rent0(i,dt)*this.season()};
+P.rent0=function(i,dt){var s=SQ[i],o=this.own[i];if(o<0||this.mort[i])return 0;
+ if(s.t==='st'){var n=0;SQ.forEach(function(q,k){if(q.t==='st'&&this.own[k]===o&&!this.mort[k])n++},this);return 25*Math.pow(2,n-1)}
+ if(s.t==='ut'){var u=0;SQ.forEach(function(q,k){if(q.t==='ut'&&this.own[k]===o)u++},this);return (u===2?10:4)*dt}
+ if(s.t!=='p')return 0;var l=this.lvl[i];var r=s.base*MULT[l];if(l===0&&this.hasSet(o,s.g))r*=2;return r};
+P.worth=function(pid){var w=this.ps[pid].cash;for(var i=0;i<SQ.length;i++)if(this.own[i]===pid){var s=SQ[i];w+=this.mort[i]?Math.round(s.p/2):s.p;if(s.t==='p')w+=this.lvl[i]*GCOST[s.g]}return w};
+P.emit=function(e){this.ev.push(e);return e};
+P.take=function(){var e=this.ev;this.ev=[];return e};
+P.pay=function(from,to,amt,why){ // to=-1 bank
+ var p=this.ps[from];p.cash-=amt;if(to>=0)this.ps[to].cash+=amt;this.emit({t:'pay',from:from,to:to,amt:amt,why:why});
+ if(p.cash<0)this.raise(from,to)};
+P.raise=function(pid,creditor){ // auto-liquidate
+ var p=this.ps[pid],G=this;
+ while(p.cash<0){var best=-1,bv=0;
+  for(var i=0;i<SQ.length;i++){if(G.own[i]===pid&&SQ[i].t==='p'&&G.lvl[i]>0){best=i;bv=1;break}}
+  if(best>=0){var s=SQ[best];G.lvl[best]--;p.cash+=Math.floor(GCOST[s.g]/2);G.emit({t:'sold',pid:pid,sq:best});continue}
+  for(i=0;i<SQ.length;i++){if(G.own[i]===pid&&!G.mort[i]&&G.lvl[i]===0){if(best<0||SQ[i].p<SQ[best].p)best=i}}
+  if(best>=0){G.mort[best]=true;p.cash+=Math.round(SQ[best].p/2);G.emit({t:'mort',pid:pid,sq:best});continue}
+  break}
+ if(p.cash<0)G.bankrupt(pid,creditor)};
+P.bankrupt=function(pid,creditor){var G=this,p=G.ps[pid];
+ if(creditor>=0)G.ps[creditor].cash+=Math.max(0,p.cash+0); 
+ for(var i=0;i<SQ.length;i++)if(G.own[i]===pid){G.own[i]=creditor>=0?creditor:-1;G.lvl[i]=0;if(creditor<0)G.mort[i]=false}
+ p.out=true;p.cash=0;G.emit({t:'out',pid:pid,to:creditor});
+ var alive=G.ps.filter(function(q){return!q.out});
+ if(alive.length===1){G.over=true;G.winner=alive[0].id;G.emit({t:'win',pid:G.winner})}};
+P.rollDice=function(){var a=1+Math.floor(this.rng()*6),b=1+Math.floor(this.rng()*6);this.dice=[a,b];return[a,b]};
+P.turnStart=function(){var p=this.P();this.phase='roll';p.doubles=0};
+P.doRoll=function(){ // current player rolls; returns events
+ var G=this,p=G.P();if(G.phase!=='roll'||G.over)return[];
+ var d=G.rollDice(),dbl=d[0]===d[1];G.emit({t:'dice',pid:p.id,d:d});
+ if(p.fog>0){
+  if(dbl){p.fog=0;G.emit({t:'fogout',pid:p.id,how:'doubles'});G.move(p,d[0]+d[1],false);return G.land(p,false)}
+  p.fog--;
+  if(p.fog===0){G.pay(p.id,-1,50,'Fog clears: pay £50');if(!p.out)G.move(p,d[0]+d[1],false);return p.out?G.finish():G.land(p,false)}
+  G.emit({t:'stay',pid:p.id,left:p.fog});return G.finish()}
+ if(dbl){p.doubles++;if(p.doubles>=3){G.sendFog(p);return G.finish(true)}}
+ G.move(p,d[0]+d[1],true);return G.land(p,dbl)};
+P.payFog=function(){var p=this.P();if(p.fog>0&&this.phase==='roll'&&p.cash>=50){p.fog=0;this.pay(p.id,-1,50,'Paid £50 to leave the fog');this.emit({t:'fogout',pid:p.id,how:'paid'})}return this.take()};
+P.useCard=function(){var p=this.P();if(p.fog>0&&p.card>0){p.card--;p.fog=0;this.emit({t:'fogout',pid:p.id,how:'card'})}return this.take()};
+P.move=function(p,n,go){var from=p.pos,path=[];for(var k=1;k<=n;k++)path.push((from+k)%40);
+ p.pos=(from+n)%40;if(go&&from+n>=40){p.cash+=200;this.emit({t:'go',pid:p.id,amt:200,by:'pass'})}
+ else if(!go&&from+n>=40){p.cash+=200;this.emit({t:'go',pid:p.id,amt:200,by:'pass'})}
+ this.emit({t:'move',pid:p.id,from:from,to:p.pos,path:path})};
+P.sendFog=function(p){p.pos=10;p.fog=3;this.emit({t:'tofog',pid:p.id})};
+P.land=function(p,dbl){var G=this,s=SQ[p.pos],i=p.pos;G.emit({t:'land',pid:p.id,sq:i});
+ if(s.t==='p'||s.t==='st'||s.t==='ut'){
+  if(G.own[i]<0){G.pendingOffer=i;G.phase='offer';G.pendDbl=dbl;G.emit({t:'offer',pid:p.id,sq:i,price:s.p});
+   if(p.ai){G.aiOffer()}return G.take()}
+  if(G.own[i]!==p.id&&!G.mort[i]){var r=G.rent(i,G.dice[0]+G.dice[1]);G.pay(p.id,G.own[i],r,'Rent on '+s.n)}}
+ else if(s.t==='tax')G.pay(p.id,-1,s.amt,s.n);
+ else if(s.t==='togo'){G.sendFog(p);return G.finish(true)}
+ else if(s.t==='luck')return G.luck(p,dbl);
+ return G.finish(false,dbl)};
+P.luck=function(p,dbl){var G=this;if(!G.deck.length)G.deck=shuffle(G,CARDS.map(function(c,i){return i}));
+ var ci=G.deck.shift(),c=CARDS[ci];G.emit({t:'card',pid:p.id,tx:c.tx});
+ if(c.cash){if(c.cash>0)p.cash+=c.cash;else G.pay(p.id,-1,-c.cash,'Devon Luck')}
+ else if(c.goto!==undefined){var from=p.pos,to=c.goto;if(to<from||to===0){p.cash+=200;G.emit({t:'go',pid:p.id,amt:200,by:'card'})}
+  var path=[];for(var k=(from+1)%40;;k=(k+1)%40){path.push(k);if(k===to)break}p.pos=to;G.emit({t:'move',pid:p.id,from:from,to:to,path:path,fast:true});return G.land2(p,dbl)}
+ else if(c.fog){G.sendFog(p);return G.finish(true)}
+ else if(c.back){var f=p.pos,t2=(f+40-c.back)%40;p.pos=t2;G.emit({t:'move',pid:p.id,from:f,to:t2,path:[t2],fast:true,back:true});return G.land2(p,dbl)}
+ else if(c.keep){p.card++}
+ else if(c.rep){var n=G.cottages(p.id);if(n)G.pay(p.id,-1,n*c.rep,'Cottage repairs')}
+ else if(c.each){G.ps.forEach(function(q){if(q.id!==p.id&&!q.out&&!p.out&&!G.over)G.pay(q.id,p.id,c.each,'Birthday')})}
+ else if(c.eachpay){G.ps.forEach(function(q){if(q.id!==p.id&&!q.out&&!p.out)G.pay(p.id,q.id,c.eachpay,'Round of drinks')})}
+ return G.finish(false,dbl)};
+P.land2=function(p,dbl){var G=this,s=SQ[p.pos];
+ if(s.t==='luck'||s.t==='tax'||s.t==='togo')return G.land(p,dbl);return G.land(p,dbl)};
+P.buy=function(){var G=this,p=G.P(),i=G.pendingOffer;if(G.phase!=='offer'||i<0)return[];var s=SQ[i];
+ if(p.cash<s.p)return G.take();p.cash-=s.p;G.own[i]=p.id;G.emit({t:'buy',pid:p.id,sq:i,price:s.p});G.pendingOffer=-1;G.phase='after';return G.finish(false,G.pendDbl)};
+P.pass=function(){var G=this,i=G.pendingOffer;if(G.phase!=='offer')return[];G.emit({t:'pass',pid:G.cur,sq:i});G.pendingOffer=-1;G.phase='after';return G.finish(false,G.pendDbl)};
+P.fin=function(forceEnd,dbl){var G=this;if(G.over)return;
+ if(G.P().out||forceEnd||!dbl||G.P().fog>0){G.phase='end'}else{G.phase='roll';G.emit({t:'again',pid:G.cur})}};
+P.finish=function(forceEnd,dbl){this.fin(forceEnd,dbl);return this.take()};
+P.canBuild=function(pid,i){var s=SQ[i];if(s.t!=='p'||this.own[i]!==pid||this.mort[i]||this.lvl[i]>=5)return false;if(!this.hasSet(pid,s.g))return false;
+ var gi=GROUPSIZE[s.g];for(var k=0;k<gi.length;k++){if(this.mort[gi[k]])return false;if(this.lvl[gi[k]]<this.lvl[i])return false}
+ return this.ps[pid].cash>=GCOST[s.g]};
+P.build=function(i){var pid=this.cur;if(!this.canBuild(pid,i))return false;this.ps[pid].cash-=GCOST[SQ[i].g];this.lvl[i]++;this.emit({t:'build',pid:pid,sq:i,lvl:this.lvl[i]});return true};
+P.canSell=function(pid,i){var s=SQ[i];if(s.t!=='p'||this.own[i]!==pid||this.lvl[i]<1)return false;var gi=GROUPSIZE[s.g];for(var k=0;k<gi.length;k++)if(this.lvl[gi[k]]>this.lvl[i])return false;return true};
+P.sell=function(i){var pid=this.cur;if(!this.canSell(pid,i))return false;this.lvl[i]--;this.ps[pid].cash+=Math.floor(GCOST[SQ[i].g]/2);this.emit({t:'sold',pid:pid,sq:i});return true};
+P.canMort=function(pid,i){var s=SQ[i];if(this.own[i]!==pid||this.mort[i])return false;if(s.t==='p'){var gi=GROUPSIZE[s.g];for(var k=0;k<gi.length;k++)if(this.lvl[gi[k]]>0)return false}return true};
+P.mortgage=function(i){var pid=this.cur;if(!this.canMort(pid,i))return false;this.mort[i]=true;this.ps[pid].cash+=Math.round(SQ[i].p/2);this.emit({t:'mort',pid:pid,sq:i});return true};
+P.unmortgage=function(i){var pid=this.cur,c=Math.round(SQ[i].p/2*1.1);if(this.own[i]!==pid||!this.mort[i]||this.ps[pid].cash<c)return false;this.ps[pid].cash-=c;this.mort[i]=false;this.emit({t:'unmort',pid:pid,sq:i});return true};
+P.endTurn=function(){var G=this;if(G.over)return G.take();
+ var n=G.ps.length,k=0;do{G.cur=(G.cur+1)%n;if(G.cur===0){G.round++;if(G.mode!=='quick'&&(G.round-1)%10===0)G.emit({t:'season',n:G.season()})}k++}while(G.ps[G.cur].out&&k<=n);
+ if(G.mode==='quick'&&G.round>G.maxRound){G.over=true;var best=-1,bw=-1;G.ps.forEach(function(q){if(!q.out){var w=G.worth(q.id);if(w>bw){bw=w;best=q.id}}});G.winner=best;G.emit({t:'win',pid:best,quick:true});return G.take()}
+ G.turnStart();G.emit({t:'turn',pid:G.cur});return G.take()};
+// ---- AI
+var STYLE={
+ cautious:{reserve:350,build:300,fogPay:false},
+ tycoon:{reserve:120,build:150,fogPay:true},
+ steady:{reserve:220,build:220,fogPay:true}
+};
+P.aiOffer=function(){var G=this,p=G.P(),s=SQ[G.pendingOffer],st=STYLE[p.ai]||STYLE.steady;
+ var want=p.cash-s.p>=st.reserve;
+ if(!want&&s.t==='p'){ // completing a set justifies risk
+  var gi=GROUPSIZE[s.g],mine=gi.filter(function(k){return G.own[k]===p.id}).length;if(mine===gi.length-1&&p.cash-s.p>=40)want=true}
+ if(!want&&s.t==='st'&&p.cash-s.p>=60)want=true;
+ if(G.mode==='quick'&&G.round>G.maxRound-3&&s.p>p.cash*0.5)want=false;
+ if(want&&p.cash>=s.p){p.cash-=s.p;G.own[G.pendingOffer]=p.id;G.emit({t:'buy',pid:p.id,sq:G.pendingOffer,price:s.p})}
+ else G.emit({t:'pass',pid:p.id,sq:G.pendingOffer});
+ G.pendingOffer=-1;G.phase='after';G.fin(false,G.pendDbl)};
+P.aiManage=function(){var G=this,p=G.P(),st=STYLE[p.ai]||STYLE.steady,guard=0;
+ for(var i=0;i<SQ.length;i++)if(G.own[i]===p.id&&G.mort[i]&&p.cash>st.build+Math.round(SQ[i].p*0.55))G.unmortgage(i);
+ var did=true;while(did&&guard++<30){did=false;
+  var cands=[];for(i=0;i<SQ.length;i++)if(G.canBuild(p.id,i)&&p.cash-GCOST[SQ[i].g]>=st.build)cands.push(i);
+  if(cands.length){cands.sort(function(a,b){return SQ[b].p-SQ[a].p});G.build(cands[0]);did=true}}};
+P.aiFog=function(){var p=this.P(),st=STYLE[p.ai]||STYLE.steady;
+ if(p.fog>0){if(p.card>0)this.useCard();else if(st.fogPay&&this.round<12&&p.cash>=400)this.payFog()}};
+P.save=function(){var G=this;return JSON.stringify({ps:G.ps,own:G.own,lvl:G.lvl,mort:G.mort,deck:G.deck,cur:G.cur,round:G.round,phase:G.phase,dice:G.dice,mode:G.mode,maxRound:G.maxRound,cash0:G.cash0,seed:G.seed,rs:G.rs,over:G.over,winner:G.winner,pend:G.pendingOffer,pd:G.pendDbl})};
+Game.load=function(js){var o=JSON.parse(js),G=new Game({players:o.ps.map(function(p){return{name:p.name,ai:p.ai,tok:p.tok}}),seed:o.seed,mode:o.mode,maxRound:o.maxRound,cash:o.cash0});G.ps=o.ps;G.own=o.own;G.lvl=o.lvl;G.mort=o.mort;G.deck=o.deck;G.cur=o.cur;G.round=o.round;G.phase=o.phase;G.dice=o.dice;G.rs=o.rs;G.over=o.over;G.winner=o.winner;G.pendingOffer=o.pend;G.pendDbl=o.pd;return G};
+root.DevonDeal={Game:Game,SQ:SQ,GROUPSIZE:GROUPSIZE,GCOST:GCOST,MULT:MULT};
+})(typeof window!=='undefined'?window:global);
+</script><script>(function(){
+var DD=window.DevonDeal,SQ=DD.SQ,GCOST=DD.GCOST,Game=DD.Game;
+var $=function(id){return document.getElementById(id)};
+var TOK=[
+ {n:'Pasty',c:'#d97a2b',g:'<path d="M3 17q0-11 9-11t9 11z" fill="#fff"/><path d="M5 16q7-3 14 0" stroke="#d97a2b" stroke-width="1.6" fill="none" stroke-dasharray="1.6 1.6"/>'},
+ {n:'Surfboard',c:'#2f8a5b',g:'<ellipse cx="12" cy="12" rx="3.6" ry="10" fill="#fff" transform="rotate(35 12 12)"/><path d="M12 3 12 21" stroke="#2f8a5b" stroke-width="1.4" transform="rotate(35 12 12)"/>'},
+ {n:'Lighthouse',c:'#c8372d',g:'<path d="M9 21 10 8h4l1 13z" fill="#fff"/><path d="M9.6 13h4.8M9.3 17h5.4" stroke="#c8372d" stroke-width="2"/><rect x="9" y="5" width="6" height="3" fill="#fff"/><path d="M12 2v2" stroke="#fff" stroke-width="1.6"/>'},
+ {n:'Steam train',c:'#2a5d8f',g:'<rect x="4" y="9" width="12" height="7" rx="1" fill="#fff"/><rect x="14" y="6" width="6" height="10" fill="#fff"/><rect x="6" y="5" width="3" height="4" fill="#fff"/><circle cx="8" cy="18" r="2" fill="#fff"/><circle cx="16" cy="18" r="2" fill="#fff"/>'},
+ {n:'Seagull',c:'#7a5c9e',g:'<path d="M2 11q5-7 10 0 5-7 10 0-5-2-10 4-5-6-10-4z" fill="#fff"/>'},
+ {n:'Scone',c:'#e0a33a',g:'<ellipse cx="12" cy="15" rx="8" ry="4.5" fill="#fff"/><ellipse cx="12" cy="11" rx="5.5" ry="3.2" fill="#fff"/><circle cx="12" cy="9" r="2.3" fill="#c8372d"/>'},
+ {n:'Crab',c:'#e0603a',cost:100,g:'<ellipse cx="12" cy="14" rx="6.5" ry="4.5" fill="#fff"/><circle cx="5" cy="8" r="2.4" fill="#fff"/><circle cx="19" cy="8" r="2.4" fill="#fff"/><path d="M6.5 11 5 8.5M17.5 11 19 8.5M7 18l-3 2.5M17 18l3 2.5M10 18.5v3M14 18.5v3" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>'},
+ {n:'Dartmoor pony',c:'#8a5a3a',cost:150,g:'<path d="M7 21 9.5 11 8 6l3-2.5 3.2 2.3L17.5 9.5 17 12.5 14 12.5 13.5 21z" fill="#fff"/><circle cx="13.6" cy="8.6" r="1" fill="#8a5a3a"/>'},
+ {n:'Trawler',c:'#1f6f8b',cost:200,g:'<path d="M3 14h18l-3 6H6z" fill="#fff"/><rect x="8" y="9" width="6" height="5" fill="#fff"/><path d="M16 14V5M16 6l4 3-4 2" stroke="#fff" stroke-width="1.6" fill="none"/>'},
+ {n:'Surfer',c:'#00a6a6',cost:250,g:'<path d="M2 19q5-9 11-9 5 0 9 9z" fill="#fff"/><circle cx="14" cy="5.5" r="2.2" fill="#fff"/><path d="M14 8l-2 5M14 8l3 3" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>'},
+ {n:'Puffin',c:'#3b3b4f',cost:300,g:'<ellipse cx="11" cy="13" rx="6" ry="7.5" fill="#fff"/><path d="M13 7q6-1 8 3-5 1-8-1z" fill="#ff8a3d"/><circle cx="10.5" cy="8.5" r="1.2" fill="#3b3b4f"/><path d="M6 14q-2-2 0-5" stroke="#3b3b4f" stroke-width="2" fill="none"/>'}
+];
+function tk(t,cls){return '<span class="'+(cls||'tk')+'" style="background:'+TOK[t].c+'"><svg viewBox="0 0 24 24">'+TOK[t].g+'</svg></span>'}
+var NAMES=['Morwenna','Jago','Tamsin'],STY=['cautious','tycoon','steady'],STYN={cautious:'Careful',tycoon:'Tycoon',steady:'Steady'};
+var G=null,human=0,busy=false,muted=false,AC=null,sel={tok:0,mode:'quick',opp:2};
+try{muted=localStorage.getItem('ddMute')==='1'}catch(e){}
+var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+function sleep(ms){return new Promise(function(r){setTimeout(r,reduce?Math.min(ms,60):ms)})}
+function money(n){return '£'+Math.round(n).toLocaleString('en-GB')}
+
+// ---------- rewards (shares keys with the site's Devon points)
+function st(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,String(v))}catch(e){}return null}
+function ni(k){return parseInt(st(k)||'0',10)||0}
+function js2(k,d){try{return JSON.parse(st(k)||'')||d}catch(e){return d}}
+function dayNo(){return Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5)}
+function balance(){return Math.max(0,ni('devonPts')-ni('ddSpent'))}
+function unl(){var u=js2('ddUnlocked',{});u.tokens=u.tokens||[];u.themes=u.themes||[];return u}
+function isTokOpen(i){return !TOK[i].cost||unl().tokens.indexOf(i)>-1}
+var THEMES=[{k:'summer',n:'Summer evening',cost:0},{k:'winter',n:'Winter on the moor',cost:350},{k:'night',n:'Night harbour',cost:450}];
+function themeOpen(k){var t=THEMES.filter(function(x){return x.k===k})[0];return !t.cost||unl().themes.indexOf(k)>-1}
+function curTheme(){var t=st('ddTheme')||'summer';return themeOpen(t)?t:'summer'}
+function applyTheme(){var b=$('board');if(!b)return;b.classList.remove('th-winter','th-night');var t=curTheme();if(t!=='summer')b.classList.add('th-'+t)}
+function spend(n){st('ddSpent',ni('ddSpent')+n)}
+function dpAward(g,base){ // same bookkeeping as the site's DP.award
+ var day=dayNo(),bonus=0,wb=0;
+ if(st('devonDay')!==String(day)){bonus=10;st('devonDay',day);var sd=ni('devonStreakDay'),sn=ni('devonStreak');sn=(sd===day-1)?sn+1:1;st('devonStreak',sn);st('devonStreakDay',day);bonus+=Math.min(25,(sn-1)*5)}
+ if(!st('devonFirst')){wb=25;st('devonFirst','1')}
+ var tot=base+bonus+wb;st('devonPts',ni('devonPts')+tot);st('devonAwards',ni('devonAwards')+1);
+ var pl=js2('devonPlayed',{});pl[g]=1;st('devonPlayed',JSON.stringify(pl));
+ var bp=js2('devonBestPts',{});if(base>(bp[g]||0)){bp[g]=base;st('devonBestPts',JSON.stringify(bp))}
+ var b=js2('devonBadges',{});if(!b.first){b.first=1;st('devonBadges',JSON.stringify(b))}
+ return{tot:tot,bonus:bonus,wb:wb,streak:ni('devonStreak')}}
+// ---------- sound
+function snd(f,d,type,v,delay){if(muted)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+(delay||0);o.type=type||'sine';o.frequency.value=f;g.gain.setValueAtTime(v||.08,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d)}catch(e){}}
+var S={tick:function(){snd(520,.05,'triangle',.05)},dice:function(){for(var i=0;i<5;i++)snd(180+Math.random()*120,.05,'square',.04,i*.07)},coin:function(){snd(988,.08,'square',.05);snd(1319,.18,'square',.05,.08)},pay:function(){snd(330,.12,'sawtooth',.05);snd(220,.2,'sawtooth',.05,.1)},buy:function(){snd(523,.1,'triangle',.08);snd(659,.1,'triangle',.08,.1);snd(784,.22,'triangle',.08,.2)},build:function(){snd(392,.08,'square',.05);snd(523,.14,'square',.05,.09)},card:function(){snd(660,.08,'triangle',.07);snd(880,.16,'triangle',.07,.08)},win:function(){[523,659,784,1047].forEach(function(f,i){snd(f,.3,'triangle',.09,i*.14)})},fog:function(){snd(140,.4,'sine',.08)}};
+// ---------- board
+var C=1.55,U=100/(9+2*C);
+function pos(i){var cw=C*U,uw=U;
+ if(i===0)return{x:100-cw,y:100-cw,w:cw,h:cw,s:'c'};
+ if(i<10)return{x:100-cw-i*uw,y:100-cw,w:uw,h:cw,s:'b'};
+ if(i===10)return{x:0,y:100-cw,w:cw,h:cw,s:'c'};
+ if(i<20)return{x:0,y:100-cw-(i-10)*uw,w:cw,h:uw,s:'l'};
+ if(i===20)return{x:0,y:0,w:cw,h:cw,s:'c'};
+ if(i<30)return{x:cw+(i-21)*uw,y:0,w:uw,h:cw,s:'t'};
+ if(i===30)return{x:100-cw,y:0,w:cw,h:cw,s:'c'};
+ return{x:100-cw,y:cw+(i-31)*uw,w:cw,h:uw,s:'r'}}
+var tiles=[],toks=[];
+function buildBoard(){
+ var g=$('grid');g.innerHTML='';tiles=[];toks=[];
+ var c=document.createElement('div');c.id='centre';c.style.cssText='left:'+C*U+'%;top:'+C*U+'%;right:'+C*U+'%;bottom:'+C*U+'%';
+ c.innerHTML=SCENE+'<div id="title"><span>DEVON</span><span>DEAL</span></div><div id="tag">Buy it. Own it. Charge for the view.</div><div id="dice"><div class="die" id="d1"></div><div class="die" id="d2"></div></div><div id="bannerc"></div>';
+ g.appendChild(c);
+ SQ.forEach(function(s,i){var p=pos(i),d=document.createElement('div');d.className='tile';d.style.cssText='left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%';
+  d.setAttribute('role','button');d.setAttribute('aria-label',s.n);d.tabIndex=0;
+  var card=document.createElement('div');card.className='card';var inner=document.createElement('div');inner.className='in '+(p.s==='c'?'b':p.s);
+  var band=s.t==='p'?'<div class="band" id="bd'+i+'" style="background:'+window.GROUPS[s.g].c+'"></div>':'';
+  var price=s.p?'<div class="pr">£'+s.p+'</div>':(s.amt?'<div class="pr">Pay £'+s.amt+'</div>':'');
+  inner.innerHTML=band+'<div class="body">'+window.icon(s.ic)+'<div class="nm">'+s.n+'</div>'+price+'</div>';
+  if(s.t==='go')card.style.background='linear-gradient(160deg,#ffd35e,#e59a1c)';
+  if(s.t==='fog'||s.t==='togo')card.style.background='linear-gradient(160deg,#a9b8b4,#74867f)';
+  if(s.t==='tea')card.style.background='linear-gradient(160deg,#ffd9bd,#f09a78)';
+  card.appendChild(inner);var ob=document.createElement('div');ob.className='ownbar';ob.id='ob'+i;card.appendChild(ob);d.appendChild(card);g.appendChild(d);tiles.push(d);
+  d.addEventListener('click',function(){showProp(i)});d.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showProp(i)}});
+ });
+ G.ps.forEach(function(p){var t=document.createElement('div');t.className='tok';t.id='tok'+p.id;t.style.background=TOK[p.tok].c;t.innerHTML='<svg viewBox="0 0 24 24">'+TOK[p.tok].g+'</svg>';g.appendChild(t);toks[p.id]=t;placeTok(p.id,p.pos)});
+ for(var i=0;i<40;i++)refreshTile(i);applyTheme();
+}
+function placeTok(pid,sq,hop){var p=pos(sq),t=toks[pid];if(!t)return;
+ var offs=p.s==='c'?[[-.3,-.36],[.3,-.36],[-.3,-.08],[.3,-.08]]:[[-.26,-.2],[.26,-.2],[-.26,.28],[.26,.28]],o=offs[pid%4];
+ // spread by index among players currently on this square
+ t.style.left=(p.x+p.w/2+o[0]*p.w*.9)+'%';t.style.top=(p.y+p.h/2+o[1]*p.h*.9+(p.s==='c'?0:0))+'%'}
+function refreshTile(i){var s=SQ[i],d=tiles[i],o=G.own[i];
+ d.classList.toggle('mort',!!G.mort[i]);
+ var ob=$('ob'+i);if(o>=0){ob.style.background=TOK[G.ps[o].tok].c;ob.style.boxShadow='0 -1px 3px rgba(0,0,0,.35)'}else{ob.style.background='none';ob.style.boxShadow='none'}
+ var bd=$('bd'+i);if(bd){bd.innerHTML='';var l=G.lvl[i];if(l===5)bd.innerHTML='<i class="cot inn"></i>';else for(var k=0;k<l;k++)bd.innerHTML+='<i class="cot"></i>'}}
+function hl(i){var d=tiles[i];d.classList.remove('hl');void d.offsetWidth;d.classList.add('hl')}
+// ---------- dice faces
+var PIPS={1:[[50,50]],2:[[28,28],[72,72]],3:[[28,28],[50,50],[72,72]],4:[[28,28],[72,28],[28,72],[72,72]],5:[[28,28],[72,28],[50,50],[28,72],[72,72]],6:[[28,24],[72,24],[28,50],[72,50],[28,76],[72,76]]};
+function face(el,n){el.innerHTML=PIPS[n].map(function(p){return '<i class="pip" style="left:'+p[0]+'%;top:'+p[1]+'%"></i>'}).join('')}
+async function tumble(d){var a=$('d1'),b=$('d2');a.classList.add('show','roll');b.classList.add('show','roll');S.dice();
+ for(var i=0;i<7;i++){face(a,1+(Math.random()*6|0));face(b,1+(Math.random()*6|0));await sleep(90)}
+ a.classList.remove('roll');b.classList.remove('roll');face(a,d[0]);face(b,d[1])}
+// ---------- players panel
+function refreshPlayers(){var h='';G.ps.forEach(function(p){h+='<div class="pl'+(p.id===G.cur&&!G.over?' cur':'')+(p.out?' out':'')+'">'+tk(p.tok)+'<div style="min-width:0"><b>'+esc(p.name)+'</b><span>'+money(p.cash)+'</span><small>'+(p.out?'Out of the game':'Worth '+money(G.worth(p.id))+(p.fog?' · in fog':''))+'</small></div></div>'});
+ $('players').innerHTML=h;
+ $('rnd').textContent=G.mode==='quick'?'Round '+Math.min(G.round,G.maxRound)+' of '+G.maxRound:'Round '+G.round+(G.season()>1?' · peak season ×'+G.season():'');
+ G.ps.forEach(function(p){if(toks[p.id]){toks[p.id].classList.toggle('act',p.id===G.cur&&!G.over);toks[p.id].style.opacity=p.out?'0':'1'}})}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function log(t){var l=$('log'),d=document.createElement('div');d.textContent=t;l.insertBefore(d,l.firstChild);while(l.children.length>40)l.removeChild(l.lastChild)}
+function banner(t){var b=$('bannerc');b.textContent=t}
+function float(pid,txt,col){var t=toks[pid];if(!t)return;var r=t.getBoundingClientRect(),f=document.createElement('div');f.className='float';f.textContent=txt;f.style.color=col;f.style.left=(r.left+r.width/2-20)+'px';f.style.top=(r.top-10)+'px';document.body.appendChild(f);setTimeout(function(){f.remove()},1250)}
+// ---------- event playback
+async function play(events){
+ for(var k=0;k<events.length;k++){var e=events[k],p=e.pid!==undefined&&e.pid>=0?G.ps[e.pid]:null;
+  switch(e.t){
+  case'turn':refreshPlayers();banner(G.P().name+(G.P().ai?'':', your go'));break;
+  case'dice':await tumble(e.d);log(p.name+' rolled '+(e.d[0]+e.d[1])+(e.d[0]===e.d[1]?' (doubles)':''));banner(p.name+' rolled '+(e.d[0]+e.d[1]));await sleep(220);break;
+  case'move':await hop(e);break;
+  case'go':S.coin();float(e.pid,'+£'+e.amt,'#ffe08a');log(p.name+' collected £'+e.amt+(e.by==='pass'?' passing Start':''));refreshPlayers();break;
+  case'land':hl(e.sq);banner(p.name+' landed on '+SQ[e.sq].n);await sleep(260);break;
+  case'pay':S.pay();if(e.from>=0)float(e.from,'-'+money(e.amt),'#ff8a7a');if(e.to>=0){float(e.to,'+'+money(e.amt),'#ffe08a')}log((e.from>=0?G.ps[e.from].name:'Everyone')+' paid '+money(e.amt)+(e.to>=0?' to '+G.ps[e.to].name:'')+' — '+e.why);refreshPlayers();await sleep(380);break;
+  case'buy':S.buy();refreshTile(e.sq);log(p.name+' bought '+SQ[e.sq].n+' for '+money(e.price));refreshPlayers();await sleep(300);break;
+  case'pass':log(p.name+' passed on '+SQ[e.sq].n);break;
+  case'card':S.card();log('Devon Luck: '+e.tx);await showCard(e.tx,!p.ai);break;
+  case'tofog':S.fog();log(p.name+' is lost in the fog');placeTok(p.id,10);refreshPlayers();await sleep(500);break;
+  case'fogout':log(p.name+' left the fog ('+e.how+')');refreshPlayers();break;
+  case'stay':log(p.name+' is still in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left)');await sleep(300);break;
+  case'build':S.build();refreshTile(e.sq);log(p.name+' built on '+SQ[e.sq].n);refreshPlayers();await sleep(220);break;
+  case'sold':refreshTile(e.sq);log(p.name+' sold a cottage on '+SQ[e.sq].n);refreshPlayers();break;
+  case'mort':refreshTile(e.sq);log(p.name+' mortgaged '+SQ[e.sq].n);refreshPlayers();break;
+  case'unmort':refreshTile(e.sq);log(p.name+' paid off the mortgage on '+SQ[e.sq].n);refreshPlayers();break;
+  case'out':log(p.name+' is out of the game');refreshPlayers();for(var i=0;i<40;i++)refreshTile(i);await sleep(500);break;
+  case'again':log(p.name+' rolls again');break;
+  case'season':log('Peak season! Rents are now ×'+e.n);banner('Peak season: rents ×'+e.n);await sleep(700);break;
+  case'win':break;
+  }}
+ refreshPlayers();
+}
+async function hop(e){var p=G.ps[e.pid],t=toks[e.pid];
+ if(e.fast){t.classList.add('hop');placeTok(e.pid,e.to);await sleep(420);t.classList.remove('hop');return}
+ for(var i=0;i<e.path.length;i++){t.classList.add('hop');placeTok(e.pid,e.path[i]);S.tick();await sleep(120);t.classList.remove('hop');await sleep(25)}
+ await sleep(120)}
+// ---------- modals
+function ov(html,cls){var o=$('ov');o.innerHTML='<div class="sheet '+(cls||'')+'">'+html+'</div>';o.classList.add('on');return o.firstChild}
+function closeOv(){var o=$('ov');o.classList.remove('on');o.innerHTML=''}
+function showCard(tx,wait){return new Promise(function(res){
+ var s=ov('<p style="font-weight:700;color:#f3dc9a;font-size:12px">DEVON LUCK</p><div class="lcard">'+esc(tx)+'</div>'+(wait?'<div class="actions"><button class="btn" id="ok">OK</button></div>':''));
+ if(wait){$('ok').focus();$('ok').onclick=function(){closeOv();res()}}else setTimeout(function(){closeOv();res()},reduce?100:1900)})}
+function propHTML(i,full){var s=SQ[i],gc=s.t==='p'?window.GROUPS[s.g].c:'#17324d',o=G.own[i];
+ var h='<div class="pcard"><div class="hd" style="background:'+gc+'">'+window.icon(s.ic,44)+'<div>'+esc(s.n)+(s.t==='p'?'<div style="font-weight:600;font-size:12px;opacity:.9">'+window.GROUPS[s.g].n+'</div>':'')+'</div></div><table>';
+ if(s.t==='p'){var b=s.base;h+='<tr><td>Price</td><td>£'+s.p+'</td></tr><tr><td>Rent</td><td>£'+b+'</td></tr><tr><td>Rent with the whole set</td><td>£'+b*2+'</td></tr>';
+  [1,2,3,4].forEach(function(k){h+='<tr><td>With '+k+' cottage'+(k>1?'s':'')+'</td><td>£'+b*DD.MULT[k]+'</td></tr>'});h+='<tr><td>With an inn</td><td>£'+b*DD.MULT[5]+'</td></tr><tr><td>Cottage costs</td><td>£'+GCOST[s.g]+'</td></tr>'}
+ else if(s.t==='st')h+='<tr><td>Price</td><td>£'+s.p+'</td></tr><tr><td>1 station</td><td>£25</td></tr><tr><td>2 stations</td><td>£50</td></tr><tr><td>3 stations</td><td>£100</td></tr><tr><td>4 stations</td><td>£200</td></tr>';
+ else if(s.t==='ut')h+='<tr><td>Price</td><td>£'+s.p+'</td></tr><tr><td>Own one</td><td>4 × dice</td></tr><tr><td>Own both</td><td>10 × dice</td></tr>';
+ else if(s.t==='tax')h+='<tr><td>You pay</td><td>£'+s.amt+'</td></tr>';
+ else if(s.t==='go')h+='<tr><td colspan="2">Collect £200 every time you pass.</td></tr>';
+ else if(s.t==='fog')h+='<tr><td colspan="2">Lost in the fog: wait up to 3 turns, roll doubles, pay £50 or use a card to leave.</td></tr>';
+ else if(s.t==='togo')h+='<tr><td colspan="2">The fog rolls in. Go to Lost in the fog.</td></tr>';
+ else if(s.t==='luck')h+='<tr><td colspan="2">Take a Devon Luck card.</td></tr>';
+ else if(s.t==='tea')h+='<tr><td colspan="2">A quiet cream tea. Nothing happens.</td></tr>';
+ h+='</table>';
+ if(o>=0)h+='<div class="own">Owned by '+esc(G.ps[o].name)+(G.mort[i]?' (mortgaged)':'')+(SQ[i].t==='p'&&G.lvl[i]?' · '+(G.lvl[i]===5?'inn':G.lvl[i]+' cottage'+(G.lvl[i]>1?'s':'')):'')+'</div>';
+ return h+'</div>'}
+function showProp(i){var s=SQ[i],me=G.ps[human],can=!G.over&&G.cur===human&&(G.phase==='roll'||G.phase==='end')&&!busy;
+ var h='<div class="actions" style="margin-top:6px">';
+ if(can&&G.own[i]===human&&(s.t==='p'||s.t==='st'||s.t==='ut')){
+  if(s.t==='p'){h+='<button class="btn" id="a-b"'+(G.canBuild(human,i)?'':' disabled')+'>Build £'+GCOST[s.g]+'</button><button class="btn alt" id="a-s"'+(G.canSell(human,i)?'':' disabled')+'>Sell £'+Math.floor(GCOST[s.g]/2)+'</button>'}
+  if(G.mort[i])h+='<button class="btn alt" id="a-u"'+(me.cash>=Math.round(s.p/2*1.1)?'':' disabled')+'>Pay off £'+Math.round(s.p/2*1.1)+'</button>';
+  else h+='<button class="btn alt" id="a-m"'+(G.canMort(human,i)?'':' disabled')+'>Mortgage £'+Math.round(s.p/2)+'</button>'}
+ h+='<button class="btn alt" id="a-c">Close</button></div>';
+ ov(propHTML(i)+h);
+ var run=async function(fn){fn();var ev=G.take();closeOv();await play(ev);refreshTile(i);refreshPlayers();save();showProp(i)};
+ if($('a-b'))$('a-b').onclick=function(){run(function(){G.build(i)})};
+ if($('a-s'))$('a-s').onclick=function(){run(function(){G.sell(i)})};
+ if($('a-m'))$('a-m').onclick=function(){run(function(){G.mortgage(i)})};
+ if($('a-u'))$('a-u').onclick=function(){run(function(){G.unmortgage(i)})};
+ $('a-c').onclick=closeOv}
+function showMine(){var h='<h2>Your properties</h2><p>Tap one to build, sell or mortgage.</p>',n=0;
+ for(var i=0;i<40;i++)if(G.own[i]===human){n++;var s=SQ[i],c=s.t==='p'?window.GROUPS[s.g].c:'#17324d';h+='<div class="row" data-i="'+i+'" style="cursor:pointer"><span class="dot" style="background:'+c+'"></span><span class="nm2">'+esc(s.n)+(G.mort[i]?' (mortgaged)':'')+'</span><span>'+(s.t==='p'&&G.lvl[i]?G.lvl[i]===5?'inn':G.lvl[i]+' cottage'+(G.lvl[i]>1?'s':''):'')+'</span></div>'}
+ if(!n)h+='<p style="margin-top:12px">You don\'t own anything yet. Buy a place when you land on it.</p>';
+ h+='<div class="actions"><button class="btn alt" id="x">Close</button></div>';var s2=ov(h);
+ s2.querySelectorAll('.row').forEach(function(r){r.onclick=function(){showProp(+r.dataset.i)}});$('x').onclick=closeOv}
+// ---------- flow
+function setDock(mode,extra){var a=$('actions'),p=G.P();
+ $('turnname').textContent=p.name+(p.ai?' ('+STYN[p.ai]+')':'');
+ $('turntk').innerHTML=tk(p.tok,'tk');
+ $('turnsub').textContent=extra||(p.ai?'Thinking…':'Your turn');
+ a.innerHTML='';
+ if(mode==='roll'){var b=btn('Roll the dice','btn',function(){humanRoll()});a.appendChild(b);b.focus&&b.focus();
+  if(p.fog>0){if(p.cash>=50)a.appendChild(btn('Pay £50 to leave','btn alt',function(){humanFog()}));if(p.card>0)a.appendChild(btn('Use fog card','btn alt',function(){humanCard()}))}
+  a.appendChild(btn('My properties','btn alt',showMine))}
+ if(mode==='end'){var e=btn('End turn','btn',function(){humanEnd()});a.appendChild(e);a.appendChild(btn('My properties','btn alt',showMine))}}
+function btn(t,c,f){var b=document.createElement('button');b.className=c;b.textContent=t;b.onclick=f;return b}
+async function humanRoll(){if(busy)return;busy=true;$('actions').innerHTML='';var ev=G.doRoll();await play(ev);busy=false;await after()}
+async function humanFog(){var ev=G.payFog();busy=true;await play(ev);busy=false;setDock('roll')}
+async function humanCard(){var ev=G.useCard();busy=true;await play(ev);busy=false;setDock('roll')}
+async function humanEnd(){if(busy)return;busy=true;$('actions').innerHTML='';busy=false;await next()}
+async function after(){
+ if(G.over)return finish();
+ var p=G.P();save();
+ if(G.phase==='offer'){showOffer();return}
+ if(G.phase==='roll'){if(p.ai){busy=true;await sleep(450);G.aiManage();await play(G.take());busy=false;await aiRoll();return}setDock('roll','Doubles! Roll again');return}
+ if(G.phase==='end'){if(p.ai){G.aiManage();await play(G.take());await sleep(450);await next();return}setDock('end','Anything to build or mortgage?');return}
+}
+function showOffer(){var i=G.pendingOffer,s=SQ[i],me=G.ps[human],ok=me.cash>=s.p;
+ var o=ov('<h2>Buy '+esc(s.n)+'?</h2><p>You have '+money(me.cash)+'.'+(ok?'':' You can\'t afford it.')+'</p>'+propHTML(i)+'<div class="actions"><button class="btn" id="by"'+(ok?'':' disabled')+'>Buy for £'+s.p+'</button><button class="btn alt" id="ps">Pass</button></div>');
+ $('by').onclick=async function(){closeOv();busy=true;await play(G.buy());busy=false;await after()};
+ $('ps').onclick=async function(){closeOv();busy=true;await play(G.pass());busy=false;await after()}}
+async function next(){busy=true;var ev=G.endTurn();await play(ev);busy=false;save();if(G.over)return finish();await turn()}
+async function aiRoll(){busy=true;var ev=G.doRoll();await play(ev);busy=false;await after()}
+async function turn(){
+ if(G.over)return finish();var p=G.P();refreshPlayers();
+ if(p.ai){setDock('none');busy=true;await sleep(500);G.aiFog();await play(G.take());G.aiManage();await play(G.take());busy=false;await aiRoll()}
+ else{banner(p.name+', your go');setDock('roll')}}
+function finish(){clearSave();play([]);S.win();confetti();
+ var meP=G.ps[human],gain=15+(G.winner===human?(G.mode==='quick'?45:80):0)+Math.min(60,Math.max(0,Math.floor((G.worth(human)-G.cash0)/40))),aw=dpAward('deal',gain);
+ var order=G.ps.slice().sort(function(a,b){return G.worth(b.id)-G.worth(a.id)}),w=G.ps[G.winner],mine=G.winner===human;
+ var h='<h2>'+(mine?'You won Devon Deal!':esc(w.name)+' wins')+'</h2><p>'+(G.mode==='quick'?'After '+G.maxRound+' rounds, the richest player wins.':'The last player standing wins.')+'</p>';
+ order.forEach(function(p,k){h+='<div class="row">'+tk(p.tok)+'<span class="nm2"><b>'+(k+1)+'. '+esc(p.name)+'</b></span><b>'+(p.out?'Out':money(G.worth(p.id)))+'</b></div>'});
+ var txt=mine?'I just won Devon Deal with '+money(G.worth(human))+' in '+Math.min(G.round,G.maxRound)+' rounds. Can you beat me?':'I just played Devon Deal, a free Devon board game. Can you beat the computer?';
+ var url='https://justdevon.co.uk/devon-deal/?ref=share';
+ h+='<p style="margin-top:10px;font-weight:800;color:#ffe08a">+'+aw.tot+' Devon points'+(aw.bonus?' (includes '+aw.bonus+' daily bonus)':'')+(aw.wb?' (+25 welcome bonus)':'')+'. You can spend them on new pieces.</p>';
+ h+='<div class="actions"><button class="btn" id="sh">Share your result</button><button class="btn alt" id="wa">WhatsApp</button></div><div class="actions"><button class="btn alt" id="again">Play again</button></div>';
+ ov(h);
+ $('sh').onclick=function(){if(window.jdShare)window.jdShare('Devon Deal',txt,url);else if(navigator.share)navigator.share({title:'Devon Deal',text:txt,url:url}).catch(function(){})};
+ $('wa').onclick=function(){window.open('https://wa.me/?text='+encodeURIComponent(txt+' '+url),'_blank')};
+ $('again').onclick=function(){closeOv();showSetup()}}
+function confetti(){if(reduce)return;var cols=['#ffe08a','#c8372d','#2f8a5b','#4a90a8','#fff'];for(var i=0;i<60;i++){var c=document.createElement('i');c.className='conf';c.style.left=Math.random()*100+'vw';c.style.background=cols[i%5];c.style.animationDelay=Math.random()*.8+'s';c.style.animationDuration=2+Math.random()*1.6+'s';document.body.appendChild(c);setTimeout(function(c){return function(){c.remove()}}(c),4500)}}
+// ---------- save
+function save(){try{localStorage.setItem('ddSave',JSON.stringify({g:G.save(),h:human}))}catch(e){}}
+function clearSave(){try{localStorage.removeItem('ddSave')}catch(e){}}
+function loadSave(){try{var s=JSON.parse(localStorage.getItem('ddSave')||'null');return s}catch(e){return null}}
+// ---------- setup
+function showSetup(){var sv=loadSave(),bal=balance();
+ var h='<h2>Devon Deal</h2><p>Buy Devon\'s best places, build cottages and charge rent. Beat the computer players.</p><div class="lbl">Choose your piece <span style="float:right;color:#ffe08a">'+bal+' points to spend</span></div><div class="choice" id="ct">';
+ TOK.forEach(function(t,i){var open=isTokOpen(i);if(!open&&sel.tok===i)sel.tok=0;h+='<button data-t="'+i+'" class="'+(sel.tok===i?'sel':'')+'" '+(open?'':'style="opacity:.8"')+'>'+tk(i)+t.n+(open?'':'<small style="color:#ffe08a">Unlock '+t.cost+' pts</small>')+'</button>'});
+ h+='</div><div class="lbl">Board look</div><div class="seg" id="sth">';
+ THEMES.forEach(function(t){var o=themeOpen(t.k);h+='<button data-th="'+t.k+'" class="'+(curTheme()===t.k?'sel':'')+'">'+t.n+(o?'':'<br><small style="color:#ffe08a">Unlock '+t.cost+' pts</small>')+'</button>'});
+ h+='</div><div class="lbl">Game length</div><div class="seg" id="sm"><button data-m="quick" class="'+(sel.mode==='quick'?'sel':'')+'">Quick<br><small>25 rounds</small></button><button data-m="classic" class="'+(sel.mode==='classic'?'sel':'')+'">Classic<br><small>Last one standing</small></button></div>';
+ h+='<div class="lbl">Opponents</div><div class="seg" id="so">';[1,2,3].forEach(function(n){h+='<button data-o="'+n+'" class="'+(sel.opp===n?'sel':'')+'">'+n+'</button>'});h+='</div>';
+ h+='<p id="smsg" style="min-height:20px;color:#ffe08a;font-size:13px;margin-top:6px" aria-live="polite"></p><div class="actions"><button class="btn" id="go">Start game</button></div>'+(sv?'<div class="actions"><button class="btn alt" id="cont">Continue saved game</button></div>':'');
+ ov(h);var msg=function(t){$('smsg').textContent=t};
+ $('ct').querySelectorAll('button').forEach(function(b){b.onclick=function(){var i=+b.dataset.t;
+  if(!isTokOpen(i)){var c=TOK[i].cost;if(balance()>=c){spend(c);var u=unl();u.tokens.push(i);st('ddUnlocked',JSON.stringify(u));S.buy();sel.tok=i;showSetup();setTimeout(function(){var m=$('smsg');if(m)m.textContent=TOK[i].n+' unlocked!'},30);return}
+   msg('You need '+(c-balance())+' more points for the '+TOK[i].n+'. Play any game on the site to earn them.');return}
+  sel.tok=i;$('ct').querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b)})}});
+ $('sth').querySelectorAll('button').forEach(function(b){b.onclick=function(){var k=b.dataset.th,t=THEMES.filter(function(x){return x.k===k})[0];
+  if(!themeOpen(k)){if(balance()>=t.cost){spend(t.cost);var u=unl();u.themes.push(k);st('ddUnlocked',JSON.stringify(u));st('ddTheme',k);S.buy();applyTheme();showSetup();setTimeout(function(){var m=$('smsg');if(m)m.textContent=t.n+' unlocked!'},30);return}
+   msg('You need '+(t.cost-balance())+' more points for '+t.n+'.');return}
+  st('ddTheme',k);applyTheme();$('sth').querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b)})}});
+ $('sm').querySelectorAll('button').forEach(function(b){b.onclick=function(){sel.mode=b.dataset.m;$('sm').querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b)})}});
+ $('so').querySelectorAll('button').forEach(function(b){b.onclick=function(){sel.opp=+b.dataset.o;$('so').querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b)})}});
+ $('go').onclick=function(){closeOv();newGame()};
+ if(sv)$('cont').onclick=function(){closeOv();resume(sv)}}
+function newGame(){var used=[sel.tok],others=TOK.map(function(t,i){return i}).filter(function(i){return i!==sel.tok});
+ var pl=[{name:'You',ai:null,tok:sel.tok}];for(var k=0;k<sel.opp;k++)pl.push({name:NAMES[k],ai:STY[k],tok:others[k]});
+ G=new Game({players:pl,mode:sel.mode,maxRound:25});human=0;$('log').innerHTML='';buildBoard();log('New game. Good luck!');refreshPlayers();save();turn()}
+function resume(sv){G=Game.load(sv.g);human=sv.h;$('log').innerHTML='';buildBoard();log('Game restored.');refreshPlayers();
+ if(G.phase==='offer'&&!G.P().ai)showOffer();else if(G.P().ai)turn();else if(G.phase==='end')setDock('end');else setDock('roll')}
+// ---------- init
+window.DDStart=function(){
+ $('mute').textContent=muted?'Sound off':'Sound on';
+ $('mute').onclick=function(){muted=!muted;try{localStorage.setItem('ddMute',muted?'1':'0')}catch(e){}$('mute').textContent=muted?'Sound off':'Sound on'};
+ $('newg').onclick=function(){showSetup()};
+ G=new Game({players:[{name:'You',tok:0},{name:'Morwenna',tok:1,ai:'cautious'}],seed:7});buildBoard();refreshPlayers();$('turnname').textContent='Welcome';$('turnsub').textContent='Choose a piece and start';
+ showSetup()};
+window.DDS={get G(){return G},play:play,S:S};
+})();
+</script><script>DDStart()</script><script>(function(){try{var H=location.hostname;if(/^(localhost|127\.|\[::1\])/.test(H)||location.protocol==='file:')return;try{var u=location.search||'';if(/[?&]notme(=|&|$)/.test(u)){var off=/notme=off/.test(u);if(off)localStorage.removeItem('jd_skip');else localStorage.setItem('jd_skip','1');var t=document.createElement('div');t.textContent=off?'Your visits are being counted again on this device.':'Done. Your visits are no longer counted on this device.';t.style.cssText='position:fixed;left:12px;right:12px;bottom:18px;z-index:99999;background:#06223a;color:#fff;padding:14px 16px;border-radius:12px;font:600 16px/1.3 system-ui,sans-serif;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.35)';document.body?document.body.appendChild(t):addEventListener('DOMContentLoaded',function(){document.body.appendChild(t)});setTimeout(function(){t.remove()},6000)}if(localStorage.getItem('jd_skip')==='1')return}catch(e){}function hit(){try{var q='p='+encodeURIComponent(location.pathname||'/')+'&t='+encodeURIComponent(document.title||'')+'&r='+encodeURIComponent(((/[?&](?:ref|utm_source)=([^&]+)/.exec(location.search)||[])[1])||document.referrer||'')+'&s='+[screen.width,screen.height,window.devicePixelRatio||1].join(',')+'&rnd='+Math.random().toString(36).slice(2);new Image().src='https://exmoregold2000.goatcounter.com/count?'+q}catch(e){}}if(document.readyState==='complete')hit();else addEventListener('load',hit)}catch(e){}})();</script></body></html>
