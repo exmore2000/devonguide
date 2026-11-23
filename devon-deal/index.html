@@ -544,7 +544,7 @@ function buildBoard(){
  for(var i=0;i<40;i++)refreshTile(i);applyTheme();
 }
 var camOn=false,lastCash={};function camWrap(){var b=$('board');if(!b||b.parentNode.id==='bwrap')return b;var w=document.createElement('div');w.id='bwrap';b.parentNode.insertBefore(w,b);w.appendChild(b);return b}
-function camTo(pid,z){var b=camWrap(),t=toks[pid];if(!b||!t)return;var x=parseFloat(t.style.left)||50,y=parseFloat(t.style.top)||50;b.style.transformOrigin=x+'% '+y+'%';b.classList.add('zm');b.style.transform='scale('+(z||(b.offsetWidth<560?2.3:2))+')';camOn=true}
+function camTo(pid,z){var b=camWrap(),t=toks[pid];if(!b||!t)return;var x=parseFloat(t.style.left)||50,y=parseFloat(t.style.top)||50;b.style.transformOrigin=x+'% '+y+'%';b.classList.add('zm');b.style.transform='scale('+(z||(b.offsetWidth<560?2.3:1.6))+')';camOn=true}
 function camOut(){var b=$('board');if(b){b.style.transform='scale(1)';b.classList.remove('zm')}camOn=false}
 function ripple(pid){var t=toks[pid],g=$('grid');if(!t||!g)return;var r=document.createElement('i');r.className='rip';r.style.left=t.style.left;r.style.top=t.style.top;g.appendChild(r);setTimeout(function(){r.remove()},900)}
 function tween(el,from,to){if(!el||from===to||reduce){if(el)el.textContent=money(to);return}var t0=performance.now();(function f(n){var k=Math.min(1,(n-t0)/550),e=1-Math.pow(1-k,3);el.textContent=money(Math.round(from+(to-from)*e));if(k<1)requestAnimationFrame(f)})(t0)}
@@ -590,14 +590,14 @@ async function play(events){
   case'dice':camTo(e.pid,1.45);await tumble(e.d);log(p.name+' rolled '+(e.d[0]+e.d[1])+(e.d[0]===e.d[1]?' (doubles)':''));banner(p.name+' rolled '+(e.d[0]+e.d[1]));await sleep(650);break;
   case'move':await hop(e);break;
   case'go':S.coin();cashRoll(-1,e.pid,true);float(e.pid,'+£'+e.amt,'#ffe08a');log(p.name+' collected £'+e.amt+(e.by==='pass'?' passing Start':''));refreshPlayers();break;
-  case'land':hl(e.sq);ripple(e.pid);camTo(e.pid,(window.innerWidth<760?2.6:2.2));banner(p.name+' landed on '+SQ[e.sq].n);await sleep(520);break;
+  case'land':hl(e.sq);ripple(e.pid);camTo(e.pid,(window.innerWidth<760?2.6:1.8));banner(p.name+' landed on '+SQ[e.sq].n);await sleep(520);break;
   case'pay':S.pay();cashRoll(e.from,e.to,e.to>=0&&G.ps[e.to]&&!G.ps[e.to].ai?true:!(e.from>=0&&G.ps[e.from]&&!G.ps[e.from].ai)&&e.to>=0);if(e.from>=0)float(e.from,'-'+money(e.amt),'#ff8a7a');if(e.to>=0){float(e.to,'+'+money(e.amt),'#ffe08a')}log((e.from>=0?G.ps[e.from].name:'Everyone')+' paid '+money(e.amt)+(e.to>=0?' to '+G.ps[e.to].name:'')+' — '+e.why);refreshPlayers();await sleep(380);break;
   case'buy':S.buy();cashRoll(e.pid,-1,false);refreshTile(e.sq);stamp(e.sq);float(e.pid,'-'+money(e.price),'#ff8a7a');log(p.name+' bought '+SQ[e.sq].n+' for '+money(e.price));refreshPlayers();await sleep(300);break;
   case'pass':log(p.name+' passed on '+SQ[e.sq].n);break;
   case'card':S.card();log('Devon Luck: '+e.tx);await showCard(e.tx,!p.ai);break;
   case'tofog':S.fog();log(p.name+' is lost in the fog');placeTok(p.id,10);refreshPlayers();await sleep(500);break;
   case'fogout':log(p.name+' left the fog ('+e.how+')');refreshPlayers();break;
-  case'stay':log(p.name+' is still in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left)');await sleep(300);break;
+  case'stay':banner(p.name+' is stuck in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left). Need doubles!');log(p.name+' is still in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left)');await sleep(300);break;
   case'build':S.build();refreshTile(e.sq);log(p.name+(p.role==='investor'?' added a holiday let on ':' built a family home on ')+SQ[e.sq].n);refreshPlayers();await sleep(220);break;
   case'levy':S.pay();log(p.name+' paid a £'+e.amt+' Second Home levy on '+e.n+' holiday let'+(e.n>1?'s':'')+'. Community Fund: £'+e.fund);float(e.pid,'-£'+e.amt,'#ff8a7a');refreshPlayers();await sleep(250);break;
   case'fund':S.win();cashRoll(-1,e.pid,true);log(p.name+' collected the Community Fund: £'+e.amt);banner(p.name+' wins the Community Fund: £'+e.amt);float(e.pid,'+£'+e.amt,'#ffe08a');refreshPlayers();await sleep(700);break;
@@ -614,7 +614,7 @@ async function play(events){
 }
 async function hop(e){var p=G.ps[e.pid],t=toks[e.pid];
  if(e.fast){t.classList.add('hop');placeTok(e.pid,e.to);camTo(e.pid,1.9);await sleep(420);t.classList.remove('hop');return}
- for(var i=0;i<e.path.length;i++){t.style.animationDuration=(p.ai?.23:.32)+'s';t.classList.add('hop');placeTok(e.pid,e.path[i]);camTo(e.pid,window.innerWidth<760?2.3:2);S.tick();await sleep(p.ai?230:320);t.classList.remove('hop');await sleep(p.ai?50:90)}await sleep(260);t.classList.add('sq');setTimeout(function(){t.classList.remove('sq')},300);
+ for(var i=0;i<e.path.length;i++){t.style.animationDuration=(p.ai?.23:.32)+'s';t.classList.add('hop');placeTok(e.pid,e.path[i]);camTo(e.pid,window.innerWidth<760?2.3:1.6);S.tick();await sleep(p.ai?230:320);t.classList.remove('hop');await sleep(p.ai?50:90)}await sleep(260);t.classList.add('sq');setTimeout(function(){t.classList.remove('sq')},300);
  await sleep(120)}
 // ---------- modals
 function ov(html,cls){var o=$('ov');o.innerHTML='<div class="sheet '+(cls||'')+'">'+html+'</div>';o.classList.add('on');return o.firstChild}
@@ -660,7 +660,7 @@ function showMine(){var h='<h2>Your properties</h2><p>Tap one to build, sell or 
 function setDock(mode,extra){camOut();var a=$('actions'),p=G.P();
  $('turnname').textContent=p.name+(p.ai?' ('+STYN[p.ai]+')':'');
  $('turntk').innerHTML=tk(p.tok,'tk');
- $('turnsub').textContent=extra||(p.ai?'Thinking…':'Your turn');
+ $('turnsub').textContent=extra||(p.ai?'Thinking…':p.fog>0?'Lost in the fog. Roll doubles to escape, pay £50, gamble, or wait it out ('+p.fog+' turn'+(p.fog>1?'s':'')+' left).':'Your turn');
  a.innerHTML='';
  if(mode==='roll'){var b=btn('Roll the dice','btn',function(){humanRoll()});a.appendChild(b);b.focus&&b.focus();
   if(p.fog>0){if(p.cash>=50)a.appendChild(btn('Pay £50 to leave','btn alt',function(){humanFog()}));if(p.card>0)a.appendChild(btn('Use fog card','btn alt',function(){humanCard()}));if(p.cash>=100)a.appendChild(btn('Gamble: free or pay £100','btn alt',function(){humanGamble()}))}
