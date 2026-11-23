@@ -170,6 +170,14 @@ a.btn{display:block;box-sizing:border-box}
 .pl .rtag{display:inline-block;font-size:10px;font-weight:800;border-radius:6px;padding:1px 6px;margin-left:6px;background:#2f8a5b;color:#fff}.pl .rtag.inv{background:#b9852b}
 #fundbar{margin-top:8px;font-size:13px;color:#ffe08a;font-weight:800}
 #fundbar{grid-column:1/-1}
+
+.pl{position:relative}.pl.gain{animation:gn 1.4s ease-out}.pl.lose{animation:ls 1.4s ease-out}
+@keyframes gn{0%,60%{background:rgba(76,223,138,.35);box-shadow:0 0 0 2px #4cdf8a,0 0 22px rgba(76,223,138,.6)}}
+@keyframes ls{0%,60%{background:rgba(255,90,74,.35);box-shadow:0 0 0 2px #ff5a4a,0 0 22px rgba(255,90,74,.6)}}
+.pl .delta{position:absolute;right:10px;top:30px;font-size:22px;font-weight:900;pointer-events:none;animation:dl 1.7s ease-out forwards;text-shadow:0 2px 6px rgba(0,0,0,.6)}
+.delta.up{color:#4cdf8a}.delta.dn{color:#ff5a4a}
+@keyframes dl{0%{transform:translateY(8px) scale(.7);opacity:0}15%{transform:translateY(0) scale(1.25);opacity:1}70%{opacity:1}100%{transform:translateY(-10px);opacity:0}}
+.float{font-size:30px!important;font-weight:900!important;-webkit-text-stroke:1px rgba(0,0,0,.45)}
 body{margin:0}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
 <nav id="ddnav"><a href="/">Just Devon</a><a href="/games/">All games</a></nav>
 <div id="dd"><div class="app">
@@ -543,11 +551,11 @@ function buildBoard(){
  G.ps.forEach(function(p){var t=document.createElement('div');t.className='tok';t.id='tok'+p.id;t.style.background=TOK[p.tok].c;t.classList.add('obj');t.innerHTML='<svg viewBox="0 0 48 48">'+TOK[p.tok].o+'</svg>';g.appendChild(t);toks[p.id]=t;placeTok(p.id,p.pos)});
  for(var i=0;i<40;i++)refreshTile(i);applyTheme();
 }
-var camOn=false,lastCash={};function camWrap(){var b=$('board');if(!b||b.parentNode.id==='bwrap')return b;var w=document.createElement('div');w.id='bwrap';b.parentNode.insertBefore(w,b);w.appendChild(b);return b}
+var camOn=false,lastCash={},lastDelta={};function camWrap(){var b=$('board');if(!b||b.parentNode.id==='bwrap')return b;var w=document.createElement('div');w.id='bwrap';b.parentNode.insertBefore(w,b);w.appendChild(b);return b}
 function camTo(pid,z){var b=camWrap(),t=toks[pid];if(!b||!t)return;var x=parseFloat(t.style.left)||50,y=parseFloat(t.style.top)||50;b.style.transformOrigin=x+'% '+y+'%';b.classList.add('zm');b.style.transform='scale('+(z||(b.offsetWidth<560?2.3:1.6))+')';camOn=true}
 function camOut(){var b=$('board');if(b){b.style.transform='scale(1)';b.classList.remove('zm')}camOn=false}
 function ripple(pid){var t=toks[pid],g=$('grid');if(!t||!g)return;var r=document.createElement('i');r.className='rip';r.style.left=t.style.left;r.style.top=t.style.top;g.appendChild(r);setTimeout(function(){r.remove()},900)}
-function tween(el,from,to){if(!el||from===to||reduce){if(el)el.textContent=money(to);return}var t0=performance.now();(function f(n){var k=Math.min(1,(n-t0)/550),e=1-Math.pow(1-k,3);el.textContent=money(Math.round(from+(to-from)*e));if(k<1)requestAnimationFrame(f)})(t0)}
+function tween(el,from,to){if(!el||from===to||reduce){if(el)el.textContent=money(to);return}el.style.color=to>from?'#4cdf8a':'#ff5a4a';setTimeout(function(){el.style.color=''},1500);var t0=performance.now();(function f(n){var k=Math.min(1,(n-t0)/550),e=1-Math.pow(1-k,3);el.textContent=money(Math.round(from+(to-from)*e));if(k<1)requestAnimationFrame(f)})(t0)}
 function placeTok(pid,sq,hop){var p=pos(sq),t=toks[pid];if(!t)return;
  var offs=p.s==='c'?[[-.3,-.36],[.3,-.36],[-.3,-.08],[.3,-.08]]:[[-.26,-.2],[.26,-.2],[-.26,.28],[.26,.28]],o=offs[pid%4];
  // spread by index among players currently on this square
@@ -566,7 +574,8 @@ async function tumble(d){var a=$('d1'),b=$('d2');a.classList.add('show','roll');
  a.classList.remove('roll');b.classList.remove('roll');face(a,d[0]);face(b,d[1])}
 // ---------- players panel
 function refreshPlayers(){var h='';G.ps.forEach(function(p){h+='<div class="pl'+(p.id===G.cur&&!G.over?' cur':'')+(p.out?' out':'')+'">'+tk(p.tok)+'<div style="min-width:0"><b>'+esc(p.name)+'</b><span data-p="'+p.id+'">'+money(lastCash[p.id]!==undefined?lastCash[p.id]:p.cash)+'</span><small>'+(p.out?'Out of the game':(p.role==='investor'?'Investor · ':'Local · ')+'Worth '+money(G.worth(p.id))+(p.fog?' · in fog':''))+'</small></div></div>'});
- $('players').innerHTML=h+'<div id="fundbar">Community Fund: '+money(G.fund||0)+' (locals collect it at Cream tea break)</div>';G.ps.forEach(function(p){var el=$('players').querySelector('span[data-p="'+p.id+'"]');if(el){tween(el,lastCash[p.id]!==undefined?lastCash[p.id]:p.cash,p.cash)}lastCash[p.id]=p.cash});
+ $('players').innerHTML=h+'<div id="fundbar">Community Fund: '+money(G.fund||0)+' (locals collect it at Cream tea break)</div>';G.ps.forEach(function(p){var el=$('players').querySelector('span[data-p="'+p.id+'"]');if(el){var pv=lastCash[p.id]!==undefined?lastCash[p.id]:p.cash;tween(el,pv,p.cash);var dl=p.cash-pv;if(dl!==0){lastDelta[p.id]={d:dl,t:performance.now()}}}lastCash[p.id]=p.cash});
+ G.ps.forEach(function(p){var ld=lastDelta[p.id],el=$('players').querySelector('span[data-p="'+p.id+'"]');if(!ld||!el)return;var age=performance.now()-ld.t;if(age>1500)return;var cd=el.closest('.pl');cd.classList.add(ld.d>0?'gain':'lose');cd.style.animationDelay=(-age)+'ms';var d=document.createElement('div');d.className='delta '+(ld.d>0?'up':'dn');d.style.animationDelay=(-age)+'ms';d.textContent=(ld.d>0?'+':'-')+money(Math.abs(ld.d));cd.appendChild(d)});
  $('rnd').textContent=G.mode==='quick'?'Round '+Math.min(G.round,G.maxRound)+' of '+G.maxRound:'Round '+G.round+(G.season()>1?' · peak season ×'+G.season():'');
  G.ps.forEach(function(p){if(toks[p.id]){toks[p.id].classList.toggle('act',p.id===G.cur&&!G.over);toks[p.id].style.opacity=p.out?'0':'1'}})}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -589,18 +598,18 @@ async function play(events){
   case'turn':refreshPlayers();banner(G.P().name+(G.P().ai?'':', your go'));camTo(G.P().id,1.6);await sleep(450);break;
   case'dice':camTo(e.pid,1.45);await tumble(e.d);log(p.name+' rolled '+(e.d[0]+e.d[1])+(e.d[0]===e.d[1]?' (doubles)':''));banner(p.name+' rolled '+(e.d[0]+e.d[1]));await sleep(650);break;
   case'move':await hop(e);break;
-  case'go':S.coin();cashRoll(-1,e.pid,true);float(e.pid,'+£'+e.amt,'#ffe08a');log(p.name+' collected £'+e.amt+(e.by==='pass'?' passing Start':''));refreshPlayers();break;
+  case'go':S.coin();cashRoll(-1,e.pid,true);float(e.pid,'+£'+e.amt,'#4cdf8a');log(p.name+' collected £'+e.amt+(e.by==='pass'?' passing Start':''));refreshPlayers();break;
   case'land':hl(e.sq);ripple(e.pid);camTo(e.pid,(window.innerWidth<760?2.6:1.8));banner(p.name+' landed on '+SQ[e.sq].n);await sleep(520);break;
-  case'pay':S.pay();cashRoll(e.from,e.to,e.to>=0&&G.ps[e.to]&&!G.ps[e.to].ai?true:!(e.from>=0&&G.ps[e.from]&&!G.ps[e.from].ai)&&e.to>=0);if(e.from>=0)float(e.from,'-'+money(e.amt),'#ff8a7a');if(e.to>=0){float(e.to,'+'+money(e.amt),'#ffe08a')}log((e.from>=0?G.ps[e.from].name:'Everyone')+' paid '+money(e.amt)+(e.to>=0?' to '+G.ps[e.to].name:'')+' — '+e.why);refreshPlayers();await sleep(380);break;
-  case'buy':S.buy();cashRoll(e.pid,-1,false);refreshTile(e.sq);stamp(e.sq);float(e.pid,'-'+money(e.price),'#ff8a7a');log(p.name+' bought '+SQ[e.sq].n+' for '+money(e.price));refreshPlayers();await sleep(300);break;
+  case'pay':S.pay();cashRoll(e.from,e.to,e.to>=0&&G.ps[e.to]&&!G.ps[e.to].ai?true:!(e.from>=0&&G.ps[e.from]&&!G.ps[e.from].ai)&&e.to>=0);if(e.from>=0)float(e.from,'-'+money(e.amt),'#ff5a4a');if(e.to>=0){float(e.to,'+'+money(e.amt),'#4cdf8a')}log((e.from>=0?G.ps[e.from].name:'Everyone')+' paid '+money(e.amt)+(e.to>=0?' to '+G.ps[e.to].name:'')+' — '+e.why);refreshPlayers();await sleep(380);break;
+  case'buy':S.buy();cashRoll(e.pid,-1,false);refreshTile(e.sq);stamp(e.sq);float(e.pid,'-'+money(e.price),'#ff5a4a');log(p.name+' bought '+SQ[e.sq].n+' for '+money(e.price));refreshPlayers();await sleep(300);break;
   case'pass':log(p.name+' passed on '+SQ[e.sq].n);break;
   case'card':S.card();log('Devon Luck: '+e.tx);await showCard(e.tx,!p.ai);break;
   case'tofog':S.fog();log(p.name+' is lost in the fog');placeTok(p.id,10);refreshPlayers();await sleep(500);if(!p.ai)await fogInfo('Oh no! '+(p.name==='You'?'You have':p.name+' has')+' been sent to the fog.');break;
   case'fogout':log(p.name+' left the fog ('+e.how+')');refreshPlayers();break;
   case'stay':if(!p.ai&&!G.fogSeen){G.fogSeen=1;await fogInfo('You did not roll doubles, so you are still stuck. '+e.left+' turn'+(e.left===1?'':'s')+' left.')}banner(p.name+' is stuck in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left). Need doubles!');log(p.name+' is still in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left)');await sleep(300);break;
   case'build':S.build();refreshTile(e.sq);log(p.name+(p.role==='investor'?' added a holiday let on ':' built a family home on ')+SQ[e.sq].n);refreshPlayers();await sleep(220);break;
-  case'levy':S.pay();log(p.name+' paid a £'+e.amt+' Second Home levy on '+e.n+' holiday let'+(e.n>1?'s':'')+'. Community Fund: £'+e.fund);float(e.pid,'-£'+e.amt,'#ff8a7a');refreshPlayers();await sleep(250);break;
-  case'fund':S.win();cashRoll(-1,e.pid,true);log(p.name+' collected the Community Fund: £'+e.amt);banner(p.name+' wins the Community Fund: £'+e.amt);float(e.pid,'+£'+e.amt,'#ffe08a');refreshPlayers();await sleep(700);break;
+  case'levy':S.pay();log(p.name+' paid a £'+e.amt+' Second Home levy on '+e.n+' holiday let'+(e.n>1?'s':'')+'. Community Fund: £'+e.fund);float(e.pid,'-£'+e.amt,'#ff5a4a');refreshPlayers();await sleep(250);break;
+  case'fund':S.win();cashRoll(-1,e.pid,true);log(p.name+' collected the Community Fund: £'+e.amt);banner(p.name+' wins the Community Fund: £'+e.amt);float(e.pid,'+£'+e.amt,'#4cdf8a');refreshPlayers();await sleep(700);break;
   case'nofund':log('The Community Fund (£'+e.amt+') is only for local families.');await sleep(250);break;
   case'sold':refreshTile(e.sq);log(p.name+' sold a cottage on '+SQ[e.sq].n);refreshPlayers();break;
   case'mort':refreshTile(e.sq);log(p.name+' mortgaged '+SQ[e.sq].n);refreshPlayers();break;
@@ -685,7 +694,7 @@ async function after(){
  var p=G.P();save();
  if(G.phase==='offer'){showOffer();return}
  if(G.phase==='roll'){if(p.ai){busy=true;await sleep(450);G.aiManage();await play(G.take());busy=false;await aiRoll();return}setDock('roll','Doubles! Roll again');return}
- if(G.phase==='end'){if(p.ai){G.aiManage();await play(G.take());await sleep(450);await next();return}setDock('end','Anything to build or mortgage?');return}
+ if(G.phase==='end'){if(p.ai){G.aiManage();await play(G.take());await sleep(450);await next();return}var cb=false;for(var bi=0;bi<40;bi++)if(G.canBuild(human,bi)){cb=true;break}if(cb){setDock('end','You can build. Build now, or end your turn.');return}setDock('none','Next player…');busy=true;await sleep(900);busy=false;await next();return}
 }
 function showOffer(){var i=G.pendingOffer,s=SQ[i],me=G.ps[human],ok=me.cash>=s.p;
  var o=ov('<h2>Buy '+esc(s.n)+'?</h2><p>You have '+money(me.cash)+'.'+(ok?'':' You can\'t afford it.')+'</p>'+propHTML(i)+'<div class="actions"><button class="btn" id="by"'+(ok?'':' disabled')+'>Buy for £'+s.p+'</button><button class="btn alt" id="ps">Pass</button></div>');
