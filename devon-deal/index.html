@@ -492,7 +492,7 @@ function buildBoard(){
  for(var i=0;i<40;i++)refreshTile(i);applyTheme();
 }
 var camOn=false;function camWrap(){var b=$('board');if(!b||b.parentNode.id==='bwrap')return b;var w=document.createElement('div');w.id='bwrap';b.parentNode.insertBefore(w,b);w.appendChild(b);return b}
-function camTo(pid){if(reduce||window.innerWidth>=900)return;var b=camWrap(),t=toks[pid];if(!b||!t)return;var x=parseFloat(t.style.left)||50,y=parseFloat(t.style.top)||50;b.style.transformOrigin=x+'% '+y+'%';b.classList.add('zm');b.style.transform='scale('+(b.offsetWidth<560?2.3:1.9)+')';camOn=true}
+function camTo(pid){var b=camWrap(),t=toks[pid];if(!b||!t)return;var x=parseFloat(t.style.left)||50,y=parseFloat(t.style.top)||50;b.style.transformOrigin=x+'% '+y+'%';b.classList.add('zm');b.style.transform='scale('+(b.offsetWidth<560?2.3:1.8)+')';camOn=true}
 function camOut(){var b=$('board');if(b){b.style.transform='scale(1)';b.classList.remove('zm')}camOn=false}
 function placeTok(pid,sq,hop){var p=pos(sq),t=toks[pid];if(!t)return;
  var offs=p.s==='c'?[[-.3,-.36],[.3,-.36],[-.3,-.08],[.3,-.08]]:[[-.26,-.2],[.26,-.2],[-.26,.28],[.26,.28]],o=offs[pid%4];
