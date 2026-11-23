@@ -50,6 +50,7 @@ html,body{background:#071823}
 #centre{position:absolute;overflow:hidden;border-radius:1.6cqw;box-shadow:0 0 0 .35cqw #e8c26a,0 0 0 .6cqw #0c2433,0 1.2cqw 2.4cqw rgba(0,0,0,.5)}
 #centre>svg{position:absolute;inset:0;width:100%;height:100%}
 #title{position:absolute;left:0;right:0;top:8%;text-align:center;font-family:"Inter Display",Inter,sans-serif;font-weight:900;letter-spacing:-.045em;line-height:.84;font-size:10.5cqw;color:#fff}
+#title .t2{font-size:.78em}
 #title span{background:linear-gradient(180deg,#fff 30%,#ffe3a1);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;filter:drop-shadow(0 .5cqw 0 #8f3a22) drop-shadow(0 1cqw 1.2cqw rgba(0,0,0,.4))}
 #tag{position:absolute;left:50%;transform:translateX(-50%);top:39%;white-space:nowrap;background:#0f2a3a;color:#f3dc9a;font-weight:800;font-size:1.6cqw;padding:.7cqw 2.2cqw;border-radius:2cqw;box-shadow:0 .4cqw .8cqw rgba(0,0,0,.4),inset 0 0 0 .15cqw #e8c26a}
 #dice{position:absolute;left:0;right:0;top:55%;display:flex;gap:3cqw;justify-content:center}
@@ -550,7 +551,7 @@ var tiles=[],toks=[];
 function buildBoard(){
  var g=$('grid');g.innerHTML='';tiles=[];toks=[];
  var c=document.createElement('div');c.id='centre';c.style.cssText='left:'+C*U+'%;top:'+C*U+'%;right:'+C*U+'%;bottom:'+C*U+'%';
- c.innerHTML=SCENE+'<div id="title"><span>DEVON</span><span>DEAL</span></div><div id="tag">Buy it. Own it. Charge for the view.</div><div id="dice"><div class="die" id="d1"></div><div class="die" id="d2"></div></div><div id="bannerc"></div>';
+ c.innerHTML=SCENE+'<div id="title"><span>DEVON</span><span class="t2">PROPERTY</span><span class="t2">RACE</span></div><div id="tag">Buy it. Own it. Charge for the view.</div><div id="dice"><div class="die" id="d1"></div><div class="die" id="d2"></div></div><div id="bannerc"></div>';
  g.appendChild(c);
  SQ.forEach(function(s,i){var p=pos(i),d=document.createElement('div');d.className='tile';d.style.cssText='left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%';
   d.setAttribute('role','button');d.setAttribute('aria-label',s.n);d.tabIndex=0;
