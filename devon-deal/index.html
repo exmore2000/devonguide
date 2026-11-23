@@ -13,8 +13,7 @@ html,body{background:#071823}
 #dd .app{max-width:1060px;margin:0 auto;display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
 @media(min-width:900px){#dd .app{grid-template-columns:minmax(0,min(78vh,720px)) minmax(0,1fr);align-items:start}}
 .topbar{display:flex;align-items:center;gap:8px;grid-column:1/-1;font-weight:800}
-.topbar .bt{margin-right:auto;display:flex;flex-direction:column;line-height:1.2;min-width:0}
-.topbar .brand{font-size:18px;letter-spacing:-.02em;white-space:nowrap}
+.topbar .brand{font-size:18px;letter-spacing:-.02em;margin-right:auto;white-space:nowrap}
 .ib{white-space:nowrap}
 .topbar .rnd{white-space:nowrap;font-size:12px;font-weight:700;color:#f3dc9a}
 .ib{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:10px;padding:7px 11px;font-weight:700;font-size:13px}
@@ -42,54 +41,7 @@ html,body{background:#071823}
 .corner svg{width:50%;max-height:50%}
 .tile .ownbar{position:absolute;left:0;right:0;bottom:0;height:.9cqw;z-index:2}
 .in.l~.ownbar{}
-.cots{display:flex;gap:.3cqw;flex-wrap:wrap;justify-content:center;align-items:center}
-.in.l .cots,.in.r .cots{flex-direction:column}
-.bp,.ph{display:none}.band.nb{display:none}
-.ph{flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.02;color:var(--navy);max-width:100%;max-height:100%;overflow:hidden}
-.ph b{font-weight:800;font-size:2.15cqw;letter-spacing:-.03em}
-.ph b.lw{font-size:1.85cqw}
-.ph small{font-weight:800;font-size:1.65cqw;color:#9a6f1a;margin-top:.2cqw;white-space:nowrap}
-.t-tax .ph small{color:#b4472b}
-.bp{position:relative;z-index:1;color:#fff;font-weight:900;font-size:1.75cqw;letter-spacing:-.02em;text-shadow:0 .15cqw .25cqw rgba(0,0,0,.55);white-space:nowrap}
-.in.l .bp,.in.r .bp{writing-mode:vertical-rl;transform:rotate(180deg)}
-@container (max-width:560px){
- .nm,.pr,.body svg{display:none}
- .cn .body svg,.t-luck .body svg{display:block}
- .body{padding:5% 6%;gap:3%;overflow:hidden}
- .ph{display:flex}
- .in.b .band,.in.t .band{height:19%}.in.l .band,.in.r .band{width:19%}
- .band.nb{display:flex}
- .bp{display:block}.band.built .bp{display:none}
- .cot{width:1.5cqw;height:1.5cqw}.cot.inn{width:2.6cqw;height:1.7cqw}
- .s-b .ph,.s-t .ph{writing-mode:vertical-rl;transform:rotate(180deg)}
- .t-luck .ph{writing-mode:horizontal-tb;transform:none}
- .t-luck .body svg{width:78%;max-height:60%}
- .s-l.t-luck .body,.s-r.t-luck .body{flex-direction:row}
- .s-l.t-luck .body svg,.s-r.t-luck .body svg{width:auto;height:78%;max-height:78%}
- .cn .body svg{width:44%;max-height:44%}
- .cn .ph b{font-size:2.5cqw}
- .tile .ownbar{height:1.3cqw}
- .tok{width:5.4%}
- #tag{font-size:2.4cqw;top:37%}
- #centre #hint{display:block}
- #bannerc{font-size:3.4cqw;line-height:1.2;bottom:5%;padding:0 5cqw}
-}
-#zoom{position:absolute;inset:0;transform-origin:50% 50%;transition:transform .55s cubic-bezier(.3,.7,.3,1),transform-origin .2s linear}
-#spot{position:absolute;left:50%;top:50%;width:min(58cqw,380px);transform:translate(-50%,-50%) scale(.85);opacity:0;transition:opacity .25s,transform .25s;z-index:20;pointer-events:none;border-radius:2.4cqw;overflow:hidden;background:#f4f7f5;color:#0f2a3a;box-shadow:0 2cqw 5cqw rgba(0,0,0,.6),0 0 0 .4cqw #e8c26a}
-#spot.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
-#spot .sh{display:flex;align-items:center;gap:2.4cqw;padding:2.2cqw 3cqw;color:#fff}
-#spot .sh svg{width:10cqw;height:10cqw;max-width:64px;max-height:64px;background:#fff;border-radius:1.6cqw;padding:.8cqw;flex:none}
-#spot .sh b{display:block;font-size:min(4.8cqw,30px);line-height:1.05;font-weight:900;letter-spacing:-.02em;text-shadow:0 .2cqw .4cqw rgba(0,0,0,.35)}
-#spot .sh small{display:block;font-size:min(2.9cqw,17px);font-weight:700;opacity:.95;margin-top:.4cqw}
-#spot .sb{padding:2.2cqw 3cqw 2.8cqw}
-#spot .who{display:flex;align-items:center;gap:1.6cqw;font-size:min(3.5cqw,21px);font-weight:800}
-#spot .who .tk{width:5.4cqw;height:5.4cqw;max-width:34px;max-height:34px;border-radius:50%;border:.4cqw solid #fff;box-shadow:0 0 0 .25cqw rgba(15,42,58,.3);display:flex;align-items:center;justify-content:center;flex:none}
-#spot .who .tk svg{width:70%;height:70%}
-#spot .res{margin-top:1.4cqw;font-size:min(3.7cqw,22px);font-weight:800;line-height:1.25;padding:1.4cqw 2cqw;border-radius:1.4cqw;background:#e2eae7}
-#spot .res.good{background:#ffeeb5;color:#6b4800}#spot .res.bad{background:#ffd8cf;color:#9b2a17}
-@media(prefers-reduced-motion:reduce){#zoom,#spot{transition:none}}
-#tag,#hint,#bannerc{transition:opacity .25s}#grid:has(#spot.on) #tag,#grid:has(#spot.on) #hint,#grid:has(#spot.on) #bannerc{opacity:0}
-#hint{display:none;position:absolute;left:0;right:0;top:45%;text-align:center;font-weight:700;font-size:2.3cqw;color:#fff;text-shadow:0 .2cqw .4cqw rgba(0,0,0,.6)}
+@container (max-width:560px){.nm,.pr{display:none}.body svg{width:72%;max-height:76%}.cot{width:1.6cqw;height:1.6cqw}}
 .tok{position:absolute;width:4.4%;aspect-ratio:1;border-radius:50%;border:.3cqw solid #fff;box-shadow:0 .5cqw .8cqw rgba(0,0,0,.55),inset 0 -.5cqw .6cqw rgba(0,0,0,.25),inset 0 .4cqw .5cqw rgba(255,255,255,.4);transform:translate(-50%,-50%);transition:left .15s ease-out,top .15s ease-out,opacity .4s,transform .15s;z-index:6;display:flex;align-items:center;justify-content:center}
 .tok svg{width:72%;height:72%}
 .tok.act{animation:bob 1.1s ease-in-out infinite}
@@ -111,10 +63,7 @@ html,body{background:#071823}
 .turn{display:flex;align-items:center;gap:10px}
 .turn .tk{width:38px;height:38px;border-radius:50%;border:2px solid #fff;flex:none;display:flex;align-items:center;justify-content:center}
 .turn .tk svg{width:70%;height:70%}
-.turn b{font-size:16px;display:block}.turn span{font-size:14px;line-height:1.4;color:#d6e4ea;display:block}
-.help ol{margin:10px 0 0;padding-left:20px;color:#cfe0e6;font-size:14px;line-height:1.5}.help li{margin:5px 0}
-.help h3{font-size:15px;margin:16px 0 4px}
-.help .row b{color:#fff}.help .row small{display:block;color:#9fb6c0;font-size:12px}
+.turn b{font-size:16px;display:block}.turn span{font-size:13px;color:#b9cbd3}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .btn{flex:1;min-width:120px;border:0;border-radius:14px;padding:14px 12px;font-weight:800;font-size:16px;color:#0f2a3a;background:linear-gradient(180deg,#ffe08a,#e8b23a);box-shadow:0 3px 0 #9a6f1a,0 6px 12px rgba(0,0,0,.3)}
 .btn:active{transform:translateY(2px);box-shadow:0 1px 0 #9a6f1a}
@@ -147,7 +96,6 @@ html,body{background:#071823}
 .lcard{background:linear-gradient(160deg,#ffe9a8,#f2b632);color:#0f2a3a;border-radius:16px;padding:22px 18px;margin:12px 0;font-weight:800;font-size:19px;line-height:1.3;text-align:center;animation:flip .5s ease-out;box-shadow:inset 0 0 0 3px #fff6d6}
 @keyframes flip{from{transform:rotateY(90deg)}}
 .row{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid rgba(255,255,255,.1);font-size:14px}
-.row .tk{width:34px;height:34px;border-radius:50%;border:2px solid #fff;flex:none;display:flex;align-items:center;justify-content:center}.row .tk svg{width:70%;height:70%}
 .row .dot{width:12px;height:12px;border-radius:3px;flex:none}
 .row .nm2{flex:1;min-width:0}
 .mini{border:0;border-radius:9px;padding:7px 10px;font-weight:800;font-size:12px;background:#ffe08a;color:#0f2a3a}
@@ -179,10 +127,15 @@ html,body{background:#071823}
 #board.th-night #title span{filter:drop-shadow(0 .5cqw 0 #1a2c4a) drop-shadow(0 1cqw 1.2cqw rgba(0,0,0,.5))}
 #board.th-winter{background:linear-gradient(145deg,#eef4f8,#9db4c4 40%,#5f7d92 62%,#dfe9ef)}
 #board.th-night{background:linear-gradient(145deg,#8fa2c8,#3d4d78 40%,#232f52 62%,#7c8fbd)}
+
+#exit{text-decoration:none;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:10px;padding:8px 12px;font-weight:800;font-size:13px;white-space:nowrap}
+#exit:focus-visible{outline:3px solid #f3dc9a;outline-offset:2px}
+a.btn{display:block;box-sizing:border-box}
+@media(max-width:520px){.topbar .brand{display:none}.topbar .rnd{margin-right:auto}}
 body{margin:0}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
 <nav id="ddnav"><a href="/">Just Devon</a><a href="/games/">All games</a></nav>
 <div id="dd"><div class="app">
- <div class="topbar"><div class="bt"><span class="brand">Devon Deal</span><span class="rnd" id="rnd"></span></div><button class="ib" id="mute" aria-label="Sound on">🔊</button><button class="ib" id="rules">How to play</button><button class="ib" id="newg">New game</button></div>
+ <div class="topbar"><a id="exit" href="/games/" aria-label="Exit to all games">&larr; Games</a><span class="brand">Devon Deal</span><span class="rnd" id="rnd"></span><button class="ib" id="mute">Sound on</button><button class="ib" id="newg">Pause</button></div>
  <div id="board"><div id="grid"></div></div>
  <div class="dock">
   <div class="panel"><div class="turn"><span id="turntk"></span><div><b id="turnname"></b><span id="turnsub"></span></div></div><div class="actions" id="actions"></div></div>
@@ -214,46 +167,46 @@ var GROUPS={
  crown:{c:'#17324d',n:'Crown jewels'}
 };
 var SQ=[
- {t:'go',n:'Start in Exeter',s:'Start',ic:'flag'},
+ {t:'go',n:'Start in Exeter',ic:'flag'},
  {t:'p',g:'moor',n:'Widecombe',ic:'tor',p:60},
- {t:'luck',n:'Devon Luck',s:'Luck',ic:'luck'},
+ {t:'luck',n:'Devon Luck',ic:'luck'},
  {t:'p',g:'moor',n:'Postbridge',ic:'bridge',p:60},
- {t:'tax',n:'Tamar Bridge toll',s:'Tamar toll',ic:'bridge',amt:200},
- {t:'st',n:'Exeter St Davids',s:'Exeter Stn',ic:'train',p:200},
- {t:'p',g:'falls',n:'Lydford Gorge',s:'Lydford Gorge',ic:'fall',p:100},
- {t:'luck',n:'Devon Luck',s:'Luck',ic:'luck'},
- {t:'p',g:'falls',n:'Becky Falls',s:'Becky Falls',ic:'fall',p:100},
- {t:'p',g:'falls',n:'Haytor Rocks',s:'Haytor',ic:'tor',p:120},
- {t:'fog',n:'Lost in the fog',s:'Fog',ic:'fog'},
+ {t:'tax',n:'Tamar Bridge toll',ic:'bridge',amt:200},
+ {t:'st',n:'Exeter St Davids',ic:'train',p:200},
+ {t:'p',g:'falls',n:'Lydford Gorge',ic:'fall',p:100},
+ {t:'luck',n:'Devon Luck',ic:'luck'},
+ {t:'p',g:'falls',n:'Becky Falls',ic:'fall',p:100},
+ {t:'p',g:'falls',n:'Haytor Rocks',ic:'tor',p:120},
+ {t:'fog',n:'Lost in the fog',ic:'fog'},
  {t:'p',g:'market',n:'Tavistock',ic:'market',p:140},
- {t:'ut',n:'Dartmouth Ferry',s:'Ferry',ic:'ferry',p:150},
+ {t:'ut',n:'Dartmouth Ferry',ic:'ferry',p:150},
  {t:'p',g:'market',n:'Totnes',ic:'market',p:140},
- {t:'p',g:'market',n:'Bovey Tracey',s:'Bovey Tracey',ic:'market',p:160},
- {t:'st',n:'Newton Abbot',s:'N. Abbot Stn',ic:'train',p:200},
- {t:'p',g:'castle',n:'Dartmouth Castle',s:'Dartmouth Castle',ic:'castle',p:180},
- {t:'luck',n:'Devon Luck',s:'Luck',ic:'luck'},
- {t:'p',g:'castle',n:'Kents Cavern',s:'Kents Cavern',ic:'cave',p:180},
- {t:'p',g:'castle',n:'Berry Pomeroy',s:'Berry Pomeroy',ic:'castle',p:200},
- {t:'tea',n:'Cream tea break',s:'Cream tea',ic:'tea'},
+ {t:'p',g:'market',n:'Bovey Tracey',ic:'market',p:160},
+ {t:'st',n:'Newton Abbot',ic:'train',p:200},
+ {t:'p',g:'castle',n:'Dartmouth Castle',ic:'castle',p:180},
+ {t:'luck',n:'Devon Luck',ic:'luck'},
+ {t:'p',g:'castle',n:'Kents Cavern',ic:'cave',p:180},
+ {t:'p',g:'castle',n:'Berry Pomeroy',ic:'castle',p:200},
+ {t:'tea',n:'Cream tea break',ic:'tea'},
  {t:'p',g:'harbour',n:'Salcombe',ic:'boat',p:220},
- {t:'luck',n:'Devon Luck',s:'Luck',ic:'luck'},
- {t:'p',g:'harbour',n:'Brixham Harbour',s:'Brixham',ic:'boat',p:220},
- {t:'p',g:'harbour',n:'Paignton Pier',s:'Paignton Pier',ic:'pier',p:240},
- {t:'st',n:'Plymouth',s:'Plymouth Stn',ic:'train',p:200},
- {t:'p',g:'cliff',n:'Lynton Cliff Railway',s:'Lynton Cliff Rly',ic:'cliffrail',p:260},
+ {t:'luck',n:'Devon Luck',ic:'luck'},
+ {t:'p',g:'harbour',n:'Brixham Harbour',ic:'boat',p:220},
+ {t:'p',g:'harbour',n:'Paignton Pier',ic:'pier',p:240},
+ {t:'st',n:'Plymouth',ic:'train',p:200},
+ {t:'p',g:'cliff',n:'Lynton Cliff Railway',ic:'cliffrail',p:260},
  {t:'p',g:'cliff',n:'Clovelly',ic:'boat',p:260},
- {t:'ut',n:'Steam Railway',s:'Steam Rly',ic:'steam',p:150},
- {t:'p',g:'cliff',n:'Hartland Quay',s:'Hartland Quay',ic:'cliff',p:280},
- {t:'togo',n:'Into the fog',s:'Into the fog',ic:'fog'},
+ {t:'ut',n:'Steam Railway',ic:'steam',p:150},
+ {t:'p',g:'cliff',n:'Hartland Quay',ic:'cliff',p:280},
+ {t:'togo',n:'Into the fog',ic:'fog'},
  {t:'p',g:'sands',n:'Woolacombe',ic:'surf',p:300},
  {t:'p',g:'sands',n:'Croyde',ic:'surf',p:300},
- {t:'luck',n:'Devon Luck',s:'Luck',ic:'luck'},
- {t:'p',g:'sands',n:'Saunton Sands',s:'Saunton Sands',ic:'surf',p:320},
- {t:'st',n:'Barnstaple',s:'B\'staple Stn',ic:'train',p:200},
- {t:'luck',n:'Devon Luck',s:'Luck',ic:'luck'},
- {t:'p',g:'crown',n:'Burgh Island',s:'Burgh Island',ic:'island',p:350},
- {t:'tax',n:'A38 roadworks',s:'A38 works',ic:'cone',amt:100},
- {t:'p',g:'crown',n:'Plymouth Hoe',s:'Plymouth Hoe',ic:'light',p:400}
+ {t:'luck',n:'Devon Luck',ic:'luck'},
+ {t:'p',g:'sands',n:'Saunton Sands',ic:'surf',p:320},
+ {t:'st',n:'Barnstaple',ic:'train',p:200},
+ {t:'luck',n:'Devon Luck',ic:'luck'},
+ {t:'p',g:'crown',n:'Burgh Island',ic:'island',p:350},
+ {t:'tax',n:'A38 roadworks',ic:'cone',amt:100},
+ {t:'p',g:'crown',n:'Plymouth Hoe',ic:'light',p:400}
 ];
 </script><script>var IC={
 flag:'<path d="M12 6v30" stroke="#17324d" stroke-width="3" stroke-linecap="round"/><path d="M13 7h20l-5 7 5 7H13z" fill="#c8372d"/>',
@@ -473,7 +426,8 @@ var NAMES=['Morwenna','Jago','Tamsin'],STY=['cautious','tycoon','steady'],STYN={
 var G=null,human=0,busy=false,muted=false,AC=null,sel={tok:0,mode:'quick',opp:2};
 try{muted=localStorage.getItem('ddMute')==='1'}catch(e){}
 var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-function sleep(ms){return new Promise(function(r){setTimeout(r,reduce?Math.min(ms,60):ms)})}
+var paused=false,started=false;
+function sleep(ms){return new Promise(function(r){setTimeout(function(){(function chk(){if(!paused)r();else setTimeout(chk,150)})()},reduce?Math.min(ms,60):ms)})}
 function money(n){return '£'+Math.round(n).toLocaleString('en-GB')}
 
 // ---------- rewards (shares keys with the site's Devon points)
@@ -503,16 +457,6 @@ function snd(f,d,type,v,delay){if(muted)return;try{AC=AC||new (window.AudioConte
 var S={tick:function(){snd(520,.05,'triangle',.05)},dice:function(){for(var i=0;i<5;i++)snd(180+Math.random()*120,.05,'square',.04,i*.07)},coin:function(){snd(988,.08,'square',.05);snd(1319,.18,'square',.05,.08)},pay:function(){snd(330,.12,'sawtooth',.05);snd(220,.2,'sawtooth',.05,.1)},buy:function(){snd(523,.1,'triangle',.08);snd(659,.1,'triangle',.08,.1);snd(784,.22,'triangle',.08,.2)},build:function(){snd(392,.08,'square',.05);snd(523,.14,'square',.05,.09)},card:function(){snd(660,.08,'triangle',.07);snd(880,.16,'triangle',.07,.08)},win:function(){[523,659,784,1047].forEach(function(f,i){snd(f,.3,'triangle',.09,i*.14)})},fog:function(){snd(140,.4,'sine',.08)}};
 // ---------- board
 var C=1.55,U=100/(9+2*C);
-// On phones the edge squares are made deeper so place names and prices fit
-function setScale(){var g=$('grid'),w=g?g.clientWidth:600,c=(w&&w<=560)?2.4:1.55,ch=c!==C;C=c;U=100/(9+2*C);return ch}
-function layout(){var c=$('centre');if(c)c.style.cssText='left:'+C*U+'%;top:'+C*U+'%;right:'+C*U+'%;bottom:'+C*U+'%';
- tiles.forEach(function(d,i){var p=pos(i);d.style.cssText='left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%'});
- if(G)G.ps.forEach(function(p){placeTok(p.id,p.pos)})}
-window.addEventListener('resize',function(){if(setScale())layout()});
-function phHTML(s){var sub='';
- if(s.t==='tax')sub='Pay £'+s.amt;else if(s.t==='go')sub='Collect £200';else if(s.t==='tea')sub='Free rest';else if(s.t==='togo')sub='Go to fog';else if(s.t==='fog')sub='Just visiting';
- var nm=s.s||s.n,lw=Math.max.apply(null,nm.split(' ').map(function(w){return w.length}))>=9;
- return '<div class="ph"><b'+(lw?' class="lw"':'')+'>'+esc(nm)+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</div>'}
 function pos(i){var cw=C*U,uw=U;
  if(i===0)return{x:100-cw,y:100-cw,w:cw,h:cw,s:'c'};
  if(i<10)return{x:100-cw-i*uw,y:100-cw,w:uw,h:cw,s:'b'};
@@ -524,18 +468,16 @@ function pos(i){var cw=C*U,uw=U;
  return{x:100-cw,y:cw+(i-31)*uw,w:cw,h:uw,s:'r'}}
 var tiles=[],toks=[];
 function buildBoard(){
- var g0=$('grid');g0.innerHTML='';tiles=[];toks=[];setScale();
- var g=document.createElement('div');g.id='zoom';g0.appendChild(g);var sp=document.createElement('div');sp.id='spot';sp.setAttribute('aria-live','polite');g0.appendChild(sp);
- var c=document.createElement('div');c.id='centre';
- c.innerHTML=SCENE+'<div id="title"><span>DEVON</span><span>DEAL</span></div><div id="tag">Buy it. Own it. Charge for the view.</div><div id="hint">Tap any square for details</div><div id="dice"><div class="die" id="d1"></div><div class="die" id="d2"></div></div><div id="bannerc"></div>';
+ var g=$('grid');g.innerHTML='';tiles=[];toks=[];
+ var c=document.createElement('div');c.id='centre';c.style.cssText='left:'+C*U+'%;top:'+C*U+'%;right:'+C*U+'%;bottom:'+C*U+'%';
+ c.innerHTML=SCENE+'<div id="title"><span>DEVON</span><span>DEAL</span></div><div id="tag">Buy it. Own it. Charge for the view.</div><div id="dice"><div class="die" id="d1"></div><div class="die" id="d2"></div></div><div id="bannerc"></div>';
  g.appendChild(c);
- SQ.forEach(function(s,i){var p=pos(i),d=document.createElement('div');d.className='tile s-'+p.s+' t-'+s.t+(p.s==='c'?' cn':'');
-  d.setAttribute('role','button');d.setAttribute('aria-label',s.n+(s.p?', £'+s.p:''));d.tabIndex=0;
+ SQ.forEach(function(s,i){var p=pos(i),d=document.createElement('div');d.className='tile';d.style.cssText='left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%';
+  d.setAttribute('role','button');d.setAttribute('aria-label',s.n);d.tabIndex=0;
   var card=document.createElement('div');card.className='card';var inner=document.createElement('div');inner.className='in '+(p.s==='c'?'b':p.s);
-  var bp='<span class="cots" id="ct'+i+'"></span><b class="bp">£'+s.p+'</b>';
-  var band=s.t==='p'?'<div class="band" id="bd'+i+'" style="background:'+window.GROUPS[s.g].c+'">'+bp+'</div>':((s.t==='st'||s.t==='ut')?'<div class="band nb" id="bd'+i+'" style="background:'+(s.t==='st'?'#17324d':'#5d6e68')+'">'+bp+'</div>':'');
+  var band=s.t==='p'?'<div class="band" id="bd'+i+'" style="background:'+window.GROUPS[s.g].c+'"></div>':'';
   var price=s.p?'<div class="pr">£'+s.p+'</div>':(s.amt?'<div class="pr">Pay £'+s.amt+'</div>':'');
-  inner.innerHTML=band+'<div class="body">'+window.icon(s.ic)+'<div class="nm">'+s.n+'</div>'+price+phHTML(s)+'</div>';
+  inner.innerHTML=band+'<div class="body">'+window.icon(s.ic)+'<div class="nm">'+s.n+'</div>'+price+'</div>';
   if(s.t==='go')card.style.background='linear-gradient(160deg,#ffd35e,#e59a1c)';
   if(s.t==='fog'||s.t==='togo')card.style.background='linear-gradient(160deg,#a9b8b4,#74867f)';
   if(s.t==='tea')card.style.background='linear-gradient(160deg,#ffd9bd,#f09a78)';
@@ -543,25 +485,8 @@ function buildBoard(){
   d.addEventListener('click',function(){showProp(i)});d.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showProp(i)}});
  });
  G.ps.forEach(function(p){var t=document.createElement('div');t.className='tok';t.id='tok'+p.id;t.style.background=TOK[p.tok].c;t.innerHTML='<svg viewBox="0 0 24 24">'+TOK[p.tok].g+'</svg>';g.appendChild(t);toks[p.id]=t;placeTok(p.id,p.pos)});
- layout();for(var i=0;i<40;i++)refreshTile(i);applyTheme();
+ for(var i=0;i<40;i++)refreshTile(i);applyTheme();
 }
-var follow=st('ddFollow')!=='0',spotFor=-1;
-function zoomTo(sq){var z=$('zoom');if(!z||!follow)return;var p=pos(sq);z.style.transformOrigin=(p.x+p.w/2)+'% '+(p.y+p.h/2)+'%';z.style.transform='scale('+(C>2?1.8:1.4)+')'}
-function zoomOut(){var z=$('zoom');if(z)z.style.transform='scale(1)'}
-function sqLabel(s){return s.t==='p'?window.GROUPS[s.g].n:s.t==='st'?'Railway station':s.t==='ut'?'Transport':s.t==='tax'?'Pay up':s.t==='luck'?'Take a card':s.t==='go'?'Collect £200 when you pass':s.t==='tea'?'Free rest':s.t==='fog'?'Fog corner':s.t==='togo'?'Bad luck':''}
-function sqColour(s){return s.t==='p'?window.GROUPS[s.g].c:s.t==='go'?'#d98a12':s.t==='tea'?'#d9785a':(s.t==='fog'||s.t==='togo')?'#5d6e68':s.t==='luck'?'#c98f12':s.t==='tax'?'#b4472b':'#17324d'}
-function firstRes(i,pid,willBuy){var s=SQ[i],o=willBuy?-1:G.own[i],you=pid===human;
- if(s.t==='p'||s.t==='st'||s.t==='ut'){if(o<0)return['For sale: £'+s.p,''];if(o===pid)return[(you?'You own':'They own')+' this one',''];
-  if(G.mort[i])return['Owned by '+G.ps[o].name+', but mortgaged: no rent',''];return['Owned by '+(o===human?'you':G.ps[o].name),o===human?'good':'']}
- if(s.t==='tax')return['Pay £'+s.amt,you?'bad':''];if(s.t==='luck')return['Take a Devon Luck card',''];if(s.t==='tea')return['Nothing happens. Enjoy the break.',''];
- if(s.t==='fog')return['Just visiting',''];if(s.t==='go')return['Collect £200',you?'good':''];if(s.t==='togo')return['Into the fog!',you?'bad':''];return['','']}
-function showSpot(i,pid,verb,willBuy){var s=SQ[i],p=G.ps[pid],sp=$('spot'),ps=pos(i).s,f=firstRes(i,pid,willBuy);if(!sp)return;spotFor=pid;
- sp.style.top=(ps==='b'||i===0||i===10)?'34%':(ps==='t'||i===20||i===30)?'66%':'50%';sp.style.left=ps==='l'?'57%':ps==='r'?'43%':'50%';
- sp.innerHTML='<div class="sh" style="background:'+sqColour(s)+'">'+window.icon(s.ic,64)+'<div><b>'+esc(s.n)+'</b>'+(sqLabel(s)?'<small>'+sqLabel(s)+'</small>':'')+'</div></div><div class="sb"><div class="who">'+tk(p.tok)+'<span>'+(pid===human?'You':esc(p.name))+' '+(verb||'landed here')+'</span></div>'+(f[0]?'<div class="res '+f[1]+'" id="sres">'+esc(f[0])+'</div>':'<div class="res" id="sres" style="display:none"></div>')+'</div>';
- sp.classList.add('on')}
-function spotRes(txt,cls){var r=$('sres');if(!r)return;r.textContent=txt;r.className='res '+(cls||'');r.style.display=''}
-function hideSpot(){var sp=$('spot');if(sp)sp.classList.remove('on');spotFor=-1}
-function nm2(id,cap){return id===human?(cap?'You':'you'):G.ps[id].name}
 function placeTok(pid,sq,hop){var p=pos(sq),t=toks[pid];if(!t)return;
  var offs=p.s==='c'?[[-.3,-.36],[.3,-.36],[-.3,-.08],[.3,-.08]]:[[-.26,-.2],[.26,-.2],[-.26,.28],[.26,.28]],o=offs[pid%4];
  // spread by index among players currently on this square
@@ -569,7 +494,7 @@ function placeTok(pid,sq,hop){var p=pos(sq),t=toks[pid];if(!t)return;
 function refreshTile(i){var s=SQ[i],d=tiles[i],o=G.own[i];
  d.classList.toggle('mort',!!G.mort[i]);
  var ob=$('ob'+i);if(o>=0){ob.style.background=TOK[G.ps[o].tok].c;ob.style.boxShadow='0 -1px 3px rgba(0,0,0,.35)'}else{ob.style.background='none';ob.style.boxShadow='none'}
- var ct=$('ct'+i);if(ct){var l=G.lvl[i],h='';if(l===5)h='<i class="cot inn"></i>';else for(var k=0;k<l;k++)h+='<i class="cot"></i>';ct.innerHTML=h;$('bd'+i).classList.toggle('built',l>0)}}
+ var bd=$('bd'+i);if(bd){bd.innerHTML='';var l=G.lvl[i];if(l===5)bd.innerHTML='<i class="cot inn"></i>';else for(var k=0;k<l;k++)bd.innerHTML+='<i class="cot"></i>'}}
 function hl(i){var d=tiles[i];d.classList.remove('hl');void d.offsetWidth;d.classList.add('hl')}
 // ---------- dice faces
 var PIPS={1:[[50,50]],2:[[28,28],[72,72]],3:[[28,28],[50,50],[72,72]],4:[[28,28],[72,28],[28,72],[72,72]],5:[[28,28],[72,28],[50,50],[28,72],[72,72]],6:[[28,24],[72,24],[28,50],[72,50],[28,76],[72,76]]};
@@ -586,40 +511,20 @@ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;
 function log(t){var l=$('log'),d=document.createElement('div');d.textContent=t;l.insertBefore(d,l.firstChild);while(l.children.length>40)l.removeChild(l.lastChild)}
 function banner(t){var b=$('bannerc');b.textContent=t}
 function float(pid,txt,col){var t=toks[pid];if(!t)return;var r=t.getBoundingClientRect(),f=document.createElement('div');f.className='float';f.textContent=txt;f.style.color=col;f.style.left=(r.left+r.width/2-20)+'px';f.style.top=(r.top-10)+'px';document.body.appendChild(f);setTimeout(function(){f.remove()},1250)}
-// ---------- plain-English notes for the human player
-var notes=[];
-function note(e){var nm=function(id){return G.ps[id].name},s=e.sq!==undefined?SQ[e.sq]:null,me=e.pid===human;
- if(e.t==='land'&&me){var o=G.own[e.sq],x='You landed on '+s.n+'.';
-  if(o===human)x+=' You own it.';else if(o>=0&&G.mort[e.sq])x+=' '+nm(o)+' owns it, but it is mortgaged, so no rent.';
-  else if(s.t==='tea')x+=' Nothing happens, enjoy the break.';else if(s.t==='fog')x+=' You are just visiting.';
-  else if(s.t==='luck')x+=' Take a Devon Luck card.';notes.push(x)}
- else if(e.t==='pay'){if(e.from===human)notes.push('You paid '+money(e.amt)+(e.to>=0?' to '+nm(e.to):'')+(/^Rent/.test(e.why)?' in rent.':' ('+e.why+').'));
-  else if(e.to===human)notes.push(nm(e.from)+' paid you '+money(e.amt)+(/^Rent/.test(e.why)?' rent for '+e.why.replace('Rent on ','')+'.':'.'))}
- else if(e.t==='buy'&&me)notes.push('You bought '+(/^You landed on /.test(notes[notes.length-1]||'')?'it':s.n)+'. Anyone who lands there now pays you rent.');
- else if(e.t==='buy'&&!me)notes.push(nm(e.pid)+' bought '+s.n+'.');
- else if(e.t==='pass'&&me)notes.push('You did not buy '+s.n+'.');
- else if(e.t==='card'&&me)notes.push('Devon Luck: '+e.tx);
- else if(e.t==='go'&&me)notes.push('You collected £'+e.amt+' for passing Start.');
- else if(e.t==='tofog'&&me)notes.push('You are lost in the fog. Roll doubles, pay £50 or wait 3 turns to get out.');
- else if(e.t==='build'&&me)notes.push('You built on '+s.n+'.');
- else if(e.t==='out')notes.push(me?'You have run out of money.':nm(e.pid)+' is out of the game.')}
-function canBuildAny(){for(var i=0;i<40;i++)if(G.canBuild(human,i))return true;return false}
-function endHint(){return canBuildAny()?'You own a whole colour set, so you can build cottages. Tap My properties, or End turn.':'Tap End turn to let the others play.'}
 // ---------- event playback
 async function play(events){
  for(var k=0;k<events.length;k++){var e=events[k],p=e.pid!==undefined&&e.pid>=0?G.ps[e.pid]:null;
-  try{note(e)}catch(x){}
   switch(e.t){
-  case'turn':hideSpot();zoomOut();refreshPlayers();banner(G.P().name+(G.P().ai?'':', your go'));break;
-  case'dice':hideSpot();zoomOut();await tumble(e.d);log(p.name+' rolled '+(e.d[0]+e.d[1])+(e.d[0]===e.d[1]?' (doubles)':''));banner(p.name+' rolled '+(e.d[0]+e.d[1]));await sleep(220);break;
+  case'turn':refreshPlayers();banner(G.P().name+(G.P().ai?'':', your go'));break;
+  case'dice':await tumble(e.d);log(p.name+' rolled '+(e.d[0]+e.d[1])+(e.d[0]===e.d[1]?' (doubles)':''));banner(p.name+' rolled '+(e.d[0]+e.d[1]));await sleep(220);break;
   case'move':await hop(e);break;
   case'go':S.coin();float(e.pid,'+£'+e.amt,'#ffe08a');log(p.name+' collected £'+e.amt+(e.by==='pass'?' passing Start':''));refreshPlayers();break;
-  case'land':hl(e.sq);zoomTo(e.sq);banner((p.id===human?'You':p.name)+' landed on '+SQ[e.sq].n);showSpot(e.sq,e.pid,'',events.slice(k+1).some(function(x){return x.t==='buy'&&x.sq===e.sq}));await sleep(p.ai?900:450);break;
-  case'pay':if(spotFor>=0&&(e.from===spotFor||e.to===spotFor)){var rent=/^Rent/.test(e.why);spotRes(rent?nm2(e.from,1)+' '+(e.from===human?'pay':'pays')+' '+(e.to>=0?nm2(e.to)+' ':'')+money(e.amt)+' rent':nm2(e.from,1)+' '+(e.from===human?'pay':'pays')+' '+money(e.amt)+(e.to>=0?' to '+nm2(e.to):''),e.to===human?'good':e.from===human?'bad':'')}S.pay();if(e.from>=0)float(e.from,'-'+money(e.amt),'#ff8a7a');if(e.to>=0){float(e.to,'+'+money(e.amt),'#ffe08a')}log((e.from>=0?G.ps[e.from].name:'Everyone')+' paid '+money(e.amt)+(e.to>=0?' to '+G.ps[e.to].name:'')+' — '+e.why);refreshPlayers();await sleep(380);break;
-  case'buy':S.buy();refreshTile(e.sq);spotRes(nm2(e.pid,1)+' bought it for '+money(e.price),e.pid===human?'good':'');log(p.name+' bought '+SQ[e.sq].n+' for '+money(e.price));refreshPlayers();await sleep(p.ai?1100:400);break;
-  case'pass':spotRes(nm2(e.pid,1)+' decided not to buy it','');log(p.name+' passed on '+SQ[e.sq].n);if(p.ai)await sleep(900);break;
-  case'card':S.card();spotRes(e.tx,'');log('Devon Luck: '+e.tx);await showCard(e.tx,!p.ai);break;
-  case'tofog':S.fog();log(p.name+' is lost in the fog');placeTok(p.id,10);zoomTo(10);showSpot(10,e.pid,(e.pid===human?'are':'is')+' lost in the fog');spotRes('Roll doubles, pay £50 or wait 3 turns to get out',e.pid===human?'bad':'');refreshPlayers();await sleep(p.ai?1300:700);break;
+  case'land':hl(e.sq);banner(p.name+' landed on '+SQ[e.sq].n);await sleep(260);break;
+  case'pay':S.pay();if(e.from>=0)float(e.from,'-'+money(e.amt),'#ff8a7a');if(e.to>=0){float(e.to,'+'+money(e.amt),'#ffe08a')}log((e.from>=0?G.ps[e.from].name:'Everyone')+' paid '+money(e.amt)+(e.to>=0?' to '+G.ps[e.to].name:'')+' — '+e.why);refreshPlayers();await sleep(380);break;
+  case'buy':S.buy();refreshTile(e.sq);log(p.name+' bought '+SQ[e.sq].n+' for '+money(e.price));refreshPlayers();await sleep(300);break;
+  case'pass':log(p.name+' passed on '+SQ[e.sq].n);break;
+  case'card':S.card();log('Devon Luck: '+e.tx);await showCard(e.tx,!p.ai);break;
+  case'tofog':S.fog();log(p.name+' is lost in the fog');placeTok(p.id,10);refreshPlayers();await sleep(500);break;
   case'fogout':log(p.name+' left the fog ('+e.how+')');refreshPlayers();break;
   case'stay':log(p.name+' is still in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left)');await sleep(300);break;
   case'build':S.build();refreshTile(e.sq);log(p.name+' built on '+SQ[e.sq].n);refreshPlayers();await sleep(220);break;
@@ -634,8 +539,8 @@ async function play(events){
  refreshPlayers();
 }
 async function hop(e){var p=G.ps[e.pid],t=toks[e.pid];
- if(e.fast){t.classList.add('hop');placeTok(e.pid,e.to);zoomTo(e.to);await sleep(420);t.classList.remove('hop');return}
- for(var i=0;i<e.path.length;i++){t.classList.add('hop');placeTok(e.pid,e.path[i]);zoomTo(e.path[i]);S.tick();await sleep(follow?150:120);t.classList.remove('hop');await sleep(25)}
+ if(e.fast){t.classList.add('hop');placeTok(e.pid,e.to);await sleep(420);t.classList.remove('hop');return}
+ for(var i=0;i<e.path.length;i++){t.classList.add('hop');placeTok(e.pid,e.path[i]);S.tick();await sleep(120);t.classList.remove('hop');await sleep(25)}
  await sleep(120)}
 // ---------- modals
 function ov(html,cls){var o=$('ov');o.innerHTML='<div class="sheet '+(cls||'')+'">'+html+'</div>';o.classList.add('on');return o.firstChild}
@@ -672,21 +577,6 @@ function showProp(i){var s=SQ[i],me=G.ps[human],can=!G.over&&G.cur===human&&(G.p
  if($('a-m'))$('a-m').onclick=function(){run(function(){G.mortgage(i)})};
  if($('a-u'))$('a-u').onclick=function(){run(function(){G.unmortgage(i)})};
  $('a-c').onclick=closeOv}
-function showHelp(back){var h='<div class="help"><h2>How to play</h2><ol>'+
- '<li>Tap <b>Roll the dice</b>. Your piece moves round the board.</li>'+
- '<li>Land on a place nobody owns and you can buy it.</li>'+
- '<li>When someone lands on a place you own, they pay you rent.</li>'+
- '<li>Own every place of one colour and the rent doubles. You can then build cottages, and then an inn, for much higher rent.</li>'+
- '<li>Stations: the more you own, the higher the fare. Ferry and Steam Railway rent depends on the dice roll.</li>'+
- '<li><b>?</b> squares give you a Devon Luck card. Tolls and roadworks cost money.</li>'+
- '<li>Into the fog sends you to the fog corner. Roll doubles, pay £50 or use a card to get out.</li>'+
- '<li>Pass Start in Exeter to collect £200.</li>'+
- '<li>Quick game: after 25 rounds the richest player wins. Classic: the last player with money wins.</li></ol>'+
- '<p style="margin-top:10px">Tap any square on the board to see its full name, price and rent.</p><h3>Colour sets</h3>';
- Object.keys(window.GROUPS).forEach(function(k){var g=window.GROUPS[k],names=SQ.filter(function(s){return s.g===k}).map(function(s){return s.n}).join(', ');
-  h+='<div class="row"><span class="dot" style="background:'+g.c+'"></span><span class="nm2"><b>'+g.n+'</b><small>'+esc(names)+'</small></span></div>'});
- h+='</div><div class="actions"><button class="btn" id="hx">'+(back?'Back':'Got it')+'</button></div>';
- ov(h);$('hx').onclick=function(){if(back)showSetup();else closeOv()}}
 function showMine(){var h='<h2>Your properties</h2><p>Tap one to build, sell or mortgage.</p>',n=0;
  for(var i=0;i<40;i++)if(G.own[i]===human){n++;var s=SQ[i],c=s.t==='p'?window.GROUPS[s.g].c:'#17324d';h+='<div class="row" data-i="'+i+'" style="cursor:pointer"><span class="dot" style="background:'+c+'"></span><span class="nm2">'+esc(s.n)+(G.mort[i]?' (mortgaged)':'')+'</span><span>'+(s.t==='p'&&G.lvl[i]?G.lvl[i]===5?'inn':G.lvl[i]+' cottage'+(G.lvl[i]>1?'s':''):'')+'</span></div>'}
  if(!n)h+='<p style="margin-top:12px">You don\'t own anything yet. Buy a place when you land on it.</p>';
@@ -696,26 +586,26 @@ function showMine(){var h='<h2>Your properties</h2><p>Tap one to build, sell or 
 function setDock(mode,extra){var a=$('actions'),p=G.P();
  $('turnname').textContent=p.name+(p.ai?' ('+STYN[p.ai]+')':'');
  $('turntk').innerHTML=tk(p.tok,'tk');
- $('turnsub').textContent=extra||(p.ai?'Taking their turn…':'Your turn. Roll the dice to move.');
+ $('turnsub').textContent=extra||(p.ai?'Thinking…':'Your turn');
  a.innerHTML='';
  if(mode==='roll'){var b=btn('Roll the dice','btn',function(){humanRoll()});a.appendChild(b);b.focus&&b.focus();
   if(p.fog>0){if(p.cash>=50)a.appendChild(btn('Pay £50 to leave','btn alt',function(){humanFog()}));if(p.card>0)a.appendChild(btn('Use fog card','btn alt',function(){humanCard()}))}
   a.appendChild(btn('My properties','btn alt',showMine))}
  if(mode==='end'){var e=btn('End turn','btn',function(){humanEnd()});a.appendChild(e);a.appendChild(btn('My properties','btn alt',showMine))}}
 function btn(t,c,f){var b=document.createElement('button');b.className=c;b.textContent=t;b.onclick=f;return b}
-async function humanRoll(){if(busy)return;busy=true;notes=[];$('actions').innerHTML='';$('turnsub').textContent='Rolling…';var ev=G.doRoll();await play(ev);busy=false;await after()}
+async function humanRoll(){if(busy)return;busy=true;$('actions').innerHTML='';var ev=G.doRoll();await play(ev);busy=false;await after()}
 async function humanFog(){var ev=G.payFog();busy=true;await play(ev);busy=false;setDock('roll')}
 async function humanCard(){var ev=G.useCard();busy=true;await play(ev);busy=false;setDock('roll')}
-async function humanEnd(){if(busy)return;busy=true;notes=[];$('actions').innerHTML='';busy=false;await next()}
+async function humanEnd(){if(busy)return;busy=true;$('actions').innerHTML='';busy=false;await next()}
 async function after(){
  if(G.over)return finish();
  var p=G.P();save();
  if(G.phase==='offer'){showOffer();return}
- if(G.phase==='roll'){if(p.ai){busy=true;await sleep(450);G.aiManage();await play(G.take());busy=false;await aiRoll();return}setDock('roll',notes.join(' ')+' Doubles! Roll again.');return}
- if(G.phase==='end'){if(p.ai){G.aiManage();await play(G.take());await sleep(700);await next();return}setDock('end',(notes.length?notes.join(' ')+' ':'')+endHint());setTimeout(function(){if(G.phase==='end'&&G.cur===human)zoomOut()},1400);return}
+ if(G.phase==='roll'){if(p.ai){busy=true;await sleep(450);G.aiManage();await play(G.take());busy=false;await aiRoll();return}setDock('roll','Doubles! Roll again');return}
+ if(G.phase==='end'){if(p.ai){G.aiManage();await play(G.take());await sleep(450);await next();return}setDock('end','Anything to build or mortgage?');return}
 }
-function showOffer(){zoomOut();var i=G.pendingOffer,s=SQ[i],me=G.ps[human],ok=me.cash>=s.p;
- var o=ov('<h2>Buy '+esc(s.n)+'?</h2><p>Nobody owns it yet. If you buy it, other players pay you rent when they land here. You have '+money(me.cash)+'.'+(ok?'':' You can\'t afford it.')+'</p>'+propHTML(i)+'<div class="actions"><button class="btn" id="by"'+(ok?'':' disabled')+'>Buy for £'+s.p+'</button><button class="btn alt" id="ps">Pass</button></div>');
+function showOffer(){var i=G.pendingOffer,s=SQ[i],me=G.ps[human],ok=me.cash>=s.p;
+ var o=ov('<h2>Buy '+esc(s.n)+'?</h2><p>You have '+money(me.cash)+'.'+(ok?'':' You can\'t afford it.')+'</p>'+propHTML(i)+'<div class="actions"><button class="btn" id="by"'+(ok?'':' disabled')+'>Buy for £'+s.p+'</button><button class="btn alt" id="ps">Pass</button></div>');
  $('by').onclick=async function(){closeOv();busy=true;await play(G.buy());busy=false;await after()};
  $('ps').onclick=async function(){closeOv();busy=true;await play(G.pass());busy=false;await after()}}
 async function next(){busy=true;var ev=G.endTurn();await play(ev);busy=false;save();if(G.over)return finish();await turn()}
@@ -723,8 +613,7 @@ async function aiRoll(){busy=true;var ev=G.doRoll();await play(ev);busy=false;aw
 async function turn(){
  if(G.over)return finish();var p=G.P();refreshPlayers();
  if(p.ai){setDock('none');busy=true;await sleep(500);G.aiFog();await play(G.take());G.aiManage();await play(G.take());busy=false;await aiRoll()}
- else{banner('Your go: roll the dice');var w=notes.filter(function(x){return !/^You (landed|bought|did not|collected|built)/.test(x)});
-  setDock('roll',w.length?'While you waited: '+w.slice(-4).join(' ')+' Now roll the dice.':'Your turn. Roll the dice to move.');notes=[]}}
+ else{banner(p.name+', your go');setDock('roll')}}
 function finish(){clearSave();play([]);S.win();confetti();
  var meP=G.ps[human],gain=15+(G.winner===human?(G.mode==='quick'?45:80):0)+Math.min(60,Math.max(0,Math.floor((G.worth(human)-G.cash0)/40))),aw=dpAward('deal',gain);
  var order=G.ps.slice().sort(function(a,b){return G.worth(b.id)-G.worth(a.id)}),w=G.ps[G.winner],mine=G.winner===human;
@@ -744,53 +633,52 @@ function save(){try{localStorage.setItem('ddSave',JSON.stringify({g:G.save(),h:h
 function clearSave(){try{localStorage.removeItem('ddSave')}catch(e){}}
 function loadSave(){try{var s=JSON.parse(localStorage.getItem('ddSave')||'null');return s}catch(e){return null}}
 // ---------- setup
-function showOptions(){var sv=loadSave(),bal=balance();
- var h='<h2>Game options</h2><p>All optional. The normal settings are fine for most games.</p><div class="lbl">Choose your piece <span style="float:right;color:#ffe08a">'+bal+' points to spend</span></div><div class="choice" id="ct">';
+function showSetup(){var sv=loadSave(),bal=balance();
+ var h='<h2>Devon Deal</h2><p>Buy Devon\'s best places, build cottages and charge rent. Beat the computer players.</p><div class="lbl">Choose your piece <span style="float:right;color:#ffe08a">'+bal+' points to spend</span></div><div class="choice" id="ct">';
  TOK.forEach(function(t,i){var open=isTokOpen(i);if(!open&&sel.tok===i)sel.tok=0;h+='<button data-t="'+i+'" class="'+(sel.tok===i?'sel':'')+'" '+(open?'':'style="opacity:.8"')+'>'+tk(i)+t.n+(open?'':'<small style="color:#ffe08a">Unlock '+t.cost+' pts</small>')+'</button>'});
  h+='</div><div class="lbl">Board look</div><div class="seg" id="sth">';
  THEMES.forEach(function(t){var o=themeOpen(t.k);h+='<button data-th="'+t.k+'" class="'+(curTheme()===t.k?'sel':'')+'">'+t.n+(o?'':'<br><small style="color:#ffe08a">Unlock '+t.cost+' pts</small>')+'</button>'});
  h+='</div><div class="lbl">Game length</div><div class="seg" id="sm"><button data-m="quick" class="'+(sel.mode==='quick'?'sel':'')+'">Quick<br><small>25 rounds</small></button><button data-m="classic" class="'+(sel.mode==='classic'?'sel':'')+'">Classic<br><small>Last one standing</small></button></div>';
- h+='<div class="lbl">Zoom in on each move</div><div class="seg" id="sf"><button data-f="1" class="'+(follow?'sel':'')+'">On</button><button data-f="0" class="'+(follow?'':'sel')+'">Off</button></div>'+'<div class="lbl">Opponents</div><div class="seg" id="so">';[1,2,3].forEach(function(n){h+='<button data-o="'+n+'" class="'+(sel.opp===n?'sel':'')+'">'+n+'</button>'});h+='</div>';
- h+='<p id="smsg" style="min-height:20px;color:#ffe08a;font-size:13px;margin-top:6px" aria-live="polite"></p><div class="actions"><button class="btn" id="go">Start game</button><button class="btn alt" id="bk">Back</button></div>';
+ h+='<div class="lbl">Opponents</div><div class="seg" id="so">';[1,2,3].forEach(function(n){h+='<button data-o="'+n+'" class="'+(sel.opp===n?'sel':'')+'">'+n+'</button>'});h+='</div>';
+ h+='<div class="actions"><a class="btn alt" id="bk" href="/games/" style="text-decoration:none;text-align:center">Back to games</a></div>';
+ h+='<p id="smsg" style="min-height:20px;color:#ffe08a;font-size:13px;margin-top:6px" aria-live="polite"></p><div class="actions"><button class="btn" id="go">Start game</button></div>'+(sv?'<div class="actions"><button class="btn alt" id="cont">Continue saved game</button></div>':'');
  ov(h);var msg=function(t){$('smsg').textContent=t};
  $('ct').querySelectorAll('button').forEach(function(b){b.onclick=function(){var i=+b.dataset.t;
-  if(!isTokOpen(i)){var c=TOK[i].cost;if(balance()>=c){spend(c);var u=unl();u.tokens.push(i);st('ddUnlocked',JSON.stringify(u));S.buy();sel.tok=i;showOptions();setTimeout(function(){var m=$('smsg');if(m)m.textContent=TOK[i].n+' unlocked!'},30);return}
+  if(!isTokOpen(i)){var c=TOK[i].cost;if(balance()>=c){spend(c);var u=unl();u.tokens.push(i);st('ddUnlocked',JSON.stringify(u));S.buy();sel.tok=i;showSetup();setTimeout(function(){var m=$('smsg');if(m)m.textContent=TOK[i].n+' unlocked!'},30);return}
    msg('You need '+(c-balance())+' more points for the '+TOK[i].n+'. Play any game on the site to earn them.');return}
   sel.tok=i;$('ct').querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b)})}});
  $('sth').querySelectorAll('button').forEach(function(b){b.onclick=function(){var k=b.dataset.th,t=THEMES.filter(function(x){return x.k===k})[0];
-  if(!themeOpen(k)){if(balance()>=t.cost){spend(t.cost);var u=unl();u.themes.push(k);st('ddUnlocked',JSON.stringify(u));st('ddTheme',k);S.buy();applyTheme();showOptions();setTimeout(function(){var m=$('smsg');if(m)m.textContent=t.n+' unlocked!'},30);return}
+  if(!themeOpen(k)){if(balance()>=t.cost){spend(t.cost);var u=unl();u.themes.push(k);st('ddUnlocked',JSON.stringify(u));st('ddTheme',k);S.buy();applyTheme();showSetup();setTimeout(function(){var m=$('smsg');if(m)m.textContent=t.n+' unlocked!'},30);return}
    msg('You need '+(t.cost-balance())+' more points for '+t.n+'.');return}
   st('ddTheme',k);applyTheme();$('sth').querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b)})}});
  $('sm').querySelectorAll('button').forEach(function(b){b.onclick=function(){sel.mode=b.dataset.m;$('sm').querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b)})}});
  $('so').querySelectorAll('button').forEach(function(b){b.onclick=function(){sel.opp=+b.dataset.o;$('so').querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b)})}});
- $('sf').querySelectorAll('button').forEach(function(b){b.onclick=function(){follow=b.dataset.f==='1';st('ddFollow',follow?'1':'0');if(!follow)zoomOut();$('sf').querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b)})}});
  $('go').onclick=function(){closeOv();newGame()};
- $('bk').onclick=function(){showSetup()}}
-// simple start screen: one big button, everything else under Options
-function showSetup(){var sv=loadSave(),opp=sel.opp===1?NAMES[0]:sel.opp===2?NAMES[0]+' and '+NAMES[1]:NAMES.join(', ').replace(/, ([^,]*)$/,' and $1');
- var h='<h2>Devon Deal</h2><p>Roll the dice, buy Devon places and collect rent. The richest player wins.</p>'+
- '<div class="row" style="margin-top:12px;border:0">'+tk(sel.tok)+'<span class="nm2">You play as the <b>'+TOK[sel.tok].n+'</b> against '+opp+'. '+(sel.mode==='quick'?'Quick game, 25 rounds.':'Classic game, last one standing.')+'</span></div>'+
- '<div class="actions"><button class="btn" id="go">Start game</button></div>'+
- (sv?'<div class="actions"><button class="btn alt" id="cont">Carry on my last game</button></div>':'')+
- '<div class="actions"><button class="btn alt" id="howto">How to play</button><button class="btn alt" id="opts">Options</button></div>';
- ov(h);
- $('go').onclick=function(){closeOv();newGame()};
- if(sv)$('cont').onclick=function(){closeOv();resume(sv)};
- $('howto').onclick=function(){showHelp(true)};
- $('opts').onclick=function(){showOptions()}}
+ if(sv)$('cont').onclick=function(){closeOv();resume(sv)}}
 function newGame(){var used=[sel.tok],others=TOK.map(function(t,i){return i}).filter(function(i){return i!==sel.tok});
  var pl=[{name:'You',ai:null,tok:sel.tok}];for(var k=0;k<sel.opp;k++)pl.push({name:NAMES[k],ai:STY[k],tok:others[k]});
- G=new Game({players:pl,mode:sel.mode,maxRound:25});human=0;$('log').innerHTML='';buildBoard();log('New game. Tip: tap any square to see its name, price and rent.');refreshPlayers();save();turn()}
-function resume(sv){G=Game.load(sv.g);human=sv.h;$('log').innerHTML='';buildBoard();log('Game restored.');refreshPlayers();
+ G=new Game({players:pl,mode:sel.mode,maxRound:25});started=true;human=0;$('log').innerHTML='';buildBoard();log('New game. Good luck!');refreshPlayers();save();turn()}
+function resume(sv){G=Game.load(sv.g);started=true;human=sv.h;$('log').innerHTML='';buildBoard();log('Game restored.');refreshPlayers();
  if(G.phase==='offer'&&!G.P().ai)showOffer();else if(G.P().ai)turn();else if(G.phase==='end')setDock('end');else setDock('roll')}
+
+function showPause(){if(paused)return;paused=true;save();
+ ov('<h2>Paused</h2><p>'+(started&&!G.over?'Your game is saved. You can leave and pick it up later: open Devon Deal and choose Continue saved game.':'Nothing is running.')+'</p><div class="actions" style="flex-direction:column"><button class="btn" id="pr">Resume game</button><button class="btn alt" id="pe">Save and exit to games</button><button class="btn alt" id="pn">Start a new game</button><button class="btn alt" id="ps2">'+(muted?'Turn sound on':'Turn sound off')+'</button></div>');
+ $('pr').onclick=function(){closeOv();paused=false};
+ $('pe').onclick=function(){save();location.href='/games/'};
+ $('pn').onclick=function(){closeOv();paused=false;showSetup()};
+ $('ps2').onclick=function(){$('mute').click();$('ps2').textContent=muted?'Turn sound on':'Turn sound off'}}
+function exitGame(ev){if(started&&G&&!G.over){if(ev)ev.preventDefault();if(paused)return;paused=true;save();
+ ov('<h2>Leave Devon Deal?</h2><p>Your game is saved. Next time, open Devon Deal and choose <b>Continue saved game</b> to carry on from here.</p><div class="actions" style="flex-direction:column"><button class="btn" id="xl">Save and leave</button><button class="btn alt" id="xk">Keep playing</button></div>');
+ $('xl').onclick=function(){save();location.href='/games/'};$('xk').onclick=function(){closeOv();paused=false}}}
 // ---------- init
 window.DDStart=function(){
- var ms=function(){$('mute').textContent=muted?'🔇':'🔊';$('mute').setAttribute('aria-label',muted?'Sound off':'Sound on')};ms();
- $('mute').onclick=function(){muted=!muted;try{localStorage.setItem('ddMute',muted?'1':'0')}catch(e){}ms()};
- $('rules').onclick=function(){showHelp()};
- $('newg').onclick=function(){showSetup()};
+ $('mute').textContent=muted?'Sound off':'Sound on';
+ $('mute').onclick=function(){muted=!muted;try{localStorage.setItem('ddMute',muted?'1':'0')}catch(e){}$('mute').textContent=muted?'Sound off':'Sound on'};
+ $('newg').onclick=showPause;$('exit').addEventListener('click',exitGame);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('ov').classList.contains('on'))showPause()});
+ window.addEventListener('pagehide',function(){if(started&&G&&!G.over)save()});
  G=new Game({players:[{name:'You',tok:0},{name:'Morwenna',tok:1,ai:'cautious'}],seed:7});buildBoard();refreshPlayers();$('turnname').textContent='Welcome';$('turnsub').textContent='Choose a piece and start';
  showSetup()};
-window.DDS={get G(){return G},play:play,S:S,refresh:function(){for(var i=0;i<40;i++)refreshTile(i);refreshPlayers()}};
+window.DDS={get G(){return G},play:play,S:S};
 })();
 </script><script>DDStart()</script><script>(function(){try{var H=location.hostname;if(/^(localhost|127\.|\[::1\])/.test(H)||location.protocol==='file:')return;try{var u=location.search||'';if(/[?&]notme(=|&|$)/.test(u)){var off=/notme=off/.test(u);if(off)localStorage.removeItem('jd_skip');else localStorage.setItem('jd_skip','1');var t=document.createElement('div');t.textContent=off?'Your visits are being counted again on this device.':'Done. Your visits are no longer counted on this device.';t.style.cssText='position:fixed;left:12px;right:12px;bottom:18px;z-index:99999;background:#06223a;color:#fff;padding:14px 16px;border-radius:12px;font:600 16px/1.3 system-ui,sans-serif;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.35)';document.body?document.body.appendChild(t):addEventListener('DOMContentLoaded',function(){document.body.appendChild(t)});setTimeout(function(){t.remove()},6000)}if(localStorage.getItem('jd_skip')==='1')return}catch(e){}function hit(){try{var q='p='+encodeURIComponent(location.pathname||'/')+'&t='+encodeURIComponent(document.title||'')+'&r='+encodeURIComponent(((/[?&](?:ref|utm_source)=([^&]+)/.exec(location.search)||[])[1])||document.referrer||'')+'&s='+[screen.width,screen.height,window.devicePixelRatio||1].join(',')+'&rnd='+Math.random().toString(36).slice(2);new Image().src='https://exmoregold2000.goatcounter.com/count?'+q}catch(e){}}if(document.readyState==='complete')hit();else addEventListener('load',hit)}catch(e){}})();</script></body></html>
