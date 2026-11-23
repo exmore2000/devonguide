@@ -5481,13 +5481,13 @@ window.__dvNews=d;window.__dvApply=function(k){var d=window.__dvNews||{};if(!d[k
 <script>window.__dvApply&&window.__dvApply("LOCAL");</script>
 
 
-<section id="play-promo"><div class="wrap"><a class="promo" href="#games"><span class="pi" aria-hidden="true">🎮</span><span class="pt"><b>Games on the go</b><span>On a train, waiting for a ferry or just relaxing? Quick Devon puzzles and quizzes. Earn points and rank up. <em id="promo-ev"></em></span></span><span class="pgo">Play now &rarr;</span></a><a class="promo" href="/devon-deal/" style="margin-top:14px"><span class="pi" aria-hidden="true">🎲</span><span class="pt"><b>New: Devon Deal board game</b><span>A free Devon property game. Buy landmarks, build cottages, beat the computer.</span></span><span class="pgo">Play now &rarr;</span></a></div></section>
+<section id="play-promo"><div class="wrap"><a class="promo" href="#games"><span class="pi" aria-hidden="true">🎮</span><span class="pt"><b>Games on the go</b><span>On a train, waiting for a ferry or just relaxing? Quick Devon puzzles and quizzes. Earn points and rank up. <em id="promo-ev"></em></span></span><span class="pgo">Play now &rarr;</span></a><a class="promo" href="/devon-deal/" style="margin-top:14px"><span class="pi" aria-hidden="true">🎲</span><span class="pt"><b>New: Devon Property Race board game</b><span>A free Devon property game. Buy landmarks, build cottages, beat the computer.</span></span><span class="pgo">Play now &rarr;</span></a></div></section>
 
 <section id="games"><div class="wrap"><span id="games-preview"></span>
 <h2>Games on the go</h2>
 <p class="gonote"><span aria-hidden="true">🚆</span><span><b>Something to play while you travel, or when you just want to switch off.</b> Every game is quick, works on your phone and saves your progress, so you can pick it up again on the bus, at the station, on the sand or on the sofa. Most take two to five minutes, and a new picture crossword arrives every day.</span></p>
 <p class="sub">Sudoku, picture and word crosswords, Devon picross, quizzes with a timer and lifelines, a daily word and more. Pick a game, earn points and climb the ranks. Scores stay on your own device.</p>
-<a class="promo" href="/devon-deal/" style="margin:0 0 18px"><span class="pi" aria-hidden="true">🎲</span><span class="pt"><b>New: Devon Deal board game</b><span>Buy Devon landmarks, build cottages and beat the computer. Earn points to unlock new pieces and board looks.</span></span><span class="pgo">Play now &rarr;</span></a>
+<a class="promo" href="/devon-deal/" style="margin:0 0 18px"><span class="pi" aria-hidden="true">🎲</span><span class="pt"><b>New: Devon Property Race board game</b><span>Buy Devon landmarks, build cottages and beat the computer. Earn points to unlock new pieces and board looks.</span></span><span class="pgo">Play now &rarr;</span></a>
 <div class="evt" id="evt"></div>
 <div class="dp" id="dp"></div>
 <div class="lb" id="lb"><h3>Leaderboard</h3><div id="lb-shared" hidden></div><div id="lb-local"></div></div>
@@ -5750,15 +5750,17 @@ pool.forEach(function(q){if(pick.length>=N)return;if(q.t==='order'){if(seenOrder
 qs=pick.map(function(q){var idx=q.o.map(function(_,n){return n;});var order=q.t==='tf'?idx:shuffle(idx);return {q:q.q,t:q.t,e:q.e,o:order.map(function(n){return q.o[n];}),a:order.indexOf(q.a)};});
 i=0;score=0;streak=0;setProgress(0);show();
 }
+var SVK='cpgSave';function csave(){try{localStorage.setItem(SVK,JSON.stringify({v:1,qs:qs,i:i,score:score,streak:streak}));}catch(e){}}function cload(){try{var o=JSON.parse(localStorage.getItem(SVK)||'null');if(o&&o.v===1&&o.qs&&o.qs.length===N&&o.i<N)return o;}catch(e){}return null;}
 function intro(){
-stage.textContent='';
-var b=el('button','gplay','Start walking');b.type='button';b.addEventListener('click',start);
+stage.textContent='';var sv=cload();
+if(sv){var cb=el('button','gplay','Continue your walk (question '+(sv.i+1)+' of '+N+')');cb.type='button';cb.addEventListener('click',function(){qs=sv.qs;i=sv.i;score=sv.score;streak=sv.streak;setProgress(score*STEP);show();});stage.appendChild(cb);}
+var b=el('button',sv?'gnext gghost':'gplay',sv?'Start a new walk':'Start walking');b.type='button';b.addEventListener('click',start);
 stage.appendChild(b);
 if(best){stage.appendChild(el('p','gsub','Your best so far: '+best+' out of '+N+'.'));}
 }
 function show(){
 stage.textContent='';
-var q=qs[i];
+var q=qs[i];csave();
 var kind=q.t==='tf'?'True or false':q.t==='order'?'Which comes first?':'Question';
 stage.appendChild(el('div','gmeta',kind+' '+(i+1)+' of '+N+(streak>1?' · streak '+streak:'')));
 stage.appendChild(el('p','gq',q.q));
@@ -5789,6 +5791,7 @@ if(s>=4)return 'Day Tripper: you have the right idea. Pack more flapjacks.';
 return 'Armchair Rambler: time to lace up and get on the path.';
 }
 function finish(){
+try{localStorage.removeItem(SVK);}catch(e){}
 if(score>best){best=score;try{localStorage.setItem('cpgBest',String(best));}catch(e){}}
 setProgress(score*STEP);
 stage.textContent='';
@@ -5820,7 +5823,7 @@ var BAD={first:['First Steps','Earn your first points'],full:['Full House','Play
 var EVT={pub:['Pub Quiz Night','🍺','the Devon Pub Quiz'],word:['Wordsmith Week','🔤','the Devon Daily Word'],hist:['History Week','📜','the Devon History Challenge'],mem:['Harbour Regatta','⚓','Harbour Match'],cw:['Crossword Cup','✏️','the Devon Crossword'],hol:['Peak Challenge','⛰️','Higher or Lower: Peaks'],cp:['Walkers’ Week','🥾','the Coast Path Challenge'],sdk:['Sudoku Showdown','🔢','Sudoku'],pcw:['Picture Puzzle Week','🖼️','the Daily Picture Crossword']};
 var ORDER=['sdk','word','cw','pub'];
 
-var GN={deal:'Devon Deal',sdk:'Sudoku',pcw:'Daily Picture Crossword',pub:'Pub Quiz',hist:'History Challenge',cw:'Crossword',word:'Daily Word',tea:'Cream Tea',mem:'Harbour Match',hol:'Peaks',cp:'Coast Path',crn:'Lighthouses',pic:'Picross',daily:'Daily set'};
+var GN={deal:'Devon Property Race',sdk:'Sudoku',pcw:'Daily Picture Crossword',pub:'Pub Quiz',hist:'History Challenge',cw:'Crossword',word:'Daily Word',tea:'Cream Tea',mem:'Harbour Match',hol:'Peaks',cp:'Coast Path',crn:'Lighthouses',pic:'Picross',daily:'Daily set'};
 var LBX={db:null,uid:null,user:null};
 function lbLocal(){var b=document.getElementById('lb-local');if(!b)return;b.textContent='';b.appendChild(el('h4','','Your best scores on this device'));var bp=js('devonBestPts',{}),ks=Object.keys(bp).sort(function(a,c){return bp[c]-bp[a];});
 if(!ks.length){b.appendChild(el('p','fine','Play a game to set your first score.'));return;}
@@ -5963,23 +5966,26 @@ var rows=[],enBtn=null,hint='';
 function ready(){var on=!over&&cur.length===5;if(enBtn)enBtn.classList.toggle('ready',on);if(over)return;if(on)msg.textContent='Now tap Enter to check your word.';else if(msg.dataset.m==='1'){msg.textContent=hint;msg.dataset.m='';}}
 function build(){gridEl.textContent='';rows=[];for(var r=0;r<6;r++){var row=el('div','wdrow'),cs=[];for(var c=0;c<5;c++){var x=el('div','wdc');row.appendChild(x);cs.push(x);}gridEl.appendChild(row);rows.push(cs);}
 kbEl.textContent='';['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'].forEach(function(line,li){var rw=el('div','kbr');if(li===2){var en=el('button','kbk wide','Enter');en.type='button';enBtn=en;en.addEventListener('click',submit);rw.appendChild(en);}line.split('').forEach(function(ch){var k=el('button','kbk',ch);k.type='button';k.dataset.k=ch;k.addEventListener('click',function(){type(ch);});rw.appendChild(k);});if(li===2){var bk=el('button','kbk wide','\u232B');bk.type='button';bk.setAttribute('aria-label','Delete');bk.addEventListener('click',back);rw.appendChild(bk);}kbEl.appendChild(rw);});}
-function reset(m){mode=m;target=m==='daily'?LIST[day%LIST.length]:LIST[Math.floor(Math.random()*LIST.length)];guesses=[];cur='';typed='';over=false;hintsLeft=2;hintsUsed=0;hintPos=[];hintLines=[];hintEl.textContent='';nextBox.textContent='';kbEl.hidden=false;hintBtn.hidden=false;again.hidden=false;hintBtn.textContent='Hint (2 left)';hintBtn.disabled=false;hint=m==='daily'?'Today\'s word is a Devon theme word. Six tries.':'Random word. Six tries.';msg.textContent=hint;msg.dataset.m='';share.hidden=true;build();}
+function reset(m){store('wdSave',null);mode=m;target=m==='daily'?LIST[day%LIST.length]:LIST[Math.floor(Math.random()*LIST.length)];guesses=[];cur='';typed='';over=false;hintsLeft=2;hintsUsed=0;hintPos=[];hintLines=[];hintEl.textContent='';nextBox.textContent='';kbEl.hidden=false;hintBtn.hidden=false;again.hidden=false;hintBtn.textContent='Hint (2 left)';hintBtn.disabled=false;hint=m==='daily'?'Today\'s word is a Devon theme word. Six tries.':'Random word. Six tries.';msg.textContent=hint;msg.dataset.m='';share.hidden=true;build();}
 var typed='';function sync(){var n=5-hintPos.length;if(typed.length>n)typed=typed.slice(0,n);if(typed.length===n){var o=[],k=0;for(var c=0;c<5;c++)o.push(hintPos.indexOf(c)>-1?target[c]:typed[k++]);cur=o.join('');}else cur=typed;}
 function type(ch){if(over||typed.length>=5-hintPos.length)return;typed+=ch;sync();paint();if(cur.length===5)msg.dataset.m='1';ready();}
 function back(){if(over)return;typed=typed.slice(0,-1);sync();paint();ready();}
 function paint(){var r=guesses.length;if(r>5)return;var k=0;for(var c=0;c<5;c++){var t=rows[r][c],h=hintPos.indexOf(c)>-1,ch=h?target[c]:(typed[k++]||'');t.textContent=ch;t.classList.toggle('hnt',h);}}
 function score(g){var res=['n','n','n','n','n'],t=target.split(''),used=[false,false,false,false,false];for(var i=0;i<5;i++)if(g[i]===t[i]){res[i]='g';used[i]=true;}for(var i=0;i<5;i++){if(res[i]==='g')continue;for(var j=0;j<5;j++){if(!used[j]&&g[i]===t[j]){res[i]='y';used[j]=true;break;}}}return res;}
 function submit(){if(over)return;if(cur.length<5){msg.textContent='Five letters needed.';return;}if(BAD[cur]){bad('Let\'s keep it friendly. Try another word.');return;}if(US[cur]){bad('That is the American spelling. This is a UK site, so try the UK spelling.');return;}if(!OK[cur]){bad('Not in the word list. Try another word.');return;}var res=score(cur),r=guesses.length;guesses.push(cur);for(var c=0;c<5;c++){rows[r][c].classList.remove('hnt');rows[r][c].classList.add(res[c]);rows[r][c].setAttribute('aria-label',cur[c]+' '+(res[c]==='g'?'correct':res[c]==='y'?'wrong place':'not in word'));var key=kbEl.querySelector('[data-k="'+cur[c]+'"]');if(key){if(res[c]==='g'){key.className='kbk g';}else if(res[c]==='y'&&!key.classList.contains('g')){key.className='kbk y';}else if(res[c]==='n'&&!key.classList.contains('g')&&!key.classList.contains('y')){key.className='kbk n';}}}
-if(cur===target){over=true;hintBtn.disabled=true;if(enBtn)enBtn.classList.remove('ready');msg.textContent='Got it in '+guesses.length+'! Proper job. '+winPts();endShare(res);return;}
-if(guesses.length===6){over=true;hintBtn.disabled=true;if(enBtn)enBtn.classList.remove('ready');msg.textContent='Out of tries. The word was '+target+'.';endShare(res);return;}cur='';typed='';msg.textContent=hint;msg.dataset.m='';paint();ready();}
+if(cur===target){over=true;store('wdSave',null);hintBtn.disabled=true;if(enBtn)enBtn.classList.remove('ready');msg.textContent='Got it in '+guesses.length+'! Proper job. '+winPts();endShare(res);return;}
+if(guesses.length===6){over=true;store('wdSave',null);hintBtn.disabled=true;if(enBtn)enBtn.classList.remove('ready');msg.textContent='Out of tries. The word was '+target+'.';endShare(res);return;}cur='';typed='';msg.textContent=hint;msg.dataset.m='';paint();wsave();ready();}
 function bad(t){msg.textContent=t;msg.dataset.m='1';var rw=gridEl.children[guesses.length];if(rw){rw.classList.remove('shake');void rw.offsetWidth;rw.classList.add('shake');}if(enBtn)enBtn.classList.remove('ready');}
-function useHint(){if(over||hintsLeft<1)return;var known={};guesses.forEach(function(g){for(var i=0;i<5;i++)if(g[i]===target[i])known[i]=1;});hintPos.forEach(function(i){known[i]=1;});var open=[0,1,2,3,4].filter(function(i){return !known[i];});if(!open.length){msg.textContent='You already have every letter in place.';msg.dataset.m='1';return;}var i=open[Math.floor(Math.random()*open.length)];hintPos.push(i);hintsLeft--;hintsUsed++;hintLines.push('Letter '+(i+1)+' is '+target[i]+'.');sync();paint();ready();hintEl.textContent='Hint: '+hintLines.join(' ');msg.textContent='Hint: letter '+(i+1)+' is '+target[i]+'. It is placed in your word.';msg.dataset.m='1';paint();hintBtn.textContent=hintsLeft?'Hint ('+hintsLeft+' left)':'No hints left';hintBtn.disabled=!hintsLeft;}
+function useHint(){if(over||hintsLeft<1)return;var known={};guesses.forEach(function(g){for(var i=0;i<5;i++)if(g[i]===target[i])known[i]=1;});hintPos.forEach(function(i){known[i]=1;});var open=[0,1,2,3,4].filter(function(i){return !known[i];});if(!open.length){msg.textContent='You already have every letter in place.';msg.dataset.m='1';return;}var i=open[Math.floor(Math.random()*open.length)];hintPos.push(i);hintsLeft--;hintsUsed++;hintLines.push('Letter '+(i+1)+' is '+target[i]+'.');sync();paint();ready();hintEl.textContent='Hint: '+hintLines.join(' ');msg.textContent='Hint: letter '+(i+1)+' is '+target[i]+'. It is placed in your word.';msg.dataset.m='1';paint();hintBtn.textContent=hintsLeft?'Hint ('+hintsLeft+' left)':'No hints left';hintBtn.disabled=!hintsLeft;wsave();}
+function wsave(){if(over)return;try{store('wdSave',JSON.stringify({v:1,mode:mode,day:day,target:target,g:guesses,hp:hintPos,hl:hintsLeft,hu:hintsUsed,hln:hintLines}));}catch(e){}}
 hintBtn.addEventListener('click',useHint);
 function winPts(){DP.badge('word');if(mode==='daily'){if(store('wdDay')===String(day))return 'Today\'s points already claimed.';store('wdDay',day);return DP.award('word',Math.max(10,(7-guesses.length)*20-hintsUsed*10)).text;}return DP.award('word',Math.max(5,15-hintsUsed*5)).text;}
 function endShare(){kbEl.hidden=true;hintBtn.hidden=true;again.hidden=true;nextBox.textContent='';if(window.__dvNext)window.__dvNext(nextBox,{again:{label:mode==='daily'?'Play a random word':'Play another random word',fn:function(){reset('random');}}});share.hidden=false;share.textContent='Copy result';share.onclick=function(){var l=guesses.map(function(g){return score(g).map(function(x){return x==='g'?'\ud83d\udfe9':x==='y'?'\ud83d\udfea':'\u2b1b';}).join('');});copy(share,'Devon Daily Word '+(guesses[guesses.length-1]===target?guesses.length:'X')+'/6\n'+l.join('\n'));};}
 document.addEventListener('keydown',function(e){var d=root.closest('details');if(!d||!d.open)return;var a=document.activeElement;if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'))return;if(e.ctrlKey||e.metaKey||e.altKey)return;if(e.key==='Enter'){if(a&&a.tagName==='BUTTON')return;submit();}else if(e.key==='Backspace'){back();}else if(/^[a-zA-Z]$/.test(e.key)){type(e.key.toUpperCase());}});
 again.addEventListener('click',function(){reset('random');});
+var wsv=null;try{wsv=JSON.parse(store('wdSave')||'null');}catch(e){}
 reset('daily');
+if(wsv&&wsv.v===1&&wsv.g&&(wsv.g.length||wsv.hp.length)&&wsv.g.length<6&&(wsv.mode==='random'||wsv.day===day)&&/^[A-Z]{5}$/.test(wsv.target||'')){try{reset(wsv.mode);target=wsv.target;hintPos=wsv.hp||[];hintsLeft=wsv.hl;hintsUsed=wsv.hu|0;hintLines=wsv.hln||[];wsv.g.forEach(function(g){cur=g;submit();});typed='';sync();paint();if(hintLines.length){hintEl.textContent='Hint: '+hintLines.join(' ');}hintBtn.textContent=hintsLeft?'Hint ('+hintsLeft+' left)':'No hints left';hintBtn.disabled=!hintsLeft;msg.textContent='Game restored. Carry on with your word.';msg.dataset.m='';ready();}catch(e){reset('daily');}}
 })();
 /* cream tea */
 (function(){
@@ -6229,29 +6235,35 @@ var root=document.getElementById('g-mem');if(!root)return;
 var ICONS=['--i-boat','--i-anchor','--i-light','--i-tent','--i-hotel','--i-fish','--i-mug','--i-sun'];
 var info=el('p','gsub',''),gridEl=el('div','memgrid'),again=el('button','gplay','New game');again.type='button';
 var first=null,lock=false,moves=0,found=0,best=parseInt(store('memBest')||'0',10)||0,nb=el('div');
-function setup(){nb.textContent='';gridEl.textContent='';first=null;lock=false;moves=0;found=0;info.textContent='Tap a card to turn it over.'+(best?' Best: '+best+' moves.':'');
-shuffle(ICONS.concat(ICONS)).forEach(function(ic){var b=el('button','mem');b.type='button';b.setAttribute('aria-label','Card, face down');b.dataset.ic=ic;var sp=el('span');sp.style.setProperty('--mi','var('+ic+')');b.appendChild(sp);b.addEventListener('click',function(){flip(b);});gridEl.appendChild(b);});}
+var MSK='memSave';function msave(){var o=[],d=[];[].forEach.call(gridEl.children,function(c){o.push(c.dataset.ic);d.push(c.classList.contains('done')?1:0);});store(MSK,JSON.stringify({v:1,o:o,d:d,m:moves,f:found}));}
+function mload(){try{var x=JSON.parse(store(MSK)||'null');if(x&&x.v===1&&x.o&&x.o.length===16&&x.f<8)return x;}catch(e){}return null;}
+function setup(rs){nb.textContent='';gridEl.textContent='';first=null;lock=false;moves=0;found=0;info.textContent='Tap a card to turn it over.'+(best?' Best: '+best+' moves.':'');
+var order=rs?rs.o:shuffle(ICONS.concat(ICONS));if(rs){moves=rs.m|0;found=rs.f|0;info.textContent='Game restored. Moves: '+moves+'. Tap a card to carry on.';}
+order.forEach(function(ic,k){var b=el('button','mem');b.type='button';b.setAttribute('aria-label','Card, face down');b.dataset.ic=ic;var sp=el('span');sp.style.setProperty('--mi','var('+ic+')');b.appendChild(sp);b.addEventListener('click',function(){flip(b);});if(rs&&rs.d[k]){b.classList.add('done');b.disabled=false;}gridEl.appendChild(b);});if(!rs)store(MSK,null);}
 function flip(b){if(lock||b.classList.contains('up')||b.classList.contains('done'))return;b.classList.add('up');b.setAttribute('aria-label','Card, '+b.dataset.ic.replace('--i-',''));
 if(!first){first=b;return;}moves++;
-if(first.dataset.ic===b.dataset.ic){first.classList.remove('up');b.classList.remove('up');first.classList.add('done');b.classList.add('done');first=null;found++;if(found===8){info.textContent='Done in '+moves+' moves! '+DP.award('mem',Math.max(20,150-moves*6)).text;if(!best||moves<best){best=moves;store('memBest',best);info.textContent+=' New best.';}if(window.__dvNext)window.__dvNext(nb,{again:{label:'Play again',fn:setup}});}}
-else{lock=true;var a=first;first=null;setTimeout(function(){a.classList.remove('up');b.classList.remove('up');a.setAttribute('aria-label','Card, face down');b.setAttribute('aria-label','Card, face down');lock=false;},800);}
+if(first.dataset.ic===b.dataset.ic){first.classList.remove('up');b.classList.remove('up');first.classList.add('done');b.classList.add('done');first=null;found++;msave();if(found===8){store(MSK,null);info.textContent='Done in '+moves+' moves! '+DP.award('mem',Math.max(20,150-moves*6)).text;if(!best||moves<best){best=moves;store('memBest',best);info.textContent+=' New best.';}if(window.__dvNext)window.__dvNext(nb,{again:{label:'Play again',fn:setup}});}}
+else{lock=true;var a=first;first=null;setTimeout(function(){a.classList.remove('up');b.classList.remove('up');a.setAttribute('aria-label','Card, face down');b.setAttribute('aria-label','Card, face down');lock=false;msave();},800);}
 if(found<8)info.textContent='Moves: '+moves+'.';}
-again.addEventListener('click',setup);root.appendChild(info);root.appendChild(gridEl);root.appendChild(again);root.appendChild(nb);setup();
+again.textContent='New game';again.addEventListener('click',function(){setup();});root.appendChild(info);root.appendChild(gridEl);root.appendChild(again);root.appendChild(nb);setup(mload());
 })();
 /* higher or lower */
 (function(){
 var root=document.getElementById('g-hol');if(!root)return;
 var D=[["High Willhays, Dartmoor", 621], ["Yes Tor, Dartmoor", 619], ["Haytor, Dartmoor", 457], ["Great Hangman, Combe Martin", 318], ["Golden Cap, Dorset", 191], ["Ben Nevis", 1345], ["Snowdon", 1085], ["Scafell Pike", 978], ["The Shard, London", 310], ["Big Ben's tower", 96]],left,right,streak,best=parseInt(store('holBest')||'0',10)||0,stage=el('div');stage.setAttribute('aria-live','polite');root.appendChild(stage);
 function pair(){var a,b;do{a=D[Math.floor(Math.random()*D.length)];b=D[Math.floor(Math.random()*D.length)];}while(a===b||a[1]===b[1]);return [a,b];}
+var HSK='holSave';function hsave(){try{store(HSK,JSON.stringify({v:1,l:D.indexOf(left),r:D.indexOf(right),s:streak}));}catch(e){}}
 function start(){streak=0;next(pair()[0]);}
 function next(l){left=l;var b;do{b=D[Math.floor(Math.random()*D.length)];}while(b===left||b[1]===left[1]);right=b;render();}
 function card(n,v){var c=el('div','hlc');c.appendChild(el('div','n',n));c.appendChild(el('div','v',v===null?'?':v+' m'));return c;}
-function render(){stage.textContent='';stage.appendChild(el('div','gmeta','Streak '+streak+' · Best '+best));var row=el('div','hlrow');row.appendChild(card(left[0],left[1]));row.appendChild(card(right[0],null));stage.appendChild(row);stage.appendChild(el('p','gq','Is '+right[0]+' higher or lower than '+left[0]+'?'));
+function render(){hsave();stage.textContent='';stage.appendChild(el('div','gmeta','Streak '+streak+' · Best '+best));var row=el('div','hlrow');row.appendChild(card(left[0],left[1]));row.appendChild(card(right[0],null));stage.appendChild(row);stage.appendChild(el('p','gq','Is '+right[0]+' higher or lower than '+left[0]+'?'));
 var hi=el('button','gbtn sm','Higher');hi.type='button';var lo=el('button','gbtn sm','Lower');lo.type='button';hi.addEventListener('click',function(){guess(true);});lo.addEventListener('click',function(){guess(false);});stage.appendChild(hi);stage.appendChild(document.createTextNode(' '));stage.appendChild(lo);}
 function guess(h){var ok=(right[1]>left[1])===h;stage.textContent='';var row=el('div','hlrow');row.appendChild(card(left[0],left[1]));row.appendChild(card(right[0],right[1]));stage.appendChild(row);
 if(ok){streak++;if(streak>best){best=streak;store('holBest',best);}stage.appendChild(el('div','gexp','Right! '+right[0]+' is '+right[1]+' m. '+DP.award('hol',5).text));var n=el('button','gnext','Keep going');n.type='button';n.addEventListener('click',function(){next(right);});stage.appendChild(n);n.focus({preventScroll:true});}
-else{stage.appendChild(el('div','gexp','Not this time. '+right[0]+' is '+right[1]+' m, and '+left[0]+' is '+left[1]+' m. Your streak was '+streak+'.'));var a=el('button','gplay','Try again');a.type='button';a.addEventListener('click',start);stage.appendChild(a);if(window.__dvNext)window.__dvNext(stage,{});}}
-var go=el('button','gplay','Start');go.type='button';go.addEventListener('click',start);stage.appendChild(go);
+else{store(HSK,null);stage.appendChild(el('div','gexp','Not this time. '+right[0]+' is '+right[1]+' m, and '+left[0]+' is '+left[1]+' m. Your streak was '+streak+'.'));var a=el('button','gplay','Try again');a.type='button';a.addEventListener('click',start);stage.appendChild(a);if(window.__dvNext)window.__dvNext(stage,{});}}
+var go=el('button','gplay','Start');go.type='button';go.addEventListener('click',start);
+try{var hv=JSON.parse(store(HSK)||'null');if(hv&&hv.v===1&&D[hv.l]&&D[hv.r]){var ct=el('button','gplay','Continue your game (streak '+hv.s+')');ct.type='button';ct.addEventListener('click',function(){streak=hv.s|0;left=D[hv.l];right=D[hv.r];render();});stage.appendChild(ct);go.className='gnext gghost';go.textContent='Start a new game';}}catch(e){}
+stage.appendChild(go);
 })();
 DP.init();
 })();
@@ -7608,7 +7620,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script id="crnjs">
 (function(){
 var gb=document.getElementById('g-crn');if(!gb)return;
-function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){}return null;}
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null){localStorage.removeItem(k);return null;}localStorage.setItem(k,v);}catch(e){}return null;}
 function el(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!==undefined)n.textContent=x;return n;}
 var AREAS=[['Dartmoor','⛰️','#c9a8ea'],['Torbay','🌴','#f6a6b8'],['Exmoor','🐴','#9fd6a5'],['Plymouth Sound','⚓','#8fcbe6'],['Exe Estuary','🦆','#f7d774'],['Jurassic Coast','🦕','#f4b27c'],['Tamar Valley','🍓','#c5dc7e'],['Hartland','🌊','#a9b8ee']];
 var SIZES=[['Easy',5,20],['Medium',6,35],['Hard',7,50],['Expert',8,70]];
@@ -7666,11 +7678,12 @@ function doHint(){if(won)return;var todo=[];for(var y=0;y<n;y++){if(marks[y][P.s
 function conflicts(){var bad={},L=[];for(var y=0;y<n;y++)for(var x=0;x<n;x++)if(marks[y][x]===2)L.push([y,x]);
  for(var i=0;i<L.length;i++)for(var j=i+1;j<L.length;j++){var a=L[i],b=L[j];if(a[0]===b[0]||a[1]===b[1]||P.reg[a[0]][a[1]]===P.reg[b[0]][b[1]]||(Math.abs(a[0]-b[0])<2&&Math.abs(a[1]-b[1])<2)){bad[a[0]+','+a[1]]=1;bad[b[0]+','+b[1]]=1;}}
  return {bad:bad,count:L.length};}
-function paint(){var C=conflicts();cEl.textContent='Lighthouses '+C.count+'/'+n;
+function crsave(){if(won)return;var any=false;for(var y=0;y<n;y++)for(var x=0;x<n;x++)if(marks[y]&&marks[y][x])any=true;if(!any)return;store('crnSave',JSON.stringify({v:1,n:n,d:daily?1:0,seed:seedUsed,m:marks,s:secs,h:hints,k:dayKey()}));}
+function paint(){crsave();var C=conflicts();cEl.textContent='Lighthouses '+C.count+'/'+n;
  [].forEach.call(grid.children,function(b){var y=+b.dataset.y,x=+b.dataset.x,m=marks[y][x];b.className='crc'+(C.bad[y+','+x]?' bad':'')+(won&&m===2?' win':'');
   b.innerHTML=m===2?LH:(m===1?'<span class="crx">✕</span>':'');
   b.setAttribute('aria-label','Row '+(y+1)+', column '+(x+1)+', '+AREAS[P.reg[y][x]][0]+', '+(m===2?'lighthouse':m===1?'marked empty':'empty')+(C.bad[y+','+x]?', clashes':''));});}
-function check(){var C=conflicts();if(C.count!==n||Object.keys(C.bad).length)return;won=true;stop();paint();
+function check(){var C=conflicts();if(C.count!==n||Object.keys(C.bad).length)return;won=true;stop();store('crnSave',null);paint();
  var base=SIZES.filter(function(s){return s[1]===n;})[0][2],pts=Math.max(10,base-hints*8),txt='Solved in '+fmt(secs)+(hints?' with '+hints+' hint'+(hints>1?'s':''):'')+'.';
  var bk='crnBest-'+n,bs=parseInt(store(bk)||'0',10)||0;if(!hints&&(!bs||secs<bs)){store(bk,String(secs));txt+=' New best time!';}
  var award=true;if(daily){var k='crnDaily-'+n;if(store(k)===String(dayKey()))award=false;else store(k,String(dayKey()));}
@@ -7725,6 +7738,7 @@ function tutorial(){
 window.__crnTut=tutorial;window.__crnDaily=function(){daily=true;n=6;newGame();};
 if(!store('crnTutDone')){document.addEventListener('crn:open',function f(){document.removeEventListener('crn:open',f);if(!store('crnTutDone'))tutorial();});}
 newGame();
+try{var sv=JSON.parse(store('crnSave')||'null');if(sv&&sv.v===1&&sv.n>=5&&sv.n<=8&&(!sv.d||sv.k===dayKey())){daily=!!sv.d;n=sv.n;stop();won=false;started=false;secs=sv.s|0;hints=sv.h|0;undo=[];seedUsed=sv.seed;P=make(n,seedUsed);marks=sv.m;tEl.textContent=fmt(secs);build();paint();info.textContent='Game restored. Carry on where you left off, or tap New puzzle.';}}catch(e){newGame();}
 })();
 </script>
 <script id="howjs">

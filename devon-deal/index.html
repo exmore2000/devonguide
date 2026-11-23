@@ -1,10 +1,10 @@
 <!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Devon Deal: free Devon board game | Just Devon</title>
-<meta name="description" content="Play Devon Deal, a free Devon property trading board game. Buy Devon landmarks, build cottages and beat the computer. No sign-up.">
+<title>Devon Property Race: free Devon board game | Just Devon</title>
+<meta name="description" content="Play Devon Property Race, a free Devon property trading board game. Buy Devon landmarks, build cottages and beat the computer. No sign-up.">
 <link rel="canonical" href="https://justdevon.co.uk/devon-deal/">
-<meta property="og:type" content="website"><meta property="og:site_name" content="Just Devon"><meta property="og:title" content="Devon Deal: free Devon board game"><meta property="og:description" content="Buy Devon landmarks, build cottages and beat the computer. Free, no sign-up."><meta property="og:url" content="https://justdevon.co.uk/devon-deal/"><meta property="og:image" content="https://justdevon.co.uk/og/games.jpg"><meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Just Devon"><meta property="og:title" content="Devon Property Race: free Devon board game"><meta property="og:description" content="Buy Devon landmarks, build cottages and beat the computer. Free, no sign-up."><meta property="og:url" content="https://justdevon.co.uk/devon-deal/"><meta property="og:image" content="https://justdevon.co.uk/og/games.jpg"><meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#071823"><link rel="icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Devon Deal", "description": "A free Devon property trading board game for phones and computers.", "url": "https://justdevon.co.uk/devon-deal/", "genre": "Board game", "gamePlatform": "Web browser", "applicationCategory": "Game", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Just Devon", "url": "https://justdevon.co.uk/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Devon Property Race", "description": "A free Devon property trading board game for phones and computers.", "url": "https://justdevon.co.uk/devon-deal/", "genre": "Board game", "gamePlatform": "Web browser", "applicationCategory": "Game", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Just Devon", "url": "https://justdevon.co.uk/"}}</script>
 <style>:root{--navy:#0f2a3a;--gold:#e8c26a;--paper:#f4f7f5;--granite:#5d6e68;--red:#b4472b}
 *{box-sizing:border-box;margin:0}
 html,body{background:#071823}
@@ -189,7 +189,7 @@ a.btn{display:block;box-sizing:border-box}
 body{margin:0}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
 <nav id="ddnav"><a href="/">Just Devon</a><a href="/games/">All games</a></nav>
 <div id="dd"><div class="app">
- <div class="topbar"><a id="exit" href="/games/" aria-label="Exit to all games">&larr; Games</a><span class="brand">Devon Deal</span><span class="rnd" id="rnd"></span><button class="ib" id="mute">Sound on</button><button class="ib" id="newg">Pause</button></div>
+ <div class="topbar"><a id="exit" href="/games/" aria-label="Exit to all games">&larr; Games</a><span class="brand">Devon Property Race</span><span class="rnd" id="rnd"></span><button class="ib" id="mute">Sound on</button><button class="ib" id="newg">Pause</button></div>
  <div id="board"><div id="grid"></div></div>
  <div class="dock">
   <div class="panel"><div class="turn"><span id="turntk"></span><div><b id="turnname"></b><span id="turnsub"></span></div></div><div class="actions" id="actions"></div></div>
@@ -198,8 +198,8 @@ body{margin:0}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;fon
  </div>
 </div>
 <div class="ov" id="ov" role="dialog" aria-modal="true"></div></div>
-<section id="dd-about"><h1>Devon Deal: a free Devon board game</h1>
-<p>Devon Deal is a free property trading board game for your phone, tablet or computer. Roll the dice, buy Devon landmarks from Widecombe to Burgh Island, collect rent, build cottages and beat up to three computer players. No sign-up and nothing to download.</p>
+<section id="dd-about"><h1>Devon Property Race: a free Devon board game</h1>
+<p>Devon Property Race is a free property trading board game for your phone, tablet or computer. Roll the dice, buy Devon landmarks from Widecombe to Burgh Island, collect rent, build cottages and beat up to three computer players. No sign-up and nothing to download.</p>
 <h2>How to play</h2>
 <ul><li>Roll the dice and move round the board. Buy the place you land on, or pass.</li>
 <li>When someone lands on a place you own, they pay you rent. Own a whole colour group and the rent doubles.</li>
@@ -733,14 +733,14 @@ async function turn(){
 function finish(){clearSave();play([]);S.win();confetti();
  var meP=G.ps[human],gain=15+(G.winner===human?(G.mode==='quick'?45:80):0)+Math.min(60,Math.max(0,Math.floor((G.worth(human)-G.cash0)/40))),aw=dpAward('deal',gain);
  var order=G.ps.slice().sort(function(a,b){return G.worth(b.id)-G.worth(a.id)}),w=G.ps[G.winner],mine=G.winner===human;
- var h='<h2>'+(mine?'You won Devon Deal!':esc(w.name)+' wins')+'</h2><p>'+(G.mode==='quick'?'After '+G.maxRound+' rounds, the richest player wins.':'The last player standing wins.')+'</p>';
+ var h='<h2>'+(mine?'You won Devon Property Race!':esc(w.name)+' wins')+'</h2><p>'+(G.mode==='quick'?'After '+G.maxRound+' rounds, the richest player wins.':'The last player standing wins.')+'</p>';
  order.forEach(function(p,k){h+='<div class="row">'+tk(p.tok)+'<span class="nm2"><b>'+(k+1)+'. '+esc(p.name)+'</b></span><b>'+(p.out?'Out':money(G.worth(p.id)))+'</b></div>'});
- var txt=mine?'I just won Devon Deal with '+money(G.worth(human))+' in '+Math.min(G.round,G.maxRound)+' rounds. Can you beat me?':'I just played Devon Deal, a free Devon board game. Can you beat the computer?';
+ var txt=mine?'I just won Devon Property Race with '+money(G.worth(human))+' in '+Math.min(G.round,G.maxRound)+' rounds. Can you beat me?':'I just played Devon Property Race, a free Devon board game. Can you beat the computer?';
  var url='https://justdevon.co.uk/devon-deal/?ref=share';
  h+='<p style="margin-top:10px;font-weight:800;color:#ffe08a">+'+aw.tot+' Devon points'+(aw.bonus?' (includes '+aw.bonus+' daily bonus)':'')+(aw.wb?' (+25 welcome bonus)':'')+'. You can spend them on new pieces.</p>';
  h+='<div class="actions"><button class="btn" id="sh">Share your result</button><button class="btn alt" id="wa">WhatsApp</button></div><div class="actions"><button class="btn alt" id="again">Play again</button></div>';
  ov(h);
- $('sh').onclick=function(){if(window.jdShare)window.jdShare('Devon Deal',txt,url);else if(navigator.share)navigator.share({title:'Devon Deal',text:txt,url:url}).catch(function(){})};
+ $('sh').onclick=function(){if(window.jdShare)window.jdShare('Devon Property Race',txt,url);else if(navigator.share)navigator.share({title:'Devon Property Race',text:txt,url:url}).catch(function(){})};
  $('wa').onclick=function(){window.open('https://wa.me/?text='+encodeURIComponent(txt+' '+url),'_blank')};
  $('again').onclick=function(){closeOv();showSetup()}}
 function confetti(){if(reduce)return;var cols=['#ffe08a','#c8372d','#2f8a5b','#4a90a8','#fff'];for(var i=0;i<60;i++){var c=document.createElement('i');c.className='conf';c.style.left=Math.random()*100+'vw';c.style.background=cols[i%5];c.style.animationDelay=Math.random()*.8+'s';c.style.animationDuration=2+Math.random()*1.6+'s';document.body.appendChild(c);setTimeout(function(c){return function(){c.remove()}}(c),4500)}}
@@ -753,7 +753,7 @@ function rolesHtml(){var R=[['local','Local family','Keep your family safe in De
  return '<div class="lbl">Who are you?</div><div class="roles" id="sr">'+R.map(function(r){return '<button data-r="'+r[0]+'" class="'+(sel.role===r[0]?'sel':'')+'"><b>'+r[1]+'</b><i>'+r[2]+'</i><small>'+r[3]+'</small></button>'}).join('')+'</div>'}
 function showSetup(){var sv=loadSave(),bal=balance();
  var rdn='';try{rdn=sv&&sv.g&&sv.g.round?' (round '+sv.g.round+')':''}catch(e){}
- var h='<h2>Devon Deal</h2>'+(sv?'<div class="actions"><button class="btn" id="cont">Continue your saved game'+rdn+'</button></div><p style="text-align:center;margin:8px 0 2px">or start a new game:</p>':'<p>Buy Devon\'s best places, build cottages and charge rent. Beat the computer players.</p>')+''+rolesHtml()+'<div class="lbl">Game length</div><div class="seg" id="sm"><button data-m="quick" class="'+(sel.mode==='quick'?'sel':'')+'">Quick<br><small>25 rounds</small></button><button data-m="classic" class="'+(sel.mode==='classic'?'sel':'')+'">Classic<br><small>Last one standing</small></button></div><div class="lbl">Opponents</div><div class="seg" id="so">'+[1,2,3].map(function(n){return '<button data-o="'+n+'" class="'+(sel.opp===n?'sel':'')+'">'+n+'</button>'}).join('')+'</div><div class="lbl">Choose your piece <span style="float:right;color:#ffe08a">'+bal+' pts to spend</span></div><div class="choice pcs" id="ct">';
+ var h='<h2>Devon Property Race</h2>'+(sv?'<div class="actions"><button class="btn" id="cont">Continue your saved game'+rdn+'</button></div><p style="text-align:center;margin:8px 0 2px">or start a new game:</p>':'<p>Buy Devon\'s best places, build cottages and charge rent. Beat the computer players.</p>')+''+rolesHtml()+'<div class="lbl">Game length</div><div class="seg" id="sm"><button data-m="quick" class="'+(sel.mode==='quick'?'sel':'')+'">Quick<br><small>25 rounds</small></button><button data-m="classic" class="'+(sel.mode==='classic'?'sel':'')+'">Classic<br><small>Last one standing</small></button></div><div class="lbl">Opponents</div><div class="seg" id="so">'+[1,2,3].map(function(n){return '<button data-o="'+n+'" class="'+(sel.opp===n?'sel':'')+'">'+n+'</button>'}).join('')+'</div><div class="lbl">Choose your piece <span style="float:right;color:#ffe08a">'+bal+' pts to spend</span></div><div class="choice pcs" id="ct">';
  TOK.forEach(function(t,i){var open=isTokOpen(i);if(!open&&sel.tok===i)sel.tok=0;h+='<button data-t="'+i+'" class="'+(sel.tok===i?'sel':'')+'" '+(open?'':'style="opacity:.8"')+'>'+tk(i)+t.n+(open?'':'<small style="color:#ffe08a">Unlock '+t.cost+' pts</small>')+'</button>'});
  h+='</div><p id="smsg" style="min-height:20px;color:#ffe08a;font-size:13px;margin-top:6px" aria-live="polite"></p><div class="actions"><button class="btn" id="go">Start game</button></div><details class="cust"'+(sel.cust?' open':'')+'><summary>Board look</summary><div class="seg" id="sth">';
  THEMES.forEach(function(t){var o=themeOpen(t.k);h+='<button data-th="'+t.k+'" class="'+(curTheme()===t.k?'sel':'')+'">'+t.n+(o?'':'<br><small style="color:#ffe08a">Unlock '+t.cost+' pts</small>')+'</button>'});
@@ -781,13 +781,13 @@ function resume(sv){G=Game.load(sv.g);started=true;human=sv.h;$('log').innerHTML
 
 function fogInfo(why){return new Promise(function(res){ov('<h2>Dartmoor Jail</h2><p>'+why+'</p><div class="lcard" style="font-size:15px;text-align:left;font-weight:700">While you are in Dartmoor Jail you cannot move, unless you get out. Ways out:<br>• Roll doubles (the same number on both dice)<br>• Pay £50 bail<br>• Play the escape mini game: pick how risky you go, then stop the searchlight in the green zone. Win and you are free (the riskier the plan, the bigger the loot). Get caught and you pay a fine<br>• Use a Get out of jail free card<br>• Or wait: after 3 turns you pay £50 and walk out.</div><div class="actions"><button class="btn" id="fok">Got it</button></div>');$('fok').onclick=function(){closeOv();res()}})}
 function showPause(){if(paused)return;paused=true;save();
- ov('<h2>Paused</h2><p>'+(started&&!G.over?'Your game is saved. You can leave and pick it up later: open Devon Deal and choose Continue saved game.':'Nothing is running.')+'</p><div class="actions" style="flex-direction:column"><button class="btn" id="pr">Resume game</button><button class="btn alt" id="pe">Save and exit to games</button><button class="btn alt" id="pn">Start a new game</button><button class="btn alt" id="ps2">'+(muted?'Turn sound on':'Turn sound off')+'</button></div>');
+ ov('<h2>Paused</h2><p>'+(started&&!G.over?'Your game is saved. You can leave and pick it up later: open Devon Property Race and choose Continue saved game.':'Nothing is running.')+'</p><div class="actions" style="flex-direction:column"><button class="btn" id="pr">Resume game</button><button class="btn alt" id="pe">Save and exit to games</button><button class="btn alt" id="pn">Start a new game</button><button class="btn alt" id="ps2">'+(muted?'Turn sound on':'Turn sound off')+'</button></div>');
  $('pr').onclick=function(){closeOv();paused=false};
  $('pe').onclick=function(){save();location.href='/games/'};
  $('pn').onclick=function(){closeOv();paused=false;showSetup()};
  $('ps2').onclick=function(){$('mute').click();$('ps2').textContent=muted?'Turn sound on':'Turn sound off'}}
 function exitGame(ev){if(started&&G&&!G.over){if(ev)ev.preventDefault();if(paused)return;paused=true;save();
- ov('<h2>Leave Devon Deal?</h2><p>Your game is saved. Next time, open Devon Deal and choose <b>Continue saved game</b> to carry on from here.</p><div class="actions" style="flex-direction:column"><button class="btn" id="xl">Save and leave</button><button class="btn alt" id="xk">Keep playing</button></div>');
+ ov('<h2>Leave Devon Property Race?</h2><p>Your game is saved. Next time, open Devon Property Race and choose <b>Continue saved game</b> to carry on from here.</p><div class="actions" style="flex-direction:column"><button class="btn" id="xl">Save and leave</button><button class="btn alt" id="xk">Keep playing</button></div>');
  $('xl').onclick=function(){save();location.href='/games/'};$('xk').onclick=function(){closeOv();paused=false}}}
 // ---------- init
 window.DDStart=function(){
