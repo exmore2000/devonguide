@@ -134,6 +134,8 @@ a.btn{display:block;box-sizing:border-box}
 @media(max-width:520px){.topbar .brand{display:none}.topbar .rnd{margin-right:auto}}
 
 #bwrap{overflow:hidden;border-radius:20px}#board{transition:transform .5s ease-in-out,transform-origin .2s linear}
+
+#board.zm .nm{display:block;font-size:1.5cqw}#board.zm .pr{display:block;font-size:1.5cqw}#board.zm .body svg{max-height:40%;width:50%}
 body{margin:0}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
 <nav id="ddnav"><a href="/">Just Devon</a><a href="/games/">All games</a></nav>
 <div id="dd"><div class="app">
@@ -425,7 +427,7 @@ var TOK=[
 ];
 function tk(t,cls){return '<span class="'+(cls||'tk')+'" style="background:'+TOK[t].c+'"><svg viewBox="0 0 24 24">'+TOK[t].g+'</svg></span>'}
 var NAMES=['Morwenna','Jago','Tamsin'],STY=['cautious','tycoon','steady'],STYN={cautious:'Careful',tycoon:'Tycoon',steady:'Steady'};
-var G=null,human=0,busy=false,muted=false,AC=null,sel={tok:0,mode:'quick',opp:2};
+var G=null,human=0,busy=false,muted=false,AC=null,sel={tok:0,mode:'quick',opp:1};
 try{muted=localStorage.getItem('ddMute')==='1'}catch(e){}
 var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 var paused=false,started=false;
@@ -490,8 +492,8 @@ function buildBoard(){
  for(var i=0;i<40;i++)refreshTile(i);applyTheme();
 }
 var camOn=false;function camWrap(){var b=$('board');if(!b||b.parentNode.id==='bwrap')return b;var w=document.createElement('div');w.id='bwrap';b.parentNode.insertBefore(w,b);w.appendChild(b);return b}
-function camTo(pid){if(reduce||window.innerWidth>760)return;var b=camWrap(),t=toks[pid];if(!b||!t)return;var x=parseFloat(t.style.left)||50,y=parseFloat(t.style.top)||50;b.style.transformOrigin=x+'% '+y+'%';b.style.transform='scale(2.1)';camOn=true}
-function camOut(){var b=$('board');if(b&&camOn){b.style.transform='scale(1)';camOn=false}}
+function camTo(pid){if(reduce||window.innerWidth>=900)return;var b=camWrap(),t=toks[pid];if(!b||!t)return;var x=parseFloat(t.style.left)||50,y=parseFloat(t.style.top)||50;b.style.transformOrigin=x+'% '+y+'%';b.classList.add('zm');b.style.transform='scale('+(b.offsetWidth<560?2.3:1.9)+')';camOn=true}
+function camOut(){var b=$('board');if(b){b.style.transform='scale(1)';b.classList.remove('zm')}camOn=false}
 function placeTok(pid,sq,hop){var p=pos(sq),t=toks[pid];if(!t)return;
  var offs=p.s==='c'?[[-.3,-.36],[.3,-.36],[-.3,-.08],[.3,-.08]]:[[-.26,-.2],[.26,-.2],[-.26,.28],[.26,.28]],o=offs[pid%4];
  // spread by index among players currently on this square
@@ -588,7 +590,7 @@ function showMine(){var h='<h2>Your properties</h2><p>Tap one to build, sell or 
  h+='<div class="actions"><button class="btn alt" id="x">Close</button></div>';var s2=ov(h);
  s2.querySelectorAll('.row').forEach(function(r){r.onclick=function(){showProp(+r.dataset.i)}});$('x').onclick=closeOv}
 // ---------- flow
-function setDock(mode,extra){var a=$('actions'),p=G.P();
+function setDock(mode,extra){camOut();var a=$('actions'),p=G.P();
  $('turnname').textContent=p.name+(p.ai?' ('+STYN[p.ai]+')':'');
  $('turntk').innerHTML=tk(p.tok,'tk');
  $('turnsub').textContent=extra||(p.ai?'Thinking…':'Your turn');
@@ -639,14 +641,15 @@ function clearSave(){try{localStorage.removeItem('ddSave')}catch(e){}}
 function loadSave(){try{var s=JSON.parse(localStorage.getItem('ddSave')||'null');return s}catch(e){return null}}
 // ---------- setup
 function showSetup(){var sv=loadSave(),bal=balance();
- var h='<h2>Devon Deal</h2><p>Buy Devon\'s best places, build cottages and charge rent. Beat the computer players.</p><div class="lbl">Choose your piece <span style="float:right;color:#ffe08a">'+bal+' points to spend</span></div><div class="choice" id="ct">';
+ var rdn='';try{rdn=sv&&sv.g&&sv.g.round?' (round '+sv.g.round+')':''}catch(e){}
+ var h='<h2>Devon Deal</h2>'+(sv?'<div class="actions"><button class="btn" id="cont">Continue your saved game'+rdn+'</button></div><p style="text-align:center;margin:8px 0 2px">or start a new game:</p>':'<p>Buy Devon\'s best places, build cottages and charge rent. Beat the computer players.</p>')+'<div class="lbl">Choose your piece <span style="float:right;color:#ffe08a">'+bal+' points to spend</span></div><div class="choice" id="ct">';
  TOK.forEach(function(t,i){var open=isTokOpen(i);if(!open&&sel.tok===i)sel.tok=0;h+='<button data-t="'+i+'" class="'+(sel.tok===i?'sel':'')+'" '+(open?'':'style="opacity:.8"')+'>'+tk(i)+t.n+(open?'':'<small style="color:#ffe08a">Unlock '+t.cost+' pts</small>')+'</button>'});
  h+='</div><div class="lbl">Board look</div><div class="seg" id="sth">';
  THEMES.forEach(function(t){var o=themeOpen(t.k);h+='<button data-th="'+t.k+'" class="'+(curTheme()===t.k?'sel':'')+'">'+t.n+(o?'':'<br><small style="color:#ffe08a">Unlock '+t.cost+' pts</small>')+'</button>'});
  h+='</div><div class="lbl">Game length</div><div class="seg" id="sm"><button data-m="quick" class="'+(sel.mode==='quick'?'sel':'')+'">Quick<br><small>25 rounds</small></button><button data-m="classic" class="'+(sel.mode==='classic'?'sel':'')+'">Classic<br><small>Last one standing</small></button></div>';
  h+='<div class="lbl">Opponents</div><div class="seg" id="so">';[1,2,3].forEach(function(n){h+='<button data-o="'+n+'" class="'+(sel.opp===n?'sel':'')+'">'+n+'</button>'});h+='</div>';
  h+='<div class="actions"><a class="btn alt" id="bk" href="/games/" style="text-decoration:none;text-align:center">Back to games</a></div>';
- h+='<p id="smsg" style="min-height:20px;color:#ffe08a;font-size:13px;margin-top:6px" aria-live="polite"></p><div class="actions"><button class="btn" id="go">Start game</button></div>'+(sv?'<div class="actions"><button class="btn alt" id="cont">Continue saved game</button></div>':'');
+ h+='<p id="smsg" style="min-height:20px;color:#ffe08a;font-size:13px;margin-top:6px" aria-live="polite"></p><div class="actions"><button class="btn" id="go">Start game</button></div>';
  ov(h);var msg=function(t){$('smsg').textContent=t};
  $('ct').querySelectorAll('button').forEach(function(b){b.onclick=function(){var i=+b.dataset.t;
   if(!isTokOpen(i)){var c=TOK[i].cost;if(balance()>=c){spend(c);var u=unl();u.tokens.push(i);st('ddUnlocked',JSON.stringify(u));S.buy();sel.tok=i;showSetup();setTimeout(function(){var m=$('smsg');if(m)m.textContent=TOK[i].n+' unlocked!'},30);return}
@@ -660,7 +663,7 @@ function showSetup(){var sv=loadSave(),bal=balance();
  $('so').querySelectorAll('button').forEach(function(b){b.onclick=function(){sel.opp=+b.dataset.o;$('so').querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b)})}});
  $('go').onclick=function(){closeOv();newGame()};
  if(sv)$('cont').onclick=function(){closeOv();resume(sv)}}
-function newGame(){var used=[sel.tok],others=TOK.map(function(t,i){return i}).filter(function(i){return i!==sel.tok});
+function newGame(){var used=[sel.tok],others=TOK.map(function(t,i){return i}).filter(function(i){return i!==sel.tok&&TOK[i].c!==TOK[sel.tok].c});
  var pl=[{name:'You',ai:null,tok:sel.tok}];for(var k=0;k<sel.opp;k++)pl.push({name:NAMES[k],ai:STY[k],tok:others[k]});
  G=new Game({players:pl,mode:sel.mode,maxRound:25});started=true;human=0;$('log').innerHTML='';buildBoard();log('New game. Good luck!');refreshPlayers();save();turn()}
 function resume(sv){G=Game.load(sv.g);started=true;human=sv.h;$('log').innerHTML='';buildBoard();log('Game restored.');refreshPlayers();
