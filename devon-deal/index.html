@@ -180,6 +180,9 @@ a.btn{display:block;box-sizing:border-box}
 .float{font-size:30px!important;font-weight:900!important;-webkit-text-stroke:1px rgba(0,0,0,.45)}
 @media(max-width:370px){.topbar .ib,#exit{padding:6px 8px;font-size:12px}.topbar .rnd{font-size:10px}.topbar{gap:4px}}
 @media(max-height:600px) and (min-width:560px){#dd .app{grid-template-columns:minmax(0,calc(100vh - 90px)) minmax(0,1fr);align-items:start}}
+
+.plans{display:flex;flex-direction:column;gap:8px;margin:12px 0}.plan{background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.18);color:#fff;border-radius:14px;padding:10px 12px;text-align:left;display:flex;flex-direction:column;gap:3px}.plan b{font-size:16px}.plan i{font-style:normal;font-size:12.5px;color:#cfe0e6}.plan .w{color:#4cdf8a;font-weight:800;font-size:13px}.plan .l{color:#ff8a7a;font-weight:800;font-size:13px}.plan:disabled{opacity:.45}
+.eb{position:relative;height:46px;border-radius:12px;background:linear-gradient(90deg,#10202b,#1d3a4c);box-shadow:inset 0 0 0 2px rgba(255,255,255,.2);margin:16px 0;overflow:hidden;cursor:pointer}.ez{position:absolute;top:0;bottom:0;background:linear-gradient(180deg,#4cdf8a,#2a9d5c);opacity:.9}.el{position:absolute;top:-4px;bottom:-4px;width:12px;margin-left:-6px;border-radius:6px;background:#fff;box-shadow:0 0 18px 6px rgba(255,240,170,.9)}.el.win{background:#4cdf8a;box-shadow:0 0 22px 8px rgba(76,223,138,.9)}.el.lose{background:#ff5a4a;box-shadow:0 0 22px 8px rgba(255,90,74,.9)}
 body{margin:0}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
 <nav id="ddnav"><a href="/">Just Devon</a><a href="/games/">All games</a></nav>
 <div id="dd"><div class="app">
@@ -199,7 +202,7 @@ body{margin:0}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;fon
 <li>When someone lands on a place you own, they pay you rent. Own a whole colour group and the rent doubles.</li>
 <li>Build cottages, then an inn, to charge far higher rent.</li>
 <li>Own railway stations like Exeter St Davids and the Dartmouth ferry for steady income.</li>
-<li>Land in the fog and you wait, roll doubles, pay £50 or use a fog card to leave.</li>
+<li>Land in Dartmoor Jail and you wait, roll doubles, pay £50 bail, use a get out of jail card, or play the escape mini game: pick how risky you go and stop the searchlight in the green zone.</li>
 <li>Quick games last 25 rounds and the richest player wins. Classic games run until one player is left.</li></ul>
 <h2>Earn points and unlock more</h2>
 <p>Before you start, choose who you are: a local family keeping a home in Devon, or a holiday-home investor buying up holiday lets. Investors earn more rent but pay a Second Home levy into a Community Fund that only locals can collect. Every game you finish earns Devon points, the same points you collect in all our <a href="/games/">free Devon games</a>. Spend them on new pieces such as a crab, a Dartmoor pony, a trawler, a surfer and a puffin, and on new board looks like Winter on the moor and Night harbour.</p>
@@ -225,7 +228,7 @@ var SQ=[
  {t:'luck',n:'Devon Luck',ic:'luck'},
  {t:'p',g:'falls',n:'Becky Falls',ic:'fall',p:100},
  {t:'p',g:'falls',n:'Haytor Rocks',ic:'tor',p:120},
- {t:'fog',n:'Lost in the fog',ic:'fog'},
+ {t:'fog',n:'Dartmoor Jail',ic:'prison'},
  {t:'p',g:'market',n:'Tavistock',ic:'market',p:140},
  {t:'ut',n:'Dartmouth Ferry',ic:'ferry',p:150},
  {t:'p',g:'market',n:'Totnes',ic:'market',p:140},
@@ -245,7 +248,7 @@ var SQ=[
  {t:'p',g:'cliff',n:'Clovelly',ic:'boat',p:260},
  {t:'ut',n:'Steam Railway',ic:'steam',p:150},
  {t:'p',g:'cliff',n:'Hartland Quay',ic:'cliff',p:280},
- {t:'togo',n:'Into the fog',ic:'fog'},
+ {t:'togo',n:'Go to Dartmoor Jail',ic:'prison'},
  {t:'p',g:'sands',n:'Woolacombe',ic:'surf',p:300},
  {t:'p',g:'sands',n:'Croyde',ic:'surf',p:300},
  {t:'luck',n:'Devon Luck',ic:'luck'},
@@ -263,6 +266,7 @@ bridge:'<rect x="2" y="24" width="36" height="4" fill="#6b7a73"/><path d="M6 28v
 luck:'<rect x="9" y="6" width="22" height="28" rx="3" fill="#f2b632"/><text x="20" y="28" text-anchor="middle" font-size="22" font-weight="900" fill="#17324d" font-family="Inter,sans-serif">?</text>',
 train:'<rect x="7" y="9" width="26" height="18" rx="4" fill="#17324d"/><rect x="10" y="12" width="9" height="7" fill="#9fd0e0"/><rect x="21" y="12" width="9" height="7" fill="#9fd0e0"/><circle cx="14" cy="31" r="3" fill="#17324d"/><circle cx="26" cy="31" r="3" fill="#17324d"/><rect x="5" y="34" width="30" height="2" fill="#6b7a73"/>',
 fall:'<path d="M2 12h12l-3 24H2z" fill="#6b7a73"/><path d="M14 12h6v24h-6z" fill="#9fd0e0"/><path d="M20 12h18v24H20z" fill="#2f5d50"/><path d="M16 14v20" stroke="#fff" stroke-width="2" stroke-dasharray="4 3"/>',
+prison:'<rect x="8" y="12" width="24" height="24" rx="2" fill="#6b7a73"/><path d="M8 12h4V8h4v4h4V8h4v4h4V8h4v4" fill="#8c9a93"/><rect x="14" y="17" width="12" height="13" rx="6" fill="#17324d"/><path d="M17 17v13M20 17v13M23 17v13" stroke="#c8d3cf" stroke-width="1.6"/><rect x="2" y="34" width="36" height="4" fill="#2f5d50"/>',
 fog:'<path d="M6 16h24M2 24h28M10 32h26" stroke="#8c9a93" stroke-width="4" stroke-linecap="round"/>',
 market:'<path d="M4 16 8 7h24l4 9z" fill="#c8372d"/><path d="M4 16q4 5 8 0 4 5 8 0 4 5 8 0 4 5 8 0" fill="#fff"/><rect x="6" y="20" width="28" height="14" fill="#8c6b4a"/><rect x="16" y="24" width="8" height="10" fill="#17324d"/>',
 ferry:'<path d="M5 24h30l-5 9H10z" fill="#17324d"/><rect x="12" y="15" width="14" height="9" fill="#fff"/><rect x="16" y="9" width="6" height="6" fill="#c8372d"/><path d="M2 36q4-3 9 0t9 0 9 0 9 0" stroke="#4a90a8" stroke-width="3" fill="none"/>',
@@ -321,9 +325,9 @@ var CARDS=[
  {tx:'Advance to Start in Exeter. Collect £200.',goto:0},
  {tx:'Take the scenic route to Burgh Island.',goto:37},
  {tx:'Hop on the steam railway.',goto:28},
- {tx:'Fog rolls in from the moor. Go to the fog.',fog:1},
+ {tx:'Caught poaching on the moor. Go to Dartmoor Jail.',fog:1},
  {tx:'Go back three spaces. Wrong turn at the roundabout.',back:3},
- {tx:'Get out of the fog free. Keep this card until you need it.',keep:1},
+ {tx:'Get out of Dartmoor Jail free. Keep this card until you need it.',keep:1},
  {tx:'Pay £25 for each cottage you own.',rep:25},
  {tx:'Everyone chips in for your birthday. Collect £20 from each player.',each:20},
  {tx:'Your round of drinks. Pay £20 to each player.',eachpay:20}
@@ -375,12 +379,17 @@ P.doRoll=function(){ // current player rolls; returns events
  if(p.fog>0){
   if(dbl){p.fog=0;G.emit({t:'fogout',pid:p.id,how:'doubles'});G.move(p,d[0]+d[1],false);return G.land(p,false)}
   p.fog--;
-  if(p.fog===0){G.pay(p.id,-1,50,'Fog clears: pay £50');if(!p.out)G.move(p,d[0]+d[1],false);return p.out?G.finish():G.land(p,false)}
+  if(p.fog===0){G.pay(p.id,-1,50,'Sentence served: pay £50 bail');if(!p.out)G.move(p,d[0]+d[1],false);return p.out?G.finish():G.land(p,false)}
   G.emit({t:'stay',pid:p.id,left:p.fog});return G.finish()}
  if(dbl){p.doubles++;if(p.doubles>=3){G.sendFog(p);return G.finish(true)}}
  G.move(p,d[0]+d[1],true);return G.land(p,dbl)};
-P.payFog=function(){var p=this.P();if(p.fog>0&&this.phase==='roll'&&p.cash>=50){p.fog=0;this.pay(p.id,-1,50,'Paid £50 to leave the fog');this.emit({t:'fogout',pid:p.id,how:'paid'})}return this.take()};
+P.payFog=function(){var p=this.P();if(p.fog>0&&this.phase==='roll'&&p.cash>=50){p.fog=0;this.pay(p.id,-1,50,'Paid £50 bail');this.emit({t:'fogout',pid:p.id,how:'paid'})}return this.take()};
 P.gamble=function(win){var p=this.P();if(p.fog>0&&this.phase==='roll'){p.fog=0;if(win)this.emit({t:'fogout',pid:p.id,how:'won the gamble'});else{this.pay(p.id,-1,100,'Lost the fog gamble: pay £100');this.emit({t:'fogout',pid:p.id,how:'lost the gamble'})}}return this.take()};
+P.jailBreak=function(level,win){var p=this.P(),L=[{f:50,b:0},{f:100,b:50},{f:150,b:200}][level]||{f:50,b:0};
+ if(p.fog>0&&this.phase==='roll'){
+  if(win){p.fog=0;this.emit({t:'fogout',pid:p.id,how:'broke out'});if(L.b){p.cash+=L.b;this.emit({t:'loot',pid:p.id,amt:L.b})}}
+  else{this.emit({t:'caught',pid:p.id,amt:L.f});this.pay(p.id,-1,L.f,'Caught escaping: £'+L.f+' fine');this.fin(true,false)}}
+ return this.take()};
 P.useCard=function(){var p=this.P();if(p.fog>0&&p.card>0){p.card--;p.fog=0;this.emit({t:'fogout',pid:p.id,how:'card'})}return this.take()};
 P.move=function(p,n,go){var from=p.pos,path=[];for(var k=1;k<=n;k++)path.push((from+k)%40);
  p.pos=(from+n)%40;var ga=p.role==='local'?230:200;if(from+n>=40){p.cash+=ga;this.emit({t:'go',pid:p.id,amt:ga,by:'pass'})}
@@ -575,7 +584,7 @@ async function tumble(d){var a=$('d1'),b=$('d2');a.classList.add('show','roll');
  for(var i=0;i<7;i++){face(a,1+(Math.random()*6|0));face(b,1+(Math.random()*6|0));await sleep(90)}
  a.classList.remove('roll');b.classList.remove('roll');face(a,d[0]);face(b,d[1])}
 // ---------- players panel
-function refreshPlayers(){var h='';G.ps.forEach(function(p){h+='<div class="pl'+(p.id===G.cur&&!G.over?' cur':'')+(p.out?' out':'')+'">'+tk(p.tok)+'<div style="min-width:0"><b>'+esc(p.name)+'</b><span data-p="'+p.id+'">'+money(lastCash[p.id]!==undefined?lastCash[p.id]:p.cash)+'</span><small>'+(p.out?'Out of the game':(p.role==='investor'?'Investor · ':'Local · ')+'Worth '+money(G.worth(p.id))+(p.fog?' · in fog':''))+'</small></div></div>'});
+function refreshPlayers(){var h='';G.ps.forEach(function(p){h+='<div class="pl'+(p.id===G.cur&&!G.over?' cur':'')+(p.out?' out':'')+'">'+tk(p.tok)+'<div style="min-width:0"><b>'+esc(p.name)+'</b><span data-p="'+p.id+'">'+money(lastCash[p.id]!==undefined?lastCash[p.id]:p.cash)+'</span><small>'+(p.out?'Out of the game':(p.role==='investor'?'Investor · ':'Local · ')+'Worth '+money(G.worth(p.id))+(p.fog?' · in jail':''))+'</small></div></div>'});
  $('players').innerHTML=h+'<div id="fundbar">Community Fund: '+money(G.fund||0)+' (locals collect it at Cream tea break)</div>';G.ps.forEach(function(p){var el=$('players').querySelector('span[data-p="'+p.id+'"]');if(el){var pv=lastCash[p.id]!==undefined?lastCash[p.id]:p.cash;tween(el,pv,p.cash);var dl=p.cash-pv;if(dl!==0){lastDelta[p.id]={d:dl,t:performance.now()}}}lastCash[p.id]=p.cash});
  G.ps.forEach(function(p){var ld=lastDelta[p.id],el=$('players').querySelector('span[data-p="'+p.id+'"]');if(!ld||!el)return;var age=performance.now()-ld.t;if(age>1500)return;var cd=el.closest('.pl');cd.classList.add(ld.d>0?'gain':'lose');cd.style.animationDelay=(-age)+'ms';var d=document.createElement('div');d.className='delta '+(ld.d>0?'up':'dn');d.style.animationDelay=(-age)+'ms';d.textContent=(ld.d>0?'+':'-')+money(Math.abs(ld.d));cd.appendChild(d)});
  $('rnd').textContent=G.mode==='quick'?'Round '+Math.min(G.round,G.maxRound)+' of '+G.maxRound:'Round '+G.round+(G.season()>1?' · peak season ×'+G.season():'');
@@ -606,13 +615,15 @@ async function play(events){
   case'buy':S.buy();cashRoll(e.pid,-1,false);refreshTile(e.sq);stamp(e.sq);float(e.pid,'-'+money(e.price),'#ff5a4a');log(p.name+' bought '+SQ[e.sq].n+' for '+money(e.price));refreshPlayers();await sleep(300);break;
   case'pass':log(p.name+' passed on '+SQ[e.sq].n);break;
   case'card':S.card();log('Devon Luck: '+e.tx);await showCard(e.tx,!p.ai);break;
-  case'tofog':S.fog();log(p.name+' is lost in the fog');placeTok(p.id,10);refreshPlayers();await sleep(500);if(!p.ai)await fogInfo('Oh no! '+(p.name==='You'?'You have':p.name+' has')+' been sent to the fog.');break;
-  case'fogout':log(p.name+' left the fog ('+e.how+')');refreshPlayers();break;
-  case'stay':if(!p.ai&&!G.fogSeen){G.fogSeen=1;await fogInfo('You did not roll doubles, so you are still stuck. '+e.left+' turn'+(e.left===1?'':'s')+' left.')}banner(p.name+' is stuck in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left). Need doubles!');log(p.name+' is still in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left)');await sleep(300);break;
+  case'tofog':S.fog();log(p.name+' is sent to Dartmoor Jail');placeTok(p.id,10);refreshPlayers();await sleep(500);if(!p.ai)await fogInfo('Oh no! '+(p.name==='You'?'You have':p.name+' has')+' been sent to Dartmoor Jail.');break;
+  case'fogout':log(p.name+' left Dartmoor Jail ('+e.how+')');refreshPlayers();break;
+  case'stay':if(!p.ai&&!G.fogSeen){G.fogSeen=1;await fogInfo('You did not roll doubles, so you are still stuck. '+e.left+' turn'+(e.left===1?'':'s')+' left.')}banner(p.name+' is stuck in Dartmoor Jail ('+e.left+' turn'+(e.left===1?'':'s')+' left). Roll doubles or try to escape!');log(p.name+' is still in Dartmoor Jail ('+e.left+' turn'+(e.left===1?'':'s')+' left)');await sleep(300);break;
   case'build':S.build();refreshTile(e.sq);log(p.name+(p.role==='investor'?' added a holiday let on ':' built a family home on ')+SQ[e.sq].n);refreshPlayers();await sleep(220);break;
   case'levy':S.pay();log(p.name+' paid a £'+e.amt+' Second Home levy on '+e.n+' holiday let'+(e.n>1?'s':'')+'. Community Fund: £'+e.fund);float(e.pid,'-£'+e.amt,'#ff5a4a');refreshPlayers();await sleep(250);break;
   case'fund':S.win();cashRoll(-1,e.pid,true);log(p.name+' collected the Community Fund: £'+e.amt);banner(p.name+' wins the Community Fund: £'+e.amt);float(e.pid,'+£'+e.amt,'#4cdf8a');refreshPlayers();await sleep(700);break;
   case'nofund':log('The Community Fund (£'+e.amt+') is only for local families.');await sleep(250);break;
+  case'loot':S.win();cashRoll(-1,e.pid,true);log(p.name+' grabbed £'+e.amt+' of loot on the way out');float(e.pid,'+£'+e.amt,'#4cdf8a');refreshPlayers();await sleep(500);break;
+  case'caught':banner(p.name+' was caught! Fine: £'+e.amt);await sleep(400);break;
   case'sold':refreshTile(e.sq);log(p.name+' sold a cottage on '+SQ[e.sq].n);refreshPlayers();break;
   case'mort':refreshTile(e.sq);log(p.name+' mortgaged '+SQ[e.sq].n);refreshPlayers();break;
   case'unmort':refreshTile(e.sq);log(p.name+' paid off the mortgage on '+SQ[e.sq].n);refreshPlayers();break;
@@ -641,8 +652,8 @@ function propHTML(i,full){var s=SQ[i],gc=s.t==='p'?window.GROUPS[s.g].c:'#17324d
  else if(s.t==='ut')h+='<tr><td>Price</td><td>£'+s.p+'</td></tr><tr><td>Own one</td><td>4 × dice</td></tr><tr><td>Own both</td><td>10 × dice</td></tr>';
  else if(s.t==='tax')h+='<tr><td>You pay</td><td>£'+s.amt+'</td></tr>';
  else if(s.t==='go')h+='<tr><td colspan="2">Collect £200 every time you pass.</td></tr>';
- else if(s.t==='fog')h+='<tr><td colspan="2">Lost in the fog: wait up to 3 turns, roll doubles, pay £50 or use a card to leave.</td></tr>';
- else if(s.t==='togo')h+='<tr><td colspan="2">The fog rolls in. Go to Lost in the fog.</td></tr>';
+ else if(s.t==='fog')h+='<tr><td colspan="2">Dartmoor Jail: wait up to 3 turns, roll doubles, pay £50 bail, play the escape mini game or use a card.</td></tr>';
+ else if(s.t==='togo')h+='<tr><td colspan="2">Go straight to Dartmoor Jail. Do not pass Start.</td></tr>';
  else if(s.t==='luck')h+='<tr><td colspan="2">Take a Devon Luck card.</td></tr>';
  else if(s.t==='tea')h+='<tr><td colspan="2">A quiet cream tea. Nothing happens.</td></tr>';
  h+='</table>';
@@ -671,23 +682,31 @@ function showMine(){var h='<h2>Your properties</h2><p>Tap one to build, sell or 
 function setDock(mode,extra){camOut();var a=$('actions'),p=G.P();
  $('turnname').textContent=p.name+(p.ai?' ('+STYN[p.ai]+')':'');
  $('turntk').innerHTML=tk(p.tok,'tk');
- $('turnsub').textContent=extra||(p.ai?'Thinking…':p.fog>0?'Lost in the fog. Roll doubles to escape, pay £50, gamble, or wait it out ('+p.fog+' turn'+(p.fog>1?'s':'')+' left).':'Your turn');
+ $('turnsub').textContent=extra||(p.ai?'Thinking…':p.fog>0?'In Dartmoor Jail. Roll doubles, pay £50 bail, try the escape mini game, or wait it out ('+p.fog+' turn'+(p.fog>1?'s':'')+' left).':'Your turn');
  a.innerHTML='';
  if(mode==='roll'){var b=btn('Roll the dice','btn',function(){humanRoll()});a.appendChild(b);b.focus&&b.focus();
-  if(p.fog>0){if(p.cash>=50)a.appendChild(btn('Pay £50 to leave','btn alt',function(){humanFog()}));if(p.card>0)a.appendChild(btn('Use fog card','btn alt',function(){humanCard()}));if(p.cash>=100)a.appendChild(btn('Gamble: free or pay £100','btn alt',function(){humanGamble()}));a.appendChild(btn('How does the fog work?','btn alt',function(){fogInfo('Here is how to get out.')}))}
+  if(p.fog>0){if(p.cash>=50)a.appendChild(btn('Pay £50 bail','btn alt',function(){humanFog()}));if(p.card>0)a.appendChild(btn('Use jail-free card','btn alt',function(){humanCard()}));if(p.cash>=100)a.appendChild(btn('Escape attempt (mini game)','btn alt',function(){humanGamble()}));a.appendChild(btn('How does Dartmoor Jail work?','btn alt',function(){fogInfo('Here is how to get out.')}))}
   a.appendChild(btn('My properties','btn alt',showMine))}
  if(mode==='end'){var e=btn('End turn','btn',function(){humanEnd()});a.appendChild(e);a.appendChild(btn('My properties','btn alt',showMine))}}
 function btn(t,c,f){var b=document.createElement('button');b.className=c;b.textContent=t;b.onclick=f;return b}
 async function humanRoll(){if(busy)return;busy=true;$('actions').innerHTML='';var ev=G.doRoll();await play(ev);busy=false;await after()}
-function lant(c){return '<svg viewBox="0 0 60 90" width="70" height="105"><rect x="22" y="4" width="16" height="10" rx="3" fill="#3a4a52"/><rect x="14" y="14" width="32" height="50" rx="8" fill="'+c+'" stroke="#e8c26a" stroke-width="3"/><rect x="24" y="64" width="12" height="20" rx="3" fill="#3a4a52"/></svg>'}
-function humanGamble(){busy=true;var w=Math.random()<.5;
- var sh=ov('<h2>Gamble in the fog</h2><p>Two lanterns glow in the mist. Pick the one that shows the way out. Right: you leave free. Wrong: you pay double (£100) to get out.</p><div class="lants"><button class="lantern" data-k="0">'+lant('#6f8790')+'<span>Left</span></button><button class="lantern" data-k="1">'+lant('#6f8790')+'<span>Right</span></button></div><div class="actions"><button class="btn alt" id="gx">No thanks</button></div>');
- $('gx').onclick=function(){closeOv();busy=false};
- sh.querySelectorAll('.lantern').forEach(function(b){b.onclick=function(){var ls=sh.querySelectorAll('.lantern');ls.forEach(function(x){x.disabled=true});$('gx').style.display='none';S.dice();
-  var pick=+b.dataset.k;ls.forEach(function(x,i){x.classList.add('flick')});
-  setTimeout(function(){ls.forEach(function(x,i){x.classList.remove('flick');var good=(i===pick)?w:!w;x.querySelector('svg rect:nth-child(2)').setAttribute('fill',good?'#ffe08a':'#4a1f1f');x.classList.add(good?'good':'bad')});
-   sh.querySelector('p').textContent=w?'The right way! You walk out of the fog for free.':'Wrong way! You pay £100 to get out.';if(w){S.win();confetti()}else S.pay();
-   setTimeout(async function(){closeOv();var ev=G.gamble(w);await play(ev);busy=false;setDock('roll')},1700)},1300)}})}
+function humanGamble(){busy=true;var p=G.P(),PL=[
+ {k:0,n:'Sneak out',d:'Easy. Slip past the guards.',win:'Free',lose:'£50 fine',zone:.46,spd:1500,f:50},
+ {k:1,n:'Dash across the moor',d:'Medium. Half the risk, double the fun.',win:'Free + £50',lose:'£100 fine',zone:.28,spd:1200,f:100},
+ {k:2,n:'Big break-out',d:'Hard. Double the risk, big loot.',win:'Free + £200',lose:'£150 fine',zone:.12,spd:950,f:150}];
+ var h='<h2>Escape from Dartmoor</h2><p>Pick your plan. Then tap STOP when the guard\'s searchlight is in the green zone.</p><div class="plans">';
+ PL.forEach(function(x){var ok=p.cash>=x.f;h+='<button class="plan" data-k="'+x.k+'"'+(ok?'':' disabled')+'><b>'+x.n+'</b><i>'+x.d+'</i><span class="w">Win: '+x.win+'</span><span class="l">Caught: '+x.lose+'</span>'+(ok?'':'<small>Not enough cash</small>')+'</button>'});
+ h+='</div><div class="actions"><button class="btn alt" id="gx">Back</button></div>';
+ var sh=ov(h);$('gx').onclick=function(){closeOv();busy=false};
+ sh.querySelectorAll('.plan').forEach(function(b){b.onclick=function(){var x=PL[+b.dataset.k];startEscape(sh,x)}})}
+function startEscape(sh,x){var zw=x.zone,zs=.04+Math.random()*(.92-zw);
+ sh.innerHTML='<h2>'+x.n+'</h2><p>Stop the searchlight inside the green zone.</p><div class="eb" id="eb"><div class="ez" style="left:'+zs*100+'%;width:'+zw*100+'%"></div><div class="el" id="el"></div></div><div class="actions"><button class="btn" id="estop">STOP!</button></div><p id="er" style="text-align:center;font-weight:800;min-height:24px"></p>';
+ var el=$('el'),t0=performance.now(),done=false,pos=0;
+ function frame(t){if(done)return;var ph=((t-t0)/x.spd)%2;pos=ph<1?ph:2-ph;el.style.left=(pos*100)+'%';requestAnimationFrame(frame)}requestAnimationFrame(frame);
+ function stop(){if(done)return;done=true;S.dice();var win=pos>=zs&&pos<=zs+zw;el.classList.add(win?'win':'lose');$('estop').disabled=true;$('er').style.color=win?'#4cdf8a':'#ff5a4a';
+  $('er').textContent=win?'You made it! You slip out of Dartmoor Jail.':'The guard spotted you! You are caught.';if(win){S.win();confetti()}else S.pay();
+  setTimeout(async function(){closeOv();var ev=G.jailBreak(x.k,win);await play(ev);busy=false;if(G.phase==='end'){await sleep(500);await next()}else setDock('roll')},1700)}
+ $('estop').onclick=stop;$('eb').onclick=stop}
 async function humanFog(){var ev=G.payFog();busy=true;await play(ev);busy=false;setDock('roll')}
 async function humanCard(){var ev=G.useCard();busy=true;await play(ev);busy=false;setDock('roll')}
 async function humanEnd(){if(busy)return;busy=true;$('actions').innerHTML='';busy=false;await next()}
@@ -757,7 +776,7 @@ function newGame(){var used=[sel.tok],others=TOK.map(function(t,i){return i}).fi
 function resume(sv){G=Game.load(sv.g);started=true;human=sv.h;$('log').innerHTML='';buildBoard();log('Game restored.');refreshPlayers();
  if(G.phase==='offer'&&!G.P().ai)showOffer();else if(G.P().ai)turn();else if(G.phase==='end')setDock('end');else setDock('roll')}
 
-function fogInfo(why){return new Promise(function(res){ov('<h2>Lost in the fog</h2><p>'+why+'</p><div class="lcard" style="font-size:15px;text-align:left;font-weight:700">While you are in the fog you cannot move, unless you escape. You can leave by:<br>• Rolling doubles (the same number on both dice)<br>• Paying £50<br>• Gambling: pick the right lantern to leave free, the wrong one costs £100<br>• Using a Get out of the fog card<br>• Or waiting: after 3 turns you pay £50 and the fog clears.</div><div class="actions"><button class="btn" id="fok">Got it</button></div>');$('fok').onclick=function(){closeOv();res()}})}
+function fogInfo(why){return new Promise(function(res){ov('<h2>Dartmoor Jail</h2><p>'+why+'</p><div class="lcard" style="font-size:15px;text-align:left;font-weight:700">While you are in Dartmoor Jail you cannot move, unless you get out. Ways out:<br>• Roll doubles (the same number on both dice)<br>• Pay £50 bail<br>• Play the escape mini game: pick how risky you go, then stop the searchlight in the green zone. Win and you are free (the riskier the plan, the bigger the loot). Get caught and you pay a fine<br>• Use a Get out of jail free card<br>• Or wait: after 3 turns you pay £50 and walk out.</div><div class="actions"><button class="btn" id="fok">Got it</button></div>');$('fok').onclick=function(){closeOv();res()}})}
 function showPause(){if(paused)return;paused=true;save();
  ov('<h2>Paused</h2><p>'+(started&&!G.over?'Your game is saved. You can leave and pick it up later: open Devon Deal and choose Continue saved game.':'Nothing is running.')+'</p><div class="actions" style="flex-direction:column"><button class="btn" id="pr">Resume game</button><button class="btn alt" id="pe">Save and exit to games</button><button class="btn alt" id="pn">Start a new game</button><button class="btn alt" id="ps2">'+(muted?'Turn sound on':'Turn sound off')+'</button></div>');
  $('pr').onclick=function(){closeOv();paused=false};

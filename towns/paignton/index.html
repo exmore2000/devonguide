@@ -429,6 +429,14 @@ footer .wrap::before{content:"";display:block;width:34px;height:34px;margin:0 au
 .qtimer i{display:block;height:100%;width:100%;background:var(--moor);border-radius:999px;transition:width .1s linear}
 .qtimer i.low{background:var(--red)}
 .gbtn.gone{opacity:.25;text-decoration:line-through}
+
+.fxr{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+.fxbig{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);text-align:center;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.55);display:flex;flex-direction:column;align-items:center;gap:4px}
+.fxbig b{font-size:clamp(54px,16vw,110px);line-height:1;font-weight:900;letter-spacing:-.03em;background:linear-gradient(180deg,#fff,#ffd35e);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 0 #8a5a12)}
+.fxbig small{font-size:clamp(15px,4vw,22px);font-weight:800;color:#ffe9a8}
+.fxbig em{font-style:normal;font-weight:800;font-size:clamp(14px,3.6vw,20px);background:rgba(0,0,0,.55);border-radius:20px;padding:5px 14px;margin-top:6px}
+.fxbig em.rk{background:linear-gradient(180deg,#ffe08a,#e8b23a);color:#3a2a00;font-size:clamp(16px,4.4vw,24px)}
+.fxcoin{position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff6c4,#ffd35e 45%,#c8901c);border:2px solid #b07a14;box-shadow:0 3px 6px rgba(0,0,0,.4);opacity:0}
 .confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:20}
 .confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:cfall 2s linear forwards}
 @keyframes cfall{to{transform:translate(var(--dx),420px) rotate(720deg);opacity:0}}
