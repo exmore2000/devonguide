@@ -595,9 +595,9 @@ async function play(events){
   case'buy':S.buy();cashRoll(e.pid,-1,false);refreshTile(e.sq);stamp(e.sq);float(e.pid,'-'+money(e.price),'#ff8a7a');log(p.name+' bought '+SQ[e.sq].n+' for '+money(e.price));refreshPlayers();await sleep(300);break;
   case'pass':log(p.name+' passed on '+SQ[e.sq].n);break;
   case'card':S.card();log('Devon Luck: '+e.tx);await showCard(e.tx,!p.ai);break;
-  case'tofog':S.fog();log(p.name+' is lost in the fog');placeTok(p.id,10);refreshPlayers();await sleep(500);break;
+  case'tofog':S.fog();log(p.name+' is lost in the fog');placeTok(p.id,10);refreshPlayers();await sleep(500);if(!p.ai)await fogInfo('Oh no! '+(p.name==='You'?'You have':p.name+' has')+' been sent to the fog.');break;
   case'fogout':log(p.name+' left the fog ('+e.how+')');refreshPlayers();break;
-  case'stay':banner(p.name+' is stuck in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left). Need doubles!');log(p.name+' is still in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left)');await sleep(300);break;
+  case'stay':if(!p.ai&&!G.fogSeen){G.fogSeen=1;await fogInfo('You did not roll doubles, so you are still stuck. '+e.left+' turn'+(e.left===1?'':'s')+' left.')}banner(p.name+' is stuck in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left). Need doubles!');log(p.name+' is still in the fog ('+e.left+' turn'+(e.left===1?'':'s')+' left)');await sleep(300);break;
   case'build':S.build();refreshTile(e.sq);log(p.name+(p.role==='investor'?' added a holiday let on ':' built a family home on ')+SQ[e.sq].n);refreshPlayers();await sleep(220);break;
   case'levy':S.pay();log(p.name+' paid a £'+e.amt+' Second Home levy on '+e.n+' holiday let'+(e.n>1?'s':'')+'. Community Fund: £'+e.fund);float(e.pid,'-£'+e.amt,'#ff8a7a');refreshPlayers();await sleep(250);break;
   case'fund':S.win();cashRoll(-1,e.pid,true);log(p.name+' collected the Community Fund: £'+e.amt);banner(p.name+' wins the Community Fund: £'+e.amt);float(e.pid,'+£'+e.amt,'#ffe08a');refreshPlayers();await sleep(700);break;
@@ -663,7 +663,7 @@ function setDock(mode,extra){camOut();var a=$('actions'),p=G.P();
  $('turnsub').textContent=extra||(p.ai?'Thinking…':p.fog>0?'Lost in the fog. Roll doubles to escape, pay £50, gamble, or wait it out ('+p.fog+' turn'+(p.fog>1?'s':'')+' left).':'Your turn');
  a.innerHTML='';
  if(mode==='roll'){var b=btn('Roll the dice','btn',function(){humanRoll()});a.appendChild(b);b.focus&&b.focus();
-  if(p.fog>0){if(p.cash>=50)a.appendChild(btn('Pay £50 to leave','btn alt',function(){humanFog()}));if(p.card>0)a.appendChild(btn('Use fog card','btn alt',function(){humanCard()}));if(p.cash>=100)a.appendChild(btn('Gamble: free or pay £100','btn alt',function(){humanGamble()}))}
+  if(p.fog>0){if(p.cash>=50)a.appendChild(btn('Pay £50 to leave','btn alt',function(){humanFog()}));if(p.card>0)a.appendChild(btn('Use fog card','btn alt',function(){humanCard()}));if(p.cash>=100)a.appendChild(btn('Gamble: free or pay £100','btn alt',function(){humanGamble()}));a.appendChild(btn('How does the fog work?','btn alt',function(){fogInfo('Here is how to get out.')}))}
   a.appendChild(btn('My properties','btn alt',showMine))}
  if(mode==='end'){var e=btn('End turn','btn',function(){humanEnd()});a.appendChild(e);a.appendChild(btn('My properties','btn alt',showMine))}}
 function btn(t,c,f){var b=document.createElement('button');b.className=c;b.textContent=t;b.onclick=f;return b}
@@ -746,6 +746,7 @@ function newGame(){var used=[sel.tok],others=TOK.map(function(t,i){return i}).fi
 function resume(sv){G=Game.load(sv.g);started=true;human=sv.h;$('log').innerHTML='';buildBoard();log('Game restored.');refreshPlayers();
  if(G.phase==='offer'&&!G.P().ai)showOffer();else if(G.P().ai)turn();else if(G.phase==='end')setDock('end');else setDock('roll')}
 
+function fogInfo(why){return new Promise(function(res){ov('<h2>Lost in the fog</h2><p>'+why+'</p><div class="lcard" style="font-size:15px;text-align:left;font-weight:700">While you are in the fog you cannot move, unless you escape. You can leave by:<br>• Rolling doubles (the same number on both dice)<br>• Paying £50<br>• Gambling: pick the right lantern to leave free, the wrong one costs £100<br>• Using a Get out of the fog card<br>• Or waiting: after 3 turns you pay £50 and the fog clears.</div><div class="actions"><button class="btn" id="fok">Got it</button></div>');$('fok').onclick=function(){closeOv();res()}})}
 function showPause(){if(paused)return;paused=true;save();
  ov('<h2>Paused</h2><p>'+(started&&!G.over?'Your game is saved. You can leave and pick it up later: open Devon Deal and choose Continue saved game.':'Nothing is running.')+'</p><div class="actions" style="flex-direction:column"><button class="btn" id="pr">Resume game</button><button class="btn alt" id="pe">Save and exit to games</button><button class="btn alt" id="pn">Start a new game</button><button class="btn alt" id="ps2">'+(muted?'Turn sound on':'Turn sound off')+'</button></div>');
  $('pr').onclick=function(){closeOv();paused=false};
