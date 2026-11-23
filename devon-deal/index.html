@@ -131,7 +131,7 @@ html,body{background:#071823}
 #exit{text-decoration:none;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:10px;padding:8px 12px;font-weight:800;font-size:13px;white-space:nowrap}
 #exit:focus-visible{outline:3px solid #f3dc9a;outline-offset:2px}
 a.btn{display:block;box-sizing:border-box}
-@media(max-width:520px){.topbar .brand{display:none}.topbar .rnd{margin-right:auto}}
+@media(max-width:700px){.topbar .brand{display:none}.topbar .rnd{margin-right:auto}}
 
 #bwrap{overflow:hidden;border-radius:20px}#board{transition:transform .5s ease-in-out,transform-origin .2s linear}
 
@@ -186,10 +186,11 @@ a.btn{display:block;box-sizing:border-box}
 
 .choice.pcs{display:flex;overflow-x:auto;gap:8px;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}.choice.pcs button{flex:0 0 84px;font-size:11px;padding:8px 2px}.choice.pcs .tk{width:44px;height:44px}
 .choice.pcs button{font-size:12px!important;min-height:96px}
-body{margin:0}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
+@media(max-width:370px){.topbar .ib,#exit{padding:6px 6px;font-size:11px}#info{min-width:28px}.topbar{gap:3px}}
+body{margin:0}#dd-about{display:none;position:fixed;inset:0;z-index:60;overflow:auto;background:#071823;-webkit-overflow-scrolling:touch}#dd-about.open{display:block}#info{min-width:34px}#ddx{position:sticky;top:10px;float:right;margin:10px 14px 0 0;padding:10px 16px;font-size:1rem}#ddnav{position:relative}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
 <nav id="ddnav"><a href="/">Just Devon</a><a href="/games/">All games</a></nav>
 <div id="dd"><div class="app">
- <div class="topbar"><a id="exit" href="/games/" aria-label="Exit to all games">&larr; Games</a><span class="brand">Devon Property Race</span><span class="rnd" id="rnd"></span><button class="ib" id="mute">Sound on</button><button class="ib" id="newg">Pause</button></div>
+ <div class="topbar"><a id="exit" href="/games/" aria-label="Exit to all games">&larr; Games</a><span class="brand">Devon Property Race</span><span class="rnd" id="rnd"></span><button class="ib" id="info" aria-label="How to play and about">?</button><button class="ib" id="mute">Sound</button><button class="ib" id="newg">Pause</button></div>
  <div id="board"><div id="grid"></div></div>
  <div class="dock">
   <div class="panel"><div class="turn"><span id="turntk"></span><div><b id="turnname"></b><span id="turnsub"></span></div></div><div class="actions" id="actions"></div></div>
@@ -198,7 +199,7 @@ body{margin:0}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;fon
  </div>
 </div>
 <div class="ov" id="ov" role="dialog" aria-modal="true"></div></div>
-<section id="dd-about"><h1>Devon Property Race: a free Devon board game</h1>
+<section id="dd-about" role="dialog" aria-modal="true" aria-label="About and how to play"><button type="button" id="ddx" class="ib">Close</button><h1>Devon Property Race: a free Devon board game</h1>
 <p>Devon Property Race is a free property trading board game for your phone, tablet or computer. Roll the dice, buy Devon landmarks from Widecombe to Burgh Island, collect rent, build cottages and beat up to three computer players. No sign-up and nothing to download.</p>
 <h2>How to play</h2>
 <ul><li>Roll the dice and move round the board. Buy the place you land on, or pass.</li>
@@ -209,6 +210,7 @@ body{margin:0}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;fon
 <li>Quick games last 25 rounds and the richest player wins. Classic games run until one player is left.</li></ul>
 <h2>Earn points and unlock more</h2>
 <p>Before you start, choose who you are: a local family keeping a home in Devon, or a holiday-home investor buying up holiday lets. Investors earn more rent but pay a Second Home levy into a Community Fund that only locals can collect. Every game you finish earns Devon points, the same points you collect in all our <a href="/games/">free Devon games</a>. Spend them on new pieces such as a crab, a Dartmoor pony, a trawler, a surfer and a puffin, and on new board looks like Winter on the moor and Night harbour.</p>
+<p><button type="button" class="ib" onclick="ddWA()">Share on WhatsApp</button></p>
 <p><a href="/games/">More free Devon games</a> &middot; <a href="/coast-path/">Devon coast path guide</a> &middot; <a href="/">Just Devon home</a></p></section><script>// Devon Deal board data
 var GROUPS={
  moor:{c:'#7a5c3e',n:'Moor villages'},
@@ -637,9 +639,13 @@ async function play(events){
   }}
  refreshPlayers();
 }
+var NATL={3:-1};// icons drawn facing left (steam train); all others face right
+function face(t,p,dx){if(Math.abs(dx)<.3)return;var sv=t.firstChild;if(!sv)return;var f=(dx>0?1:-1)*(NATL[p.tok]||1);sv.style.transform=f<0?'scaleX(-1)':'';sv.style.transition='transform .15s'}
+function waShare(){var u='https://justdevon.co.uk/devon-deal/';window.open('https://wa.me/?text='+encodeURIComponent('I am playing Devon Property Race, a free Devon board game. Buy Devon landmarks, build cottages, beat the computer. Play it free: '+u),'_blank')}
+window.ddWA=waShare;
 async function hop(e){var p=G.ps[e.pid],t=toks[e.pid];
  if(e.fast){t.classList.add('hop');placeTok(e.pid,e.to);camTo(e.pid,1.9);await sleep(420);t.classList.remove('hop');return}
- for(var i=0;i<e.path.length;i++){t.style.animationDuration=(p.ai?.23:.32)+'s';t.classList.add('hop');placeTok(e.pid,e.path[i]);camTo(e.pid,window.innerWidth<760?2.3:1.6);S.tick();await sleep(p.ai?230:320);t.classList.remove('hop');await sleep(p.ai?50:90)}await sleep(260);t.classList.add('sq');setTimeout(function(){t.classList.remove('sq')},300);
+ for(var i=0;i<e.path.length;i++){t.style.animationDuration=(p.ai?.23:.32)+'s';t.classList.add('hop');var ol=parseFloat(t.style.left);placeTok(e.pid,e.path[i]);face(t,p,parseFloat(t.style.left)-ol);camTo(e.pid,window.innerWidth<760?2.3:1.6);S.tick();await sleep(p.ai?230:320);t.classList.remove('hop');await sleep(p.ai?50:90)}await sleep(260);t.classList.add('sq');setTimeout(function(){t.classList.remove('sq')},300);
  await sleep(120)}
 // ---------- modals
 function ov(html,cls){var o=$('ov');o.innerHTML='<div class="sheet '+(cls||'')+'">'+html+'</div>';o.classList.add('on');return o.firstChild}
@@ -758,8 +764,9 @@ function showSetup(){var sv=loadSave(),bal=balance();
  h+='</div><p id="smsg" style="min-height:20px;color:#ffe08a;font-size:13px;margin-top:6px" aria-live="polite"></p><div class="actions"><button class="btn" id="go">Start game</button></div><details class="cust"'+(sel.cust?' open':'')+'><summary>Board look</summary><div class="seg" id="sth">';
  THEMES.forEach(function(t){var o=themeOpen(t.k);h+='<button data-th="'+t.k+'" class="'+(curTheme()===t.k?'sel':'')+'">'+t.n+(o?'':'<br><small style="color:#ffe08a">Unlock '+t.cost+' pts</small>')+'</button>'});
  h+='</div></details>';
+ h+='<div class="actions"><button class="btn alt" id="hw" type="button">How to play</button><button class="btn alt" id="wa2" type="button" style="margin-top:8px">Share on WhatsApp</button></div>';
  h+='<div class="actions"><a class="btn alt" id="bk" href="/games/" style="text-decoration:none;text-align:center">Back to games</a></div>';
- ov(h);var msg=function(t){$('smsg').textContent=t};
+ ov(h);var msg=function(t){$('smsg').textContent=t};var w2=$('wa2');if(w2)w2.onclick=waShare;var hw=$('hw');if(hw)hw.onclick=function(){if(window.ddInfo)window.ddInfo();};
  $('ct').querySelectorAll('button').forEach(function(b){b.onclick=function(){var i=+b.dataset.t;
   if(!isTokOpen(i)){var c=TOK[i].cost;if(balance()>=c){spend(c);var u=unl();u.tokens.push(i);st('ddUnlocked',JSON.stringify(u));S.buy();sel.tok=i;sel.cust=1;showSetup();setTimeout(function(){var m=$('smsg');if(m)m.textContent=TOK[i].n+' unlocked!'},30);return}
    msg('You need '+(c-balance())+' more points for the '+TOK[i].n+'. Play any game on the site to earn them.');return}
@@ -791,8 +798,8 @@ function exitGame(ev){if(started&&G&&!G.over){if(ev)ev.preventDefault();if(pause
  $('xl').onclick=function(){save();location.href='/games/'};$('xk').onclick=function(){closeOv();paused=false}}}
 // ---------- init
 window.DDStart=function(){
- $('mute').textContent=muted?'Sound off':'Sound on';
- $('mute').onclick=function(){muted=!muted;try{localStorage.setItem('ddMute',muted?'1':'0')}catch(e){}$('mute').textContent=muted?'Sound off':'Sound on'};
+ $('mute').textContent=muted?'Muted':'Sound';
+ $('mute').onclick=function(){muted=!muted;try{localStorage.setItem('ddMute',muted?'1':'0')}catch(e){}$('mute').textContent=muted?'Muted':'Sound'};
  $('newg').onclick=showPause;$('exit').addEventListener('click',exitGame);
  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('ov').classList.contains('on'))showPause()});
  window.addEventListener('pagehide',function(){if(started&&G&&!G.over)save()});
@@ -800,4 +807,4 @@ window.DDStart=function(){
  showSetup()};
 window.DDS={get G(){return G},play:play,S:S};
 })();
-</script><script>DDStart()</script><script>(function(){try{var H=location.hostname;if(/^(localhost|127\.|\[::1\])/.test(H)||location.protocol==='file:')return;try{var u=location.search||'';if(/[?&]notme(=|&|$)/.test(u)){var off=/notme=off/.test(u);if(off)localStorage.removeItem('jd_skip');else localStorage.setItem('jd_skip','1');var t=document.createElement('div');t.textContent=off?'Your visits are being counted again on this device.':'Done. Your visits are no longer counted on this device.';t.style.cssText='position:fixed;left:12px;right:12px;bottom:18px;z-index:99999;background:#06223a;color:#fff;padding:14px 16px;border-radius:12px;font:600 16px/1.3 system-ui,sans-serif;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.35)';document.body?document.body.appendChild(t):addEventListener('DOMContentLoaded',function(){document.body.appendChild(t)});setTimeout(function(){t.remove()},6000)}if(localStorage.getItem('jd_skip')==='1')return}catch(e){}function hit(){try{var q='p='+encodeURIComponent(location.pathname||'/')+'&t='+encodeURIComponent(document.title||'')+'&r='+encodeURIComponent(((/[?&](?:ref|utm_source)=([^&]+)/.exec(location.search)||[])[1])||document.referrer||'')+'&s='+[screen.width,screen.height,window.devicePixelRatio||1].join(',')+'&rnd='+Math.random().toString(36).slice(2);new Image().src='https://exmoregold2000.goatcounter.com/count?'+q}catch(e){}}if(document.readyState==='complete')hit();else addEventListener('load',hit)}catch(e){}})();</script></body></html>
+</script><script>DDStart();(function(){var a=document.getElementById('dd-about'),i=document.getElementById('info'),x=document.getElementById('ddx');window.ddInfo=function(){o(true)};function o(v){a.classList.toggle('open',v);if(v)a.scrollTop=0;}i.onclick=function(){o(true)};x.onclick=function(){o(false)};document.addEventListener('keydown',function(e){if(e.key==='Escape')o(false)});if(location.hash==='#info')o(true);})()</script><script>(function(){try{var H=location.hostname;if(/^(localhost|127\.|\[::1\])/.test(H)||location.protocol==='file:')return;try{var u=location.search||'';if(/[?&]notme(=|&|$)/.test(u)){var off=/notme=off/.test(u);if(off)localStorage.removeItem('jd_skip');else localStorage.setItem('jd_skip','1');var t=document.createElement('div');t.textContent=off?'Your visits are being counted again on this device.':'Done. Your visits are no longer counted on this device.';t.style.cssText='position:fixed;left:12px;right:12px;bottom:18px;z-index:99999;background:#06223a;color:#fff;padding:14px 16px;border-radius:12px;font:600 16px/1.3 system-ui,sans-serif;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.35)';document.body?document.body.appendChild(t):addEventListener('DOMContentLoaded',function(){document.body.appendChild(t)});setTimeout(function(){t.remove()},6000)}if(localStorage.getItem('jd_skip')==='1')return}catch(e){}function hit(){try{var q='p='+encodeURIComponent(location.pathname||'/')+'&t='+encodeURIComponent(document.title||'')+'&r='+encodeURIComponent(((/[?&](?:ref|utm_source)=([^&]+)/.exec(location.search)||[])[1])||document.referrer||'')+'&s='+[screen.width,screen.height,window.devicePixelRatio||1].join(',')+'&rnd='+Math.random().toString(36).slice(2);new Image().src='https://exmoregold2000.goatcounter.com/count?'+q}catch(e){}}if(document.readyState==='complete')hit();else addEventListener('load',hit)}catch(e){}})();</script></body></html>
