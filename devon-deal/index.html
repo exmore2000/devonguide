@@ -641,12 +641,12 @@ async function play(events){
  refreshPlayers();
 }
 var NATL={3:-1};// icons drawn facing left (steam train); all others face right
-function face(t,p,dx){if(Math.abs(dx)<.3)return;var sv=t.firstChild;if(!sv)return;var f=(dx>0?1:-1)*(NATL[p.tok]||1);sv.style.transform=f<0?'scaleX(-1)':'';sv.style.transition='transform .15s'}
+function faceTok(t,p,dx){if(Math.abs(dx)<.3)return;var sv=t.firstChild;if(!sv)return;var f=(dx>0?1:-1)*(NATL[p.tok]||1);sv.style.transform=f<0?'scaleX(-1)':'';sv.style.transition='transform .15s'}
 function waShare(){var u='https://justdevon.co.uk/devon-deal/';window.open('https://wa.me/?text='+encodeURIComponent('I am playing Devon Property Race, a free Devon board game. Buy Devon landmarks, build cottages, beat the computer. Play it free: '+u),'_blank')}
 window.ddWA=waShare;
 async function hop(e){var p=G.ps[e.pid],t=toks[e.pid];
  if(e.fast){t.classList.add('hop');placeTok(e.pid,e.to);camTo(e.pid,1.9);await sleep(420);t.classList.remove('hop');return}
- for(var i=0;i<e.path.length;i++){t.style.animationDuration=(p.ai?.23:.32)+'s';t.classList.add('hop');var ol=parseFloat(t.style.left);placeTok(e.pid,e.path[i]);face(t,p,parseFloat(t.style.left)-ol);camTo(e.pid,window.innerWidth<760?2.3:1.6);S.tick();await sleep(p.ai?230:320);t.classList.remove('hop');await sleep(p.ai?50:90)}await sleep(260);t.classList.add('sq');setTimeout(function(){t.classList.remove('sq')},300);
+ for(var i=0;i<e.path.length;i++){t.style.animationDuration=(p.ai?.23:.32)+'s';t.classList.add('hop');var ol=parseFloat(t.style.left);placeTok(e.pid,e.path[i]);faceTok(t,p,parseFloat(t.style.left)-ol);camTo(e.pid,window.innerWidth<760?2.3:1.6);S.tick();await sleep(p.ai?230:320);t.classList.remove('hop');await sleep(p.ai?50:90)}await sleep(260);t.classList.add('sq');setTimeout(function(){t.classList.remove('sq')},300);
  await sleep(120)}
 // ---------- modals
 function ov(html,cls){var o=$('ov');o.innerHTML='<div class="sheet '+(cls||'')+'">'+html+'</div>';o.classList.add('on');return o.firstChild}
