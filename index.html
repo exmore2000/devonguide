@@ -5984,8 +5984,8 @@ function endShare(){kbEl.hidden=true;hintBtn.hidden=true;again.hidden=true;nextB
 document.addEventListener('keydown',function(e){var d=root.closest('details');if(!d||!d.open)return;var a=document.activeElement;if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'))return;if(e.ctrlKey||e.metaKey||e.altKey)return;if(e.key==='Enter'){if(a&&a.tagName==='BUTTON')return;submit();}else if(e.key==='Backspace'){back();}else if(/^[a-zA-Z]$/.test(e.key)){type(e.key.toUpperCase());}});
 again.addEventListener('click',function(){reset('random');});
 var wsv=null;try{wsv=JSON.parse(store('wdSave')||'null');}catch(e){}
-reset('daily');
-if(wsv&&wsv.v===1&&wsv.g&&(wsv.g.length||wsv.hp.length)&&wsv.g.length<6&&(wsv.mode==='random'||wsv.day===day)&&/^[A-Z]{5}$/.test(wsv.target||'')){try{reset(wsv.mode);target=wsv.target;hintPos=wsv.hp||[];hintsLeft=wsv.hl;hintsUsed=wsv.hu|0;hintLines=wsv.hln||[];wsv.g.forEach(function(g){cur=g;submit();});typed='';sync();paint();if(hintLines.length){hintEl.textContent='Hint: '+hintLines.join(' ');}hintBtn.textContent=hintsLeft?'Hint ('+hintsLeft+' left)':'No hints left';hintBtn.disabled=!hintsLeft;msg.textContent='Game restored. Carry on with your word.';msg.dataset.m='';ready();}catch(e){reset('daily');}}
+var dailyDone=store('wdDay')===String(day);reset(dailyDone?'random':'daily');if(dailyDone){msg.textContent='You have done today\'s daily word. Here is a fresh random word.';msg.dataset.m='';}
+if(wsv&&wsv.v===1&&wsv.g&&(wsv.g.length||wsv.hp.length)&&wsv.g.length<6&&(wsv.mode==='random'||wsv.day===day)&&/^[A-Z]{5}$/.test(wsv.target||'')){try{reset(wsv.mode);target=wsv.target;hintPos=wsv.hp||[];hintsLeft=wsv.hl;hintsUsed=wsv.hu|0;hintLines=wsv.hln||[];wsv.g.forEach(function(g){cur=g;submit();});typed='';sync();paint();if(hintLines.length){hintEl.textContent='Hint: '+hintLines.join(' ');}hintBtn.textContent=hintsLeft?'Hint ('+hintsLeft+' left)':'No hints left';hintBtn.disabled=!hintsLeft;msg.textContent='Game restored. Carry on with your word.';msg.dataset.m='';ready();}catch(e){reset(dailyDone?'random':'daily');}}
 })();
 /* cream tea */
 (function(){
