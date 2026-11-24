@@ -193,7 +193,15 @@ a.btn{display:block;box-sizing:border-box}
 
 .topbar .ic{display:none}@media(max-width:520px){.topbar .lb{display:none}.topbar .ic{display:inline}}
 
-#tilt{perspective:1000px;perspective-origin:50% -10%}#bwrap{transform:rotateX(16deg);transform-origin:50% 100%;box-shadow:0 26px 40px -12px rgba(0,0,0,.6)}#bwrap.pan{transform:none}
+#tilt{perspective:900px;perspective-origin:50% -10%}#bwrap{transform:rotateX(30deg);transform-origin:50% 100%;box-shadow:0 26px 40px -12px rgba(0,0,0,.6)}#bwrap.pan{transform:none}
+
+.tok.obj{filter:saturate(1.15) contrast(1.06) drop-shadow(0 .22cqw 0 rgba(0,0,0,.4)) drop-shadow(0 .5cqw .35cqw rgba(0,0,0,.5))}
+.tok.obj:after{content:'';position:absolute;left:6%;right:6%;bottom:-8%;height:26%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(0,0,0,.55),rgba(0,0,0,0) 70%);z-index:-1}
+.tok.obj svg{transition:scale .15s}
+.tok.obj.act svg{animation:sway 1.4s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg) scaleY(1.04)}}
+@media(prefers-reduced-motion:reduce){.tok.obj.act svg{animation:none}}
+#tilt{margin-top:-7%}
 body{margin:0}#dd-about{display:none;position:fixed;inset:0;z-index:60;overflow:auto;background:#071823;-webkit-overflow-scrolling:touch}#dd-about.open{display:block}#info{min-width:34px}#ddx{position:sticky;top:10px;float:right;margin:10px 14px 0 0;padding:10px 16px;font-size:1rem}#ddnav{position:relative}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
 <nav id="ddnav"><a href="/">Just Devon</a><a href="/games/">All games</a></nav>
 <div id="dd"><div class="app">
@@ -572,7 +580,7 @@ function buildBoard(){
   d.addEventListener('click',function(){showProp(i)});d.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showProp(i)}});
  });
  G.ps.forEach(function(p){var t=document.createElement('div');t.className='tok';t.id='tok'+p.id;t.style.background=TOK[p.tok].c;t.classList.add('obj');t.innerHTML='<svg viewBox="0 0 48 48">'+TOK[p.tok].o+'</svg>';g.appendChild(t);toks[p.id]=t;placeTok(p.id,p.pos)});
- for(var i=0;i<40;i++)refreshTile(i);applyTheme();
+ for(var i=0;i<40;i++)refreshTile(i);applyTheme();camWrap();
 }
 var camOn=false,lastCash={},lastDelta={};function camWrap(){var b=$('board');if(!b||b.parentNode.id==='bwrap')return b;var t=document.createElement('div');t.id='tilt';b.parentNode.insertBefore(t,b);var w=document.createElement('div');w.id='bwrap';t.appendChild(w);w.appendChild(b);return b}
 function camTo(pid,z){var b=camWrap(),t=toks[pid];if(!b||!t)return;if(panOn()){var w=$('bwrap'),px=parseFloat(t.style.left)||50,py=parseFloat(t.style.top)||50;w.scrollTo({left:b.offsetWidth*px/100-w.clientWidth/2,top:b.offsetHeight*py/100-w.clientHeight/2,behavior:'smooth'});return}var x=parseFloat(t.style.left)||50,y=parseFloat(t.style.top)||50;b.style.transformOrigin=x+'% '+y+'%';b.classList.add('zm');b.style.transform='scale('+(z||(b.offsetWidth<560?2.3:1.6))+')';camOn=true}
@@ -660,7 +668,7 @@ async function play(events){
  refreshPlayers();
 }
 var NATL={3:-1};// icons drawn facing left (steam train); all others face right
-function faceTok(t,p,dx){if(Math.abs(dx)<.3)return;var sv=t.firstChild;if(!sv)return;var f=(dx>0?1:-1)*(NATL[p.tok]||1);sv.style.transform=f<0?'scaleX(-1)':'';sv.style.transition='transform .15s'}
+function faceTok(t,p,dx){if(Math.abs(dx)<.3)return;var sv=t.firstChild;if(!sv)return;var f=(dx>0?1:-1)*(NATL[p.tok]||1);sv.style.scale=f<0?'-1 1':'1 1'}
 function waShare(){var u='https://justdevon.co.uk/devon-deal/';window.open('https://wa.me/?text='+encodeURIComponent('I am playing Devon Property Race, a free Devon board game. Buy Devon landmarks, build cottages, beat the computer. Play it free: '+u),'_blank')}
 window.ddWA=waShare;
 async function hop(e){var p=G.ps[e.pid],t=toks[e.pid];
