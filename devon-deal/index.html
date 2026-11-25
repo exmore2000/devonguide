@@ -11,7 +11,7 @@ html,body{background:#071823}
 #dd{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;min-height:100vh;padding:8px;background:radial-gradient(120% 90% at 50% 0%,#1d4b63 0%,#0e2f42 45%,#071823 100%);-webkit-tap-highlight-color:transparent;user-select:none}
 #dd button{font:inherit;cursor:pointer}
 #dd .app{max-width:1060px;margin:0 auto;display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
-@media(min-width:900px){#dd .app{max-width:1400px;grid-template-columns:minmax(0,min(calc(100vh - 112px),66vw,900px)) minmax(300px,380px);justify-content:center;align-items:start}}@supports(height:100svh){@media(min-width:900px){#dd .app{grid-template-columns:minmax(0,min(calc(100svh - 112px),66vw,900px)) minmax(300px,380px)}}}
+@media(min-width:900px){#dd .app{max-width:1400px;grid-template-columns:minmax(0,min(calc(100vh - 84px),66vw,900px)) minmax(250px,310px);justify-content:center;align-items:start}}@supports(height:100svh){@media(min-width:900px){#dd .app{grid-template-columns:minmax(0,min(calc(100svh - 84px),66vw,900px)) minmax(250px,310px)}}}
 .topbar{display:flex;align-items:center;gap:8px;grid-column:1/-1;font-weight:800}
 .topbar .brand{font-size:18px;letter-spacing:-.02em;margin-right:auto;white-space:nowrap}
 .ib{white-space:nowrap}
@@ -228,6 +228,7 @@ a.btn{display:block;box-sizing:border-box}
 .tok.obj img{width:135%;left:-17.5%;top:-66%}
 
 
+@media(min-width:900px){#dd .panel{padding:10px}#dd .app{gap:8px 14px}}
 body{margin:0}#dd-about{display:none;position:fixed;inset:0;z-index:60;overflow:auto;background:#071823;-webkit-overflow-scrolling:touch}#dd-about.open{display:block}#info{min-width:34px}#ddx{position:sticky;top:10px;float:right;margin:10px 14px 0 0;padding:10px 16px;font-size:1rem}#ddnav{position:relative}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
 <nav id="ddnav"><a href="/">Just Devon</a><a href="/games/">All games</a></nav>
 <div id="dd"><div class="app">
