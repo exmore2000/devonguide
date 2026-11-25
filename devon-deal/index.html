@@ -218,6 +218,7 @@ a.btn{display:block;box-sizing:border-box}
 .choice.pcs button{flex-basis:92px}
 .tok.obj img{width:280%;left:-90%;top:-193%}
 .tok.obj img{width:260%;left:-80%;top:-179%}
+.tok.obj img{width:170%;left:-35%;top:-96%}
 body{margin:0}#dd-about{display:none;position:fixed;inset:0;z-index:60;overflow:auto;background:#071823;-webkit-overflow-scrolling:touch}#dd-about.open{display:block}#info{min-width:34px}#ddx{position:sticky;top:10px;float:right;margin:10px 14px 0 0;padding:10px 16px;font-size:1rem}#ddnav{position:relative}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
 <nav id="ddnav"><a href="/">Just Devon</a><a href="/games/">All games</a></nav>
 <div id="dd"><div class="app">
@@ -599,7 +600,7 @@ function buildBoard(){
  for(var i=0;i<40;i++)refreshTile(i);applyTheme();camWrap();
 }
 var camOn=false,lastCash={},lastDelta={};function camWrap(){var b=$('board');if(!b||b.parentNode.id==='bwrap')return b;var t=document.createElement('div');t.id='tilt';b.parentNode.insertBefore(t,b);var w=document.createElement('div');w.id='bwrap';t.appendChild(w);w.appendChild(b);return b}
-function camTo(pid,z){var b=camWrap(),t=toks[pid];if(!b||!t)return;if(panOn()){var w=$('bwrap'),px=parseFloat(t.style.left)||50,py=parseFloat(t.style.top)||50;w.scrollTo({left:b.offsetWidth*px/100-w.clientWidth/2,top:b.offsetHeight*py/100-w.clientHeight/2,behavior:'smooth'});return}var x=parseFloat(t.style.left)||50,y=parseFloat(t.style.top)||50;b.style.transformOrigin=x+'% '+y+'%';b.classList.add('zm');b.style.transform='scale('+(z||(b.offsetWidth<560?2.0:1.6))+')';camOn=true}
+function camTo(pid,z){var b=camWrap(),t=toks[pid];if(!b||!t)return;if(panOn()){var w=$('bwrap'),px=parseFloat(t.style.left)||50,py=parseFloat(t.style.top)||50;w.scrollTo({left:b.offsetWidth*px/100-w.clientWidth/2,top:b.offsetHeight*py/100-w.clientHeight/2,behavior:'smooth'});return}var x=parseFloat(t.style.left)||50,y=parseFloat(t.style.top)||50;b.style.transformOrigin=x+'% '+y+'%';b.classList.add('zm');b.style.transform='scale('+(z||(b.offsetWidth<560?1.8:1.5))+')';camOn=true}
 function panOn(){var w=$('bwrap');return !!(w&&w.classList.contains('pan'))}
 function togglePan(){var b=camWrap(),w=$('bwrap');if(!b||!w)return;var on=!w.classList.contains('pan');if(on){camOut();w.classList.add('pan');w.style.height=Math.min(w.clientWidth*1.05,innerHeight*.62)+'px';var t=toks[0];if(t){var f=function(){var x=parseFloat(t.style.left)||50,y=parseFloat(t.style.top)||50;w.scrollLeft=b.offsetWidth*x/100-w.clientWidth/2;w.scrollTop=b.offsetHeight*y/100-w.clientHeight/2};setTimeout(f,60)}}else{w.classList.remove('pan');w.style.height='';w.scrollLeft=0;w.scrollTop=0}var n=$('nmb');if(n)n.classList.toggle('on',on)}
 window.ddNames=togglePan;
