@@ -18,7 +18,7 @@ html,body{background:#071823}
 .topbar .rnd{white-space:nowrap;font-size:12px;font-weight:700;color:#f3dc9a}
 .ib{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:10px;padding:7px 11px;font-weight:700;font-size:13px}
 .ib:focus-visible,.btn:focus-visible{outline:3px solid #f3dc9a;outline-offset:2px}
-#board{position:relative;width:100%;aspect-ratio:1;border-radius:20px;padding:9px;background:linear-gradient(145deg,#f3dc9a,#c99a3c 38%,#8a6320 62%,#e8c26a);box-shadow:0 30px 60px rgba(0,0,0,.55)}
+#board{--k:1.13;position:relative;width:100%;aspect-ratio:1/1.13;border-radius:20px;padding:9px;background:linear-gradient(145deg,#f3dc9a,#c99a3c 38%,#8a6320 62%,#e8c26a);box-shadow:0 30px 60px rgba(0,0,0,.55)}
 #board:before{content:"";position:absolute;inset:6px;border-radius:15px;background:#0c2433;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
 #grid{position:relative;width:100%;height:100%;border-radius:11px;overflow:hidden;container-type:size;background:radial-gradient(90% 90% at 50% 40%,#17425a,#0b2231)}
 .tile{position:absolute;padding:.28cqw;cursor:pointer}
@@ -193,7 +193,7 @@ a.btn{display:block;box-sizing:border-box}
 
 .topbar .ic{display:none}@media(max-width:520px){.topbar .lb{display:none}.topbar .ic{display:inline}}
 
-#tilt{perspective:900px;perspective-origin:50% -10%}#bwrap{transform:rotateX(30deg);transform-origin:50% 100%;box-shadow:0 26px 40px -12px rgba(0,0,0,.6)}#bwrap.pan{transform:none}
+#tilt{perspective:1900px;perspective-origin:50% -10%}#bwrap{transform:rotateX(30deg);transform-origin:50% 100%;box-shadow:0 26px 40px -12px rgba(0,0,0,.6)}#bwrap.pan{transform:none}
 
 .tok.obj{filter:saturate(1.15) contrast(1.06) drop-shadow(0 .22cqw 0 rgba(0,0,0,.4)) drop-shadow(0 .5cqw .35cqw rgba(0,0,0,.5))}
 .tok.obj:after{content:'';position:absolute;left:6%;right:6%;bottom:-8%;height:26%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(0,0,0,.55),rgba(0,0,0,0) 70%);z-index:-1}
@@ -221,11 +221,13 @@ a.btn{display:block;box-sizing:border-box}
 .tok.obj img{width:170%;left:-35%;top:-96%}
 
 /* side tiles are turned sideways like a real board */
-.in.sl,.in.sr{inset:auto;left:50%;top:50%;width:64.5%;height:155%;flex-direction:column}
+.in.sl,.in.sr{inset:auto;left:50%;top:50%;width:calc(100% * var(--sk));height:calc(100% / var(--sk));flex-direction:column}
 .in.sl{transform:translate(-50%,-50%) rotate(90deg)}
 .in.sr{transform:translate(-50%,-50%) rotate(-90deg)}
 .in.sl .band,.in.sr .band{width:auto;height:23%;flex-direction:row}
 .tok.obj img{width:135%;left:-17.5%;top:-66%}
+
+
 body{margin:0}#dd-about{display:none;position:fixed;inset:0;z-index:60;overflow:auto;background:#071823;-webkit-overflow-scrolling:touch}#dd-about.open{display:block}#info{min-width:34px}#ddx{position:sticky;top:10px;float:right;margin:10px 14px 0 0;padding:10px 16px;font-size:1rem}#ddnav{position:relative}#dd-about{max-width:760px;margin:0 auto;padding:10px 18px 60px;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#cfe0e6;line-height:1.6}#dd-about h1{font-size:1.6rem;color:#fff;letter-spacing:-.02em;margin:26px 0 10px}#dd-about h2{font-size:1.15rem;color:#fff;margin:22px 0 8px}#dd-about a{color:#ffe08a}#dd-about li{margin:4px 0}#ddnav{display:flex;gap:14px;flex-wrap:wrap;max-width:1060px;margin:0 auto;padding:10px 12px 0;font:700 14px Inter,system-ui,sans-serif}#ddnav a{color:#f3dc9a;text-decoration:none;padding:6px 0}</style></head><body>
 <nav id="ddnav"><a href="/">Just Devon</a><a href="/games/">All games</a></nav>
 <div id="dd"><div class="app">
@@ -575,20 +577,20 @@ function dpAward(g,base){ // same bookkeeping as the site's DP.award
 function snd(f,d,type,v,delay){if(muted)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+(delay||0);o.type=type||'sine';o.frequency.value=f;g.gain.setValueAtTime(v||.08,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d)}catch(e){}}
 var S={tick:function(){snd(520,.05,'triangle',.05)},dice:function(){for(var i=0;i<5;i++)snd(180+Math.random()*120,.05,'square',.04,i*.07)},coin:function(){snd(988,.08,'square',.05);snd(1319,.18,'square',.05,.08)},pay:function(){snd(330,.12,'sawtooth',.05);snd(220,.2,'sawtooth',.05,.1)},buy:function(){snd(523,.1,'triangle',.08);snd(659,.1,'triangle',.08,.1);snd(784,.22,'triangle',.08,.2)},build:function(){snd(392,.08,'square',.05);snd(523,.14,'square',.05,.09)},card:function(){snd(660,.08,'triangle',.07);snd(880,.16,'triangle',.07,.08)},win:function(){[523,659,784,1047].forEach(function(f,i){snd(f,.3,'triangle',.09,i*.14)})},fog:function(){snd(140,.4,'sine',.08)}};
 // ---------- board
-var C=1.55,U=100/(9+2*C);
-function pos(i){var cw=C*U,uw=U;
- if(i===0)return{x:100-cw,y:100-cw,w:cw,h:cw,s:'c'};
- if(i<10)return{x:100-cw-i*uw,y:100-cw,w:uw,h:cw,s:'b'};
- if(i===10)return{x:0,y:100-cw,w:cw,h:cw,s:'c'};
- if(i<20)return{x:0,y:100-cw-(i-10)*uw,w:cw,h:uw,s:'l'};
- if(i===20)return{x:0,y:0,w:cw,h:cw,s:'c'};
- if(i<30)return{x:cw+(i-21)*uw,y:0,w:uw,h:cw,s:'t'};
- if(i===30)return{x:100-cw,y:0,w:cw,h:cw,s:'c'};
- return{x:100-cw,y:cw+(i-31)*uw,w:cw,h:uw,s:'r'}}
+var C=1.55,U=100/(9+2*C),KB=1.13,CW=C*U,CY=CW/KB,UY=(100-2*CY)/9,SK=(UY*KB)/CW;
+function pos(i){var cw=CW,cy=CY,uw=U,uy=UY;
+ if(i===0)return{x:100-cw,y:100-cy,w:cw,h:cy,s:'c'};
+ if(i<10)return{x:100-cw-i*uw,y:100-cy,w:uw,h:cy,s:'b'};
+ if(i===10)return{x:0,y:100-cy,w:cw,h:cy,s:'c'};
+ if(i<20)return{x:0,y:100-cy-(i-10)*uy,w:cw,h:uy,s:'l'};
+ if(i===20)return{x:0,y:0,w:cw,h:cy,s:'c'};
+ if(i<30)return{x:cw+(i-21)*uw,y:0,w:uw,h:cy,s:'t'};
+ if(i===30)return{x:100-cw,y:0,w:cw,h:cy,s:'c'};
+ return{x:100-cw,y:cy+(i-31)*uy,w:cw,h:uy,s:'r'}}
 var tiles=[],toks=[];
 function buildBoard(){
  var g=$('grid');g.innerHTML='';tiles=[];toks=[];
- var c=document.createElement('div');c.id='centre';c.style.cssText='left:'+C*U+'%;top:'+C*U+'%;right:'+C*U+'%;bottom:'+C*U+'%';
+ var c=document.createElement('div');c.id='centre';c.style.cssText='left:'+CW+'%;top:'+CY+'%;right:'+CW+'%;bottom:'+CY+'%';var bd0=$('board');if(bd0)bd0.style.setProperty('--sk',SK);
  c.innerHTML=SCENE+'<div id="title"><span>DEVON</span><span class="t2">PROPERTY</span><span class="t2">RACE</span></div><div id="tag">Buy it. Own it. Charge for the view.</div><div id="dice"><div class="die" id="d1"></div><div class="die" id="d2"></div></div><div id="bannerc"></div>';
  g.appendChild(c);
  SQ.forEach(function(s,i){var p=pos(i),d=document.createElement('div');d.className='tile';d.style.cssText='left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%';
